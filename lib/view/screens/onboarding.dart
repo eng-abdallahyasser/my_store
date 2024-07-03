@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/controller/onboarding_controller.dart';
 import 'package:my_store/core/constant/colors.dart';
+import 'package:my_store/core/constant/routes.dart';
 import 'package:my_store/data/data_source/static.dart';
 import 'package:my_store/data/model/onboarding.dart';
 
@@ -106,13 +107,15 @@ class Onboarding extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: MyColors.elsie,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: GestureDetector(
-              onTap: controller.next,
+          GestureDetector(
+            onTap: () {
+              Get.offAllNamed(MyRoutes.auth);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: MyColors.elsie,
+                borderRadius: BorderRadius.circular(16),
+              ),
               child: const Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 100.0,
