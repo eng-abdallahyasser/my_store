@@ -5,4 +5,7 @@ class MyRoutes {
   static const signUpScreen = "/sign_un";
   static const home = "/home";
   static const cart = "/cart";
+  static const profile = "/profile";
+  static const search = "/search";
+  static const categories = "/categories";
 }

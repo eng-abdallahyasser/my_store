@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constant/routes.dart';
-import 'package:my_store/view/screens/my_navigation_bar.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -12,7 +11,6 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      bottomNavigationBar: MyNavigationBar(),
       body: Column(
         children: [
           const Text("Home"),

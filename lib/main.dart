@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:my_store/core/constant/colors.dart';
 import 'package:my_store/core/constant/routes.dart';
-import 'package:my_store/routes.dart';
+import 'package:my_store/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       initialRoute: MyRoutes.home,
-      routes: routes,
+      getPages: getPages,
+      // routes:routes,
     );
   }
 }

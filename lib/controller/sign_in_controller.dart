@@ -17,9 +17,9 @@ class SignInController extends GetxController {
 
   Future<void> signIn() async {
     try {
-      UserCredential  credential = await _auth.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
           email: emailController.text, password: pwController.text);
-          Get.offAllNamed(MyRoutes.home);
+      Get.offAllNamed(MyRoutes.home);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-class Cart extends StatelessWidget {
 
-  const Cart({super.key});
+class Profile extends StatelessWidget {
+  const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Cart'),
+          title: const Text('Profile'),
         ),
+    
         body: const Center(
-          child: Text("Cart"),
+          child: Text("Profile"),
         ));
   }
 }
