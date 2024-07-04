@@ -9,35 +9,6 @@ class SignUpScreen extends StatelessWidget {
   final SignUpController controller = Get.put(SignUpController());
   SignUpScreen({super.key});
 
-  void signUp(BuildContext context) {
-    if (controller.nameController.text.isNotEmpty &&
-        controller.emailController.text.isNotEmpty &&
-        controller.pwController.text.isNotEmpty &&
-        controller.confirmPwController.text.isNotEmpty) {
-      if (controller.pwController.text == controller.confirmPwController.text) {
-        try {} catch (e) {
-          showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                    title: Text(e.toString()),
-                  ));
-        }
-      } else {
-        showDialog(
-            context: context,
-            builder: (context) => const AlertDialog(
-                  title: Text("Passwords don't match!"),
-                ));
-      }
-    } else {
-      showDialog(
-          context: context,
-          builder: (context) => const AlertDialog(
-                title: Text("You have to input all fields"),
-              ));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,7 +136,7 @@ class SignUpScreen extends StatelessWidget {
                                 ),
                                 Center(
                                   child: GestureDetector(
-                                    onTap: () => signUp(context),
+                                    onTap: controller.signUp,
                                     child: const MyButton(
                                       text: "Sign Up",
                                     ),

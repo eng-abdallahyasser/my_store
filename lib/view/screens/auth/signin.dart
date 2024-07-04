@@ -12,7 +12,6 @@ class SignInScreen extends StatelessWidget {
     super.key,
   });
 
-  void signIn() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -64,70 +63,68 @@ class SignInScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)),
-                        child: GetBuilder<SignInController>(
-                          builder: (_) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 10.0),
-                                MyTextfield(
-                                  controller: controller.emailController,
-                                  hintText: "Email",
-                                  obscureText: false,
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                const SizedBox(height: 10.0),
-                                Row(children: [
-                                  Expanded(
-                                    child: MyTextfield(
-                                      hintText: 'Password',
-                                      controller: controller.pwController,
-                                      obscureText: controller.showPassword,
-                                    ),
-                                  ),
-                                  IconButton(
-                                      onPressed: () {
-                                        controller.hidePassword();
-                                      },
-                                      icon:
-                                          const Icon(Icons.remove_red_eye_outlined))
-                                ]),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("I forgetten my password, ",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w400)),
-                                    Text("Reset it.",
-                                        style: TextStyle(
-                                            color: Color(0xff7f30fe),
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w500)),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 40,
-                                ),
-                                Center(
-                                  child: GestureDetector(
-                                    onTap: signIn,
-                                    child: const MyButton(text: "Sign In"),
+                        child: GetBuilder<SignInController>(builder: (_) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 10.0),
+                              MyTextfield(
+                                controller: controller.emailController,
+                                hintText: "Email",
+                                obscureText: false,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const SizedBox(height: 10.0),
+                              Row(children: [
+                                Expanded(
+                                  child: MyTextfield(
+                                    hintText: 'Password',
+                                    controller: controller.pwController,
+                                    obscureText: controller.showPassword,
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 20,
+                                IconButton(
+                                    onPressed: () {
+                                      controller.hidePassword();
+                                    },
+                                    icon: const Icon(
+                                        Icons.remove_red_eye_outlined))
+                              ]),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("I forgetten my password, ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w400)),
+                                  Text("Reset it.",
+                                      style: TextStyle(
+                                          color: Color(0xff7f30fe),
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w500)),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              Center(
+                                child: GestureDetector(
+                                  onTap: controller.signIn,
+                                  child: const MyButton(text: "Sign In"),
                                 ),
-                              ],
-                            );
-                          }
-                        ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          );
+                        }),
                       ),
                     ),
                   ),
