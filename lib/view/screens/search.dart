@@ -4,13 +4,10 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Search'),
-        ),
-      
-        body: const Center(
-          child: Text("Search"),
-        ));
+    return  const SafeArea(
+      child: Center(
+            child: Text("Search"),
+          ),
+    );
   }
 }

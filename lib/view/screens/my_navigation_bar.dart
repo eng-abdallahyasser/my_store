@@ -18,6 +18,7 @@ class MyNavigationBarWraper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: controller.pageController,
         children: const [
           Home(),

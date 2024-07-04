@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 16, color: MyColors.gray),
         ),
       ),
-      initialRoute: MyRoutes.home,
+      initialRoute: MyRoutes.navigationBarWraper,
       getPages: getPages,
       // routes:routes,
     );

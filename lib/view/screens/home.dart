@@ -7,11 +7,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
-      body: Column(
+    return SafeArea(
+      child: Column(
         children: [
           const Text("Home"),
           const SizedBox(

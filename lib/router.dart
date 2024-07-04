@@ -7,6 +7,7 @@ import 'package:my_store/view/screens/auth/signup.dart';
 import 'package:my_store/view/screens/cart.dart';
 import 'package:my_store/view/screens/categories.dart';
 import 'package:my_store/view/screens/home.dart';
+import 'package:my_store/view/screens/my_navigation_bar.dart';
 import 'package:my_store/view/screens/onboarding.dart';
 import 'package:my_store/view/screens/profile.dart';
 import 'package:my_store/view/screens/search.dart';
@@ -50,6 +51,11 @@ final List<GetPage> getPages = [
   GetPage(
     name: MyRoutes.profile,
     page: () =>  const Profile(),
+    transition: Transition.noTransition, // Disable animation
+  ),
+  GetPage(
+    name: MyRoutes.navigationBarWraper,
+    page: () => MyNavigationBarWraper(),
     transition: Transition.noTransition, // Disable animation
   ),
 ];

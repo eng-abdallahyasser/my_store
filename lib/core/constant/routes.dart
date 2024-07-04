@@ -8,4 +8,5 @@ class MyRoutes {
   static const profile = "/profile";
   static const search = "/search";
   static const categories = "/categories";
+  static const navigationBarWraper = "/navigationBarWraper";
 }
