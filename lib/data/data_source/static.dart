@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:my_store/core/constant/images.dart';
 import 'package:my_store/core/constant/routes.dart';
 import 'package:my_store/data/model/bottom_bar_destination.dart';
@@ -28,27 +27,22 @@ List<OnboardingData> onboardingList = [
 List<BottomBarDestination> bottomBarDestinations = [
   BottomBarDestination(
       index: 0,
-      icon: const Icon(Icons.home_rounded),
-      label: 'Home',
+      icon: "assets/icons/Shop Icon.svg",
       route: MyRoutes.home),
   BottomBarDestination(
       index: 1,
-      icon: const Icon(Icons.category),
-      label: 'Groups',
+      icon: "assets/icons/Heart Icon.svg",
       route: MyRoutes.categories),
   BottomBarDestination(
       index: 2,
-      icon: const Icon(Icons.search_outlined),
-      label: 'Search',
+      icon: "assets/icons/Search Icon.svg",
       route: MyRoutes.search),
   BottomBarDestination(
       index: 3,
-      icon: const Icon(Icons.shopping_cart_rounded),
-      label: 'Cart',
+      icon: "assets/icons/Cart Icon.svg",
       route: MyRoutes.cart),
   BottomBarDestination(
       index: 4,
-      icon: const Icon(Icons.person_2),
-      label: 'Profile',
+      icon: "assets/icons/User Icon.svg",
       route: MyRoutes.profile)
 ];

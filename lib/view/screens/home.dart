@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:my_store/core/constant/routes.dart';
+import 'package:my_store/view/widget/home_header.dart';
+import 'package:my_store/view/widget/product_list.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          const Text("Home"),
-          const SizedBox(
-            height: 50,
-          ),
-          MaterialButton(
-            onPressed: () {
-              Get.toNamed(MyRoutes.cart);
-            },
-            child: const Text("Go to Cart"),
-          )
-        ],
-      ),
-    );
+    return const SafeArea(
+        child: Column(
+      children: [
+        SizedBox(height: 20),
+        HomeHeader(),
+        ProductList(),
+      ],
+    ));
   }
 }
