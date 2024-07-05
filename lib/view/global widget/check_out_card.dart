@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:my_store/core/constant/colors.dart';
+import 'package:my_store/core/constants.dart';
 
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({

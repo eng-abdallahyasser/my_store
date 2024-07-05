@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:my_store/core/constant/colors.dart';
-import 'package:my_store/core/constant/routes.dart';
+
+import 'package:my_store/core/constants.dart';
 import 'package:my_store/router.dart';
 
 void main() async {
@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       initialRoute: MyRoutes.navigationBarWraper,
-      getPages: getPages,
-      // routes:routes,
+      // getPages: getPages,
+      routes:routes,
     );
   }
 }

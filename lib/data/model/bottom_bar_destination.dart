@@ -1,12 +1,12 @@
 
 class BottomBarDestination {
-  final int index;
   final String icon;
   final String route;
+  final String label;
 
   BottomBarDestination({
-    required this.index,
     required this.icon,
     required this.route,
+    required this.label,
   });
 }

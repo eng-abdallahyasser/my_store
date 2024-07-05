@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_store/data/model/Cart.dart';
-import 'package:my_store/view/widget/cart_card.dart';
-import 'package:my_store/view/widget/check_out_card.dart';
+import 'package:my_store/view/global%20widget/cart_card.dart';
+import 'package:my_store/view/global%20widget/check_out_card.dart';
 
-class Cart extends StatelessWidget {
-  const Cart({super.key});
+class CartScreen extends StatelessWidget {
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class Cart extends StatelessWidget {
         title: Column(
           children: [
             const Text(
-              "Your Cart",
+              "Your CartScreen",
               style: TextStyle(color: Colors.black),
             ),
             Text(

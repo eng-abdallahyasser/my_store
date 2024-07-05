@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/controller/sign_up_controller.dart';
-import 'package:my_store/core/constant/routes.dart';
-import 'package:my_store/view/widget/my_button.dart';
-import 'package:my_store/view/widget/my_textfield.dart';
+import 'package:my_store/core/constants.dart';
+import 'package:my_store/view/global%20widget/my_button.dart';
+import 'package:my_store/view/global%20widget/my_textfield.dart';
 
 class SignUpScreen extends StatelessWidget {
   final SignUpController controller = Get.put(SignUpController());

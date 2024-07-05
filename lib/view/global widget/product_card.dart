@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:my_store/core/constant/colors.dart';
-import 'package:my_store/data/model/product.dart';
+import 'package:get/get.dart';
+import 'package:my_store/core/constants.dart';
+import 'package:my_store/data/model/Product.dart';
+// import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/view/screens/details/details_screen.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -21,7 +24,9 @@ class ProductCard extends StatelessWidget {
     return SizedBox(
       width: width,
       child: GestureDetector(
-        onTap: onPress,
+        onTap: () {
+          Get.to(() => DetailsScreen(product: product));
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

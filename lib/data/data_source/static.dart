@@ -1,5 +1,8 @@
-import 'package:my_store/core/constant/images.dart';
-import 'package:my_store/core/constant/routes.dart';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:my_store/core/constants.dart';
+import 'package:my_store/data/model/Product.dart';
 import 'package:my_store/data/model/bottom_bar_destination.dart';
 import 'package:my_store/data/model/onboarding.dart';
 
@@ -26,23 +29,176 @@ List<OnboardingData> onboardingList = [
 
 List<BottomBarDestination> bottomBarDestinations = [
   BottomBarDestination(
-      index: 0,
-      icon: "assets/icons/Shop Icon.svg",
-      route: MyRoutes.home),
+    icon: "assets/icons/Shop Icon.svg",
+    route: MyRoutes.home,
+    label: "Home",
+  ),
   BottomBarDestination(
-      index: 1,
-      icon: "assets/icons/Heart Icon.svg",
-      route: MyRoutes.categories),
+    icon: "assets/icons/Heart Icon.svg",
+    route: MyRoutes.categories,
+    label: "Favourites",
+  ),
   BottomBarDestination(
-      index: 2,
-      icon: "assets/icons/Search Icon.svg",
-      route: MyRoutes.search),
+    icon: "assets/icons/Cart Icon.svg",
+    route: MyRoutes.cart,
+    label: "Cart",
+  ),
   BottomBarDestination(
-      index: 3,
-      icon: "assets/icons/Cart Icon.svg",
-      route: MyRoutes.cart),
-  BottomBarDestination(
-      index: 4,
-      icon: "assets/icons/User Icon.svg",
-      route: MyRoutes.profile)
+    icon: "assets/icons/User Icon.svg",
+    route: MyRoutes.profile,
+    label: "Profile",
+  )
 ];
+
+List<Product> demoProducts = [
+  Product(
+    id: 1,
+    images: [
+      "assets/images/ps4_console_white_1.png",
+      "assets/images/ps4_console_white_2.png",
+      "assets/images/ps4_console_white_3.png",
+      "assets/images/ps4_console_white_4.png",
+    ],
+    colors: [
+      const Color(0xFFF6625E),
+      const Color(0xFF836DB8),
+      const Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Wireless Controller for PS4™",
+    price: 64.99,
+    description: description,
+    rating: 4.8,
+    isFavourite: true,
+    isPopular: true,
+  ),
+  Product(
+    id: 2,
+    images: [
+      "assets/images/Image Popular Product 2.png",
+    ],
+    colors: [
+      const Color(0xFFF6625E),
+      const Color(0xFF836DB8),
+      const Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Nike Sport White - Man Pant",
+    price: 50.5,
+    description: description,
+    rating: 4.1,
+    isPopular: true,
+  ),
+  Product(
+    id: 3,
+    images: [
+      "assets/images/glap.png",
+    ],
+    colors: [
+      const Color(0xFFF6625E),
+      const Color(0xFF836DB8),
+      const Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Gloves XC Omega - Polygon",
+    price: 36.55,
+    description: description,
+    rating: 4.1,
+    isFavourite: true,
+    isPopular: true,
+  ),
+  Product(
+    id: 4,
+    images: [
+      "assets/images/wireless headset.png",
+    ],
+    colors: [
+      const Color(0xFFF6625E),
+      const Color(0xFF836DB8),
+      const Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Logitech Head",
+    price: 20.20,
+    description: description,
+    rating: 4.1,
+    isFavourite: true,
+  ),
+  Product(
+    id: 1,
+    images: [
+      "assets/images/ps4_console_white_1.png",
+      "assets/images/ps4_console_white_2.png",
+      "assets/images/ps4_console_white_3.png",
+      "assets/images/ps4_console_white_4.png",
+    ],
+    colors: [
+      const Color(0xFFF6625E),
+      const Color(0xFF836DB8),
+      const Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Wireless Controller for PS4™",
+    price: 64.99,
+    description: description,
+    rating: 4.8,
+    isFavourite: true,
+    isPopular: true,
+  ),
+  Product(
+    id: 2,
+    images: [
+      "assets/images/Image Popular Product 2.png",
+    ],
+    colors: [
+      const Color(0xFFF6625E),
+      const Color(0xFF836DB8),
+      const Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Nike Sport White - Man Pant",
+    price: 50.5,
+    description: description,
+    rating: 4.1,
+    isPopular: true,
+  ),
+  Product(
+    id: 3,
+    images: [
+      "assets/images/glap.png",
+    ],
+    colors: [
+      const Color(0xFFF6625E),
+      const Color(0xFF836DB8),
+      const Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Gloves XC Omega - Polygon",
+    price: 36.55,
+    description: description,
+    rating: 4.1,
+    isFavourite: true,
+    isPopular: true,
+  ),
+  Product(
+    id: 4,
+    images: [
+      "assets/images/wireless headset.png",
+    ],
+    colors: [
+      const Color(0xFFF6625E),
+      const Color(0xFF836DB8),
+      const Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Logitech Head",
+    price: 20.20,
+    description: description,
+    rating: 4.1,
+    isFavourite: true,
+  ),
+];
+
+const String description =
+    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
+

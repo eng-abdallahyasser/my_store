@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_store/view/widget/icon_btn_header.dart';
-import 'package:my_store/view/widget/search_feild.dart';
+import 'package:my_store/view/global%20widget/icon_btn_header.dart';
+import 'package:my_store/view/screens/home/search_feild.dart';
 
 
 class HomeHeader extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_store/core/constant/colors.dart';
+import 'package:my_store/core/constants.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({

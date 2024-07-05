@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_store/view/widget/home_header.dart';
-import 'package:my_store/view/widget/product_list.dart';
+import 'package:my_store/view/screens/home/home_header.dart';
+import 'package:my_store/view/global%20widget/product_list.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});

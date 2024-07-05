@@ -1,3 +1,5 @@
+import 'package:my_store/data/data_source/static.dart';
+
 import 'Product.dart';
 
 class Cart {

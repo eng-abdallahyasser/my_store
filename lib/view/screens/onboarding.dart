@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/controller/onboarding_controller.dart';
-import 'package:my_store/core/constant/colors.dart';
-import 'package:my_store/core/constant/routes.dart';
+import 'package:my_store/core/constants.dart';
 import 'package:my_store/data/data_source/static.dart';
 import 'package:my_store/data/model/onboarding.dart';
 

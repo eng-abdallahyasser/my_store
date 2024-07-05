@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
-import 'package:my_store/core/constant/routes.dart';
+import 'package:my_store/core/constants.dart';
 import 'package:my_store/view/screens/auth/signin.dart';
 import 'package:my_store/view/screens/auth/signup.dart';
-import 'package:my_store/view/screens/cart.dart';
+import 'package:my_store/view/screens/cart/cart.dart';
 import 'package:my_store/view/screens/categories.dart';
-import 'package:my_store/view/screens/home.dart';
-import 'package:my_store/view/screens/my_navigation_bar.dart';
+import 'package:my_store/view/screens/home/home.dart';
+import 'package:my_store/view/screens/navigation%20wraper/my_navigation_bar.dart';
 import 'package:my_store/view/screens/onboarding.dart';
 import 'package:my_store/view/screens/profile/profile.dart';
 import 'package:my_store/view/screens/search.dart';
@@ -40,7 +40,7 @@ final List<GetPage> getPages = [
   ),
   GetPage(
     name: MyRoutes.cart,
-    page: () =>  const Cart(),
+    page: () =>  const CartScreen(),
     transition: Transition.noTransition, // Disable animation
   ),
   GetPage(
@@ -65,8 +65,10 @@ Map<String, Widget Function(BuildContext)> routes = {
   MyRoutes.signInScreen: (_) => SignInScreen(),
   MyRoutes.signUpScreen: (_) => SignUpScreen(),
   MyRoutes.home: (_) =>  const Home(),
-  MyRoutes.cart: (_) =>  const Cart(),
+  MyRoutes.cart: (_) =>  const CartScreen(),
   MyRoutes.categories: (_) =>  const Categories(),
   MyRoutes.profile: (_) =>  const Profile(),
   MyRoutes.search: (_) =>  const Search(),
+  MyRoutes.navigationBarWraper: (_) => MyNavigationBarWraper(),
+
 };
