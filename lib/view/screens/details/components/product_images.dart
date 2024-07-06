@@ -1,45 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:my_store/controller/detailes_screen_controller.dart';
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/data/model/Product.dart';
 
 class ProductImages extends StatelessWidget {
   final Product product;
+  final DetailesScreenController controller;
 
-  final int selectedImage = 0;
-
-  const ProductImages({super.key, required this.product});
+  const ProductImages(
+      {super.key, required this.product, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: 238,
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: Image.asset(product.images[selectedImage]),
-          ),
-        ),
-        // SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return GetBuilder<DetailesScreenController>(
+      builder: (controller) {
+        return Column(
           children: [
-            ...List.generate(
-              product.images.length,
-              (index) => SmallProductImage(
-                isSelected: index == selectedImage,
-                press: () {},
-                image: product.images[index],
+            SizedBox(
+              width: 238,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Image.asset(product.images[controller.selectedImage]),
               ),
             ),
+            // SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...List.generate(
+                  product.images.length,
+                  (index) => SmallProductImage(
+                    isSelected: index == controller.selectedImage,
+                    press: () {
+                      controller.selectImageIndex(index);
+                    },
+                    image: product.images[index],
+                  ),
+                ),
+              ],
+            )
           ],
-        )
-      ],
+        );
+      }
     );
   }
 }
 
-class SmallProductImage extends StatefulWidget {
+class SmallProductImage extends StatelessWidget {
   const SmallProductImage(
       {super.key,
       required this.isSelected,
@@ -51,14 +59,9 @@ class SmallProductImage extends StatefulWidget {
   final String image;
 
   @override
-  State<SmallProductImage> createState() => _SmallProductImageState();
-}
-
-class _SmallProductImageState extends State<SmallProductImage> {
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.press,
+      onTap: press,
       child: AnimatedContainer(
         duration: defaultDuration,
         margin: const EdgeInsets.only(right: 16),
@@ -68,10 +71,10 @@ class _SmallProductImageState extends State<SmallProductImage> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-              color: MyColors.elsie.withOpacity(widget.isSelected ? 1 : 0)),
+          border:
+              Border.all(color: MyColors.elsie.withOpacity(isSelected ? 1 : 0)),
         ),
-        child: Image.asset(widget.image),
+        child: Image.asset(image),
       ),
     );
   }

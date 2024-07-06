@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:my_store/controller/detailes_screen_controller.dart';
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/data/model/Product.dart';
 import 'package:my_store/view/global%20widget/rounded_icon_btn.dart';
@@ -7,35 +9,44 @@ class ColorDots extends StatelessWidget {
   const ColorDots({
     super.key,
     required this.product,
+    required this.controller,
   });
 
   final Product product;
+  final DetailesScreenController controller;
 
   @override
   Widget build(BuildContext context) {
-    // Now this is fixed and only for demo
-    int selectedColor = 3;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           ...List.generate(
             product.colors.length,
-            (index) => ColorDot(
-              color: product.colors[index],
-              isSelected: index == selectedColor,
+            (index) => GestureDetector(
+              onTap: () {
+                controller.selectColorIndex(index);
+              },
+              child: GetBuilder<DetailesScreenController>(
+                builder: (controller) {
+                  return ColorDot(
+                    color: product.colors[index],
+                    isSelected: index == controller.selectedColor,
+                  );
+                }
+              ),
             ),
           ),
           const Spacer(),
           RoundedIconBtn(
             icon: Icons.remove,
-            press: () {},
+            press: controller.removeOneItem,
           ),
           const SizedBox(width: 20),
           RoundedIconBtn(
             icon: Icons.add,
             showShadow: true,
-            press: () {},
+            press: controller.addOneItem,
           ),
         ],
       ),
@@ -44,11 +55,10 @@ class ColorDots extends StatelessWidget {
 }
 
 class ColorDot extends StatelessWidget {
-  
   const ColorDot({
     super.key,
     required this.color,
-    this.isSelected = false,
+    required this.isSelected,
   });
 
   final Color color;

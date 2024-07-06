@@ -30,9 +30,8 @@ class ProductList extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: ProductCard(
-                        product: demoProducts.first,
-                        onPress: () {
-                        },
+                        product: demoProducts[index],
+                        onPress: () {},
                       ),
                     );
                   }

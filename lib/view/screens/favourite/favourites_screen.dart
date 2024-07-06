@@ -18,7 +18,7 @@ class FavouritesScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: GridView.builder(
-                itemCount: demoProducts.length,
+                itemCount: favouriteProducts.length,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 200,
                   childAspectRatio: 0.7,
@@ -26,7 +26,7 @@ class FavouritesScreen extends StatelessWidget {
                   crossAxisSpacing: 16,
                 ),
                 itemBuilder: (context, index) =>
-                    ProductCard(product: demoProducts[index], onPress: () {}),
+                    ProductCard(product: favouriteProducts[index], onPress: () {}),
               ),
             ),
           )

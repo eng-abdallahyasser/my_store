@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:my_store/controller/detailes_screen_controller.dart';
+import 'package:my_store/core/constants.dart';
+import 'package:my_store/data/model/Cart.dart';
 import 'package:my_store/data/model/Product.dart';
 import 'components/color_dots.dart';
 import 'components/product_description.dart';
@@ -7,11 +11,12 @@ import 'components/product_images.dart';
 import 'components/top_rounded_container.dart';
 
 class DetailsScreen extends StatelessWidget {
-  static String routeName = "/details";
-
   final Product product;
 
-  const DetailsScreen({super.key, required this.product});
+  late final DetailesScreenController controller =
+      Get.put(DetailesScreenController(product: product));
+
+  DetailsScreen({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +78,10 @@ class DetailsScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          ProductImages(product: product),
+          ProductImages(
+            product: product,
+            controller: controller,
+          ),
           TopRoundedContainer(
             color: Colors.white,
             child: Column(
@@ -86,7 +94,10 @@ class DetailsScreen extends StatelessWidget {
                   color: const Color(0xFFF6F7F9),
                   child: Column(
                     children: [
-                      ColorDots(product: product),
+                      ColorDots(
+                        product: product,
+                        controller: controller,
+                      ),
                     ],
                   ),
                 ),
@@ -100,12 +111,35 @@ class DetailsScreen extends StatelessWidget {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            child: ElevatedButton(
-              onPressed: () {
-                
-              },
-              child: const Text("Add To Cart"),
-            ),
+            child: GetBuilder<DetailesScreenController>(builder: (controller) {
+              return ElevatedButton(
+                onPressed: () {
+                  demoCarts.add(
+                    Cart(product: product, numOfItem: controller.numberOfItems),
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Add   ",
+                      style: TextStyle(color: MyColors.matteCharcoal),
+                     ),
+                    Text(
+                      "${controller.numberOfItems}",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: MyColors.elsie),
+                    ),
+                    const Text(
+                      "   items to Cart",
+                      style: TextStyle(color: MyColors.matteCharcoal),
+                    ),
+                  ],
+                ),
+              );
+            }),
           ),
         ),
       ),
