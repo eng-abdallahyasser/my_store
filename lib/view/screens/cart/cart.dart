@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:my_store/data/model/Cart.dart';
-import 'package:my_store/view/global%20widget/cart_card.dart';
-import 'package:my_store/view/global%20widget/check_out_card.dart';
+import 'package:get/get.dart';
+import 'package:my_store/controller/cart_controller.dart';
+import 'package:my_store/data/model/cart_item.dart';
+import 'package:my_store/view/screens/cart/check_out_card.dart';
+import 'package:my_store/view/screens/cart/cart_card.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+  final CartController controller = Get.put(CartController());
+
+  CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +37,7 @@ class CartScreen extends StatelessWidget {
             child: Dismissible(
               key: Key(demoCarts[index].product.id.toString()),
               direction: DismissDirection.endToStart,
-              onDismissed: (direction) {
-              },
+              onDismissed: (direction) {},
               background: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
@@ -48,11 +51,23 @@ class CartScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              child: CartCard(cart: demoCarts[index]),
+              child: GetBuilder<CartController>(builder: (controller) {
+                return CartCard(
+                  cart: controller.cartList[index],
+                  add: () {
+                    controller.addOneProduct(index);
+                    print('$index');
+                  },
+                  remove: () {
+                    controller.removeOneProduct(index);
+                  },
+                );
+              }),
             ),
           ),
         ),
       ),
       bottomNavigationBar: const CheckoutCard(),
-    );}
+    );
+  }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_store/view/screens/admin/admin_screen.dart';
 import 'package:my_store/view/screens/profile/components/profile_menu.dart';
 import 'package:my_store/view/screens/profile/components/profile_pic.dart';
 
@@ -7,7 +9,7 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
       ),
@@ -41,6 +43,13 @@ class Profile extends StatelessWidget {
               text: "Log Out",
               icon: "assets/icons/Log out.svg",
               press: () {},
+            ),
+            ProfileMenu(
+              text: "Go as Admin",
+              icon: "assets/icons/Discover.svg",
+              press: () {
+                Get.to(()=>const AdminScreen());
+              },
             ),
           ],
         ),

@@ -26,7 +26,7 @@ class FavouritesScreen extends StatelessWidget {
                   crossAxisSpacing: 16,
                 ),
                 itemBuilder: (context, index) =>
-                    ProductCard(product: favouriteProducts[index], onPress: () {}),
+                    ProductCard(product: favouriteProducts[index]),
               ),
             ),
           )

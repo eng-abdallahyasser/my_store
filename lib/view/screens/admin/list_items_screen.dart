@@ -2,35 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/data/data_source/static.dart';
 import 'package:my_store/data/model/Product.dart';
 import 'package:my_store/data/data_source/repo.dart';
-import 'package:my_store/view/screens/details/details_screen.dart';
+import 'package:my_store/view/screens/admin/controller/list_itmes_controller.dart';
+import 'package:my_store/view/screens/home/search_feild.dart';
 
-class ProductCard extends StatefulWidget {
-  const ProductCard({
-    super.key,
-    this.width = 140,
-    this.aspectRetio = 1.02,
-    required this.product,
-  });
+class ListItemsScreen extends StatelessWidget {
+  final ListItmesController controller = Get.put(ListItmesController());
+  ListItemsScreen({super.key});
 
-  final double width, aspectRetio;
-  final Product product;
-
-  @override
-  State<ProductCard> createState() => _ProductCardState();
-}
-
-class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: SearchField(),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: FutureBuilder(
+                    future: controller.getAllProduct(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshot.hasData) {
+                        return _productsGrid(snapshot.data!);
+                      }
+                      return const Text("no items yet");
+                    }),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  GridView _productsGrid(List<Product> products) {
+    return GridView.builder(
+      itemCount: products.length,
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 170,
+        childAspectRatio: 0.7,
+        mainAxisSpacing: 20,
+        crossAxisSpacing: 16,
+      ),
+      itemBuilder: (context, index) => _productCard(context, products[index]),
+    );
+  }
+
+  Widget _productCard(BuildContext context, Product product) {
     return SizedBox(
-      width: widget.width,
       child: GestureDetector(
-        onTap: () {
-          Get.to(() => DetailsScreen(product: widget.product));
-        },
+        onTap: () {},
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -42,7 +73,7 @@ class _ProductCardState extends State<ProductCard> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: FutureBuilder(
-                    future: Repo.getProductImageNumber(widget.product.id, 0),
+                    future: Repo.getProductImageNumber(product.id, 0),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
@@ -74,7 +105,7 @@ class _ProductCardState extends State<ProductCard> {
             ),
             const SizedBox(height: 8),
             Text(
-              widget.product.title,
+              product.title,
               style: Theme.of(context).textTheme.bodyMedium,
               maxLines: 2,
             ),
@@ -82,7 +113,7 @@ class _ProductCardState extends State<ProductCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "\$${widget.product.price}",
+                  "\$${product.price}",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -91,21 +122,12 @@ class _ProductCardState extends State<ProductCard> {
                 ),
                 InkWell(
                   borderRadius: BorderRadius.circular(50),
-                  onTap: () {
-                    if (!favouriteProducts.contains(widget.product)) {
-                      favouriteProducts.add(widget.product);
-                    } else {
-                      favouriteProducts.remove(widget.product);
-                    }
-                    setState(() {});
-                  },
+                  onTap: () {},
                   child: Container(
                     padding: const EdgeInsets.all(6),
                     height: 24,
                     decoration: BoxDecoration(
-                      color: favouriteProducts.contains(widget.product)
-                          ? MyColors.elsie.withOpacity(0.15)
-                          : MyColors.matteCharcoal.withOpacity(0.1),
+                      color: MyColors.elsie.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: Row(
@@ -113,16 +135,13 @@ class _ProductCardState extends State<ProductCard> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "${widget.product.favouritecount}",
+                          "${product.favouritecount}",
                           style: const TextStyle(fontSize: 12),
                         ),
                         SvgPicture.asset(
                           "assets/icons/Heart Icon_2.svg",
-                          colorFilter: ColorFilter.mode(
-                              favouriteProducts.contains(widget.product)
-                                  ? const Color(0xFFFF4848)
-                                  : MyColors.elsieLite.withOpacity(0.5),
-                              BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              Color(0xFFFF4848), BlendMode.srcIn),
                         ),
                       ],
                     ),

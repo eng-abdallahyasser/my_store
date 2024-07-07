@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:my_store/controller/cart_controller.dart';
 import 'package:my_store/core/constants.dart';
 
 class CheckoutCard extends StatelessWidget {
@@ -59,17 +61,21 @@ class CheckoutCard extends StatelessWidget {
             const SizedBox(height: 16),
             Row(
               children: [
-                const Expanded(
-                  child: Text.rich(
-                    TextSpan(
-                      text: "Total:\n",
-                      children: [
+                 Expanded(
+                  child: GetBuilder<CartController>(
+                    builder: (controller) {
+                      return Text.rich(
                         TextSpan(
-                          text: "\$337.15",
-                          style: TextStyle(fontSize: 16, color: Colors.black),
+                          text: "Total:\n",
+                          children: [
+                            TextSpan(
+                              text: "\$ ${controller.total}",
+                              style: const TextStyle(fontSize: 16, color: Colors.black),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    }
                   ),
                 ),
                 Expanded(

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/data/model/Cart.dart';
+import 'package:my_store/data/model/cart_item.dart';
+import 'package:my_store/view/global%20widget/rounded_icon_btn.dart';
 
 class CartCard extends StatelessWidget {
   const CartCard({
     super.key,
-    required this.cart,
+    required this.cart, required this.add, required this.remove,
   });
 
-  final Cart cart;
+  final CartItem cart;
+  final Function() add;
+  final Function() remove;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +54,13 @@ class CartCard extends StatelessWidget {
               ),
             )
           ],
-        )
+        ),
+        const Spacer(),
+        Column(children: [
+          RoundedIconBtn(icon: Icons.add, press: add),
+          const SizedBox(height: 4),
+          RoundedIconBtn(icon: Icons.remove, press: remove),
+        ])
       ],
     );
   }

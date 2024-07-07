@@ -7,11 +7,8 @@ class SignUpController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   TextEditingController nameController = TextEditingController();
-
   TextEditingController emailController = TextEditingController();
-
   TextEditingController pwController = TextEditingController();
-
   TextEditingController confirmPwController = TextEditingController();
   bool showPassword = false;
   bool showConfirmPassword = false;

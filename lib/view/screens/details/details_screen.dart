@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:my_store/controller/detailes_screen_controller.dart';
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/data/model/Cart.dart';
+import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/data/model/Product.dart';
 import 'components/color_dots.dart';
 import 'components/product_description.dart';
@@ -115,7 +115,8 @@ class DetailsScreen extends StatelessWidget {
               return ElevatedButton(
                 onPressed: () {
                   demoCarts.add(
-                    Cart(product: product, numOfItem: controller.numberOfItems),
+                    CartItem(
+                        product: product, numOfItem: controller.numberOfItems),
                   );
                 },
                 child: Row(
@@ -124,7 +125,7 @@ class DetailsScreen extends StatelessWidget {
                     const Text(
                       "Add   ",
                       style: TextStyle(color: MyColors.matteCharcoal),
-                     ),
+                    ),
                     Text(
                       "${controller.numberOfItems}",
                       style: const TextStyle(

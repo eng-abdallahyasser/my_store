@@ -19,6 +19,7 @@ class MyRoutes {
   static const categories = "/categories";
   static const navigationBarWraper = "/navigationBarWraper";
   static const itemDetails = "/itemDetails";
+  static const admin = "/admin";
 }
 
 class MyColors {

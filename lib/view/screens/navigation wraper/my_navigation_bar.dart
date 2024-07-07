@@ -20,11 +20,11 @@ class MyNavigationBarWraper extends StatelessWidget {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller.pageController,
-        children: const [
-          Home(),
-          FavouritesScreen(),
+        children:  [
+          const Home(),
+          const FavouritesScreen(),
           CartScreen(),
-          Profile(),
+          const Profile(),
         ],
       ),
       bottomNavigationBar: GetBuilder<NavigationBarController>(
