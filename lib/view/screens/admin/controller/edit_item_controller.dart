@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:my_store/data/model/Product.dart';
 
 class EditItemController extends GetxController {
-  Product product=Product(title: "",images: [],colors: [],price: 0.0,description: "");
+  Product product = Product(
+      title: "", imagesUrl: [], colors: [], price: 0.0, description: "");
   TextEditingController title = TextEditingController(text: "");
   TextEditingController price = TextEditingController();
   TextEditingController oldPrice = TextEditingController();
@@ -16,7 +17,6 @@ class EditItemController extends GetxController {
   TextEditingController quantity = TextEditingController();
   List<Color> colorList = [];
   List<Uint8List> images = [];
-
 
   void onSaveClicked() {}
 }

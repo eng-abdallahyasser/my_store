@@ -1,10 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:my_store/data/data_source/repo.dart';
 
 class Product {
   String id;
   int quantity;
   final String title, description;
-  final List<String> images;
+  final List<String> imagesUrl;
+  late List<Uint8List?> imagesUint8List;
   final List<Color> colors;
   final double rating, price, oldPrice;
   final bool isFavourite, isPopular;
@@ -12,22 +16,22 @@ class Product {
 
   Product({
     this.id = "",
-    required this.images,
+    required this.imagesUrl,
     required this.colors,
     this.rating = 0.0,
     this.isFavourite = false,
     this.isPopular = false,
     this.favouritecount = 0,
-    required this.title,
-    required this.price,
+    this.title = "",
+    this.price = 0.0,
     this.oldPrice = 0,
-    required this.description,
+    this.description = "",
     this.quantity = 1,
   });
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "images": images,
+        "images": imagesUrl,
         "colors": colorsStringList(),
         "rating": rating,
         "isFavourite": isFavourite,
@@ -43,7 +47,7 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'] ?? "",
-      images: List<String>.from(json['images'] ?? []),
+      imagesUrl: List<String>.from(json['images'] ?? []),
       colors: (json['colors'] as List<dynamic>)
           .map((colorString) => Color(int.parse(colorString, radix: 16)))
           .toList(),
@@ -67,5 +71,8 @@ class Product {
     return colorsStringList;
   }
 
-  
+  Future<void> initializeImages() async {
+    imagesUint8List = await Future.wait(
+        imagesUrl.map((url) => Repo.getProductImageUrl(url)).toList());
+  }
 }

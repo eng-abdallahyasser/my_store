@@ -36,6 +36,17 @@ class Repo {
       return null;
     }
   }
+  static Future<Uint8List?> getProductImageUrl(
+      String url) async {
+    final Uint8List? image =
+        await _storage.ref().child(url).getData();
+    try {
+      return image;
+    } catch (e) {
+      print('Failed to get profile picture for uid $url: $e');
+      return null;
+    }
+  }
 
   static Future<void> addItem(Product product, List<Uint8List> images) async {
     try {

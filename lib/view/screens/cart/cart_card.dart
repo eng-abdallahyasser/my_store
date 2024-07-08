@@ -6,7 +6,9 @@ import 'package:my_store/view/global%20widget/rounded_icon_btn.dart';
 class CartCard extends StatelessWidget {
   const CartCard({
     super.key,
-    required this.cart, required this.add, required this.remove,
+    required this.cart,
+    required this.add,
+    required this.remove,
   });
 
   final CartItem cart;
@@ -27,7 +29,7 @@ class CartCard extends StatelessWidget {
                 color: const Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(cart.product.images[0]),
+              child: Image.asset(cart.product.imagesUrl[0]),
             ),
           ),
         ),

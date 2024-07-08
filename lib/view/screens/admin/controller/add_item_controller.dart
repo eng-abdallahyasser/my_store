@@ -43,7 +43,7 @@ class AddItemController extends GetxController {
       try {
         Repo.addItem(
             Product(
-                images: [],
+                imagesUrl: [],
                 colors: colorList,
                 title: title.text,
                 price: double.parse(price.text),

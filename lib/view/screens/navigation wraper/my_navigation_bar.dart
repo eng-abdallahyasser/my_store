@@ -5,10 +5,7 @@ import 'package:my_store/controller/navigation_bar_controller.dart';
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/data/data_source/static.dart';
 import 'package:my_store/data/model/bottom_bar_destination.dart';
-import 'package:my_store/view/screens/cart/cart.dart';
-import 'package:my_store/view/screens/favourite/favourites_screen.dart';
-import 'package:my_store/view/screens/home/home.dart';
-import 'package:my_store/view/screens/profile/profile.dart';
+
 
 class MyNavigationBarWraper extends StatelessWidget {
   final NavigationBarController controller = Get.put(NavigationBarController());
@@ -20,12 +17,9 @@ class MyNavigationBarWraper extends StatelessWidget {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller.pageController,
-        children:  [
-          const Home(),
-          const FavouritesScreen(),
-          CartScreen(),
-          const Profile(),
-        ],
+        children: bottomBarDestinations
+            .map((destination) => destination.routeWidget)
+            .toList(),
       ),
       bottomNavigationBar: GetBuilder<NavigationBarController>(
         builder: (controller) => BottomNavigationBar(

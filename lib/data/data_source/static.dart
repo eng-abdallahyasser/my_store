@@ -6,6 +6,10 @@ import 'package:my_store/data/model/Product.dart';
 import 'package:my_store/data/model/bottom_bar_destination.dart';
 import 'package:my_store/data/model/onboarding.dart';
 import 'package:my_store/data/data_source/repo.dart';
+import 'package:my_store/view/screens/cart/cart.dart';
+import 'package:my_store/view/screens/favourite/favourites_screen.dart';
+import 'package:my_store/view/screens/home/home.dart';
+import 'package:my_store/view/screens/profile/profile.dart';
 
 List<OnboardingData> onboardingList = [
   OnboardingData(
@@ -33,21 +37,25 @@ List<BottomBarDestination> bottomBarDestinations = [
     icon: "assets/icons/Shop Icon.svg",
     route: MyRoutes.home,
     label: "Home",
+    routeWidget: const Home(),
   ),
   BottomBarDestination(
     icon: "assets/icons/Heart Icon.svg",
     route: MyRoutes.categories,
     label: "Favourites",
+    routeWidget: const FavouritesScreen(),
   ),
   BottomBarDestination(
     icon: "assets/icons/Cart Icon.svg",
     route: MyRoutes.cart,
     label: "Cart",
+    routeWidget: CartScreen(),
   ),
   BottomBarDestination(
     icon: "assets/icons/User Icon.svg",
     route: MyRoutes.profile,
     label: "Profile",
+    routeWidget: const Profile(),
   )
 ];
 
@@ -198,7 +206,7 @@ const String description =
 
 List<Product> favouriteProducts = [
   Product(
-      images: [
+      imagesUrl: [
         "assets/images/ps4_console_white_1.png",
         "assets/images/ps4_console_white_2.png",
         "assets/images/ps4_console_white_3.png",

@@ -79,7 +79,6 @@ class DetailsScreen extends StatelessWidget {
       body: ListView(
         children: [
           ProductImages(
-            product: product,
             controller: controller,
           ),
           TopRoundedContainer(
