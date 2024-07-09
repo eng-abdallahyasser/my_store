@@ -1,9 +1,8 @@
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/order.dart';
 
 class Repo {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -25,6 +24,25 @@ class Repo {
     }).toList();
   }
 
+  // static Future<List> getAllCarts() async {
+  //   final QuerySnapshot querySnapshot =
+  //       await _firestore.collection('orders').get();
+  //   return querySnapshot.docs.map((doc) {
+  //     return Order.fromJson(doc.data() as Map<String, dynamic>);
+  //   }).toList();
+  // }
+
+  Future<Product> getProductById(String id) async {
+    final DocumentSnapshot doc =
+        await FirebaseFirestore.instance.collection("products").doc(id).get();
+
+    if (!doc.exists) {
+      throw Exception("Product not found");
+    }
+
+    return Product.fromFirestore(doc);
+  }
+
   static Future<Uint8List?> getProductImageNumber(
       String productId, int number) async {
     final Uint8List? image =
@@ -36,10 +54,9 @@ class Repo {
       return null;
     }
   }
-  static Future<Uint8List?> getProductImageUrl(
-      String url) async {
-    final Uint8List? image =
-        await _storage.ref().child(url).getData();
+
+  static Future<Uint8List?> getProductImageUrl(String url) async {
+    final Uint8List? image = await _storage.ref().child(url).getData();
     try {
       return image;
     } catch (e) {
@@ -71,6 +88,17 @@ class Repo {
       print("Product Added with ID: ${docRef.id}");
     } catch (error) {
       print("Failed to add product: $error");
+    }
+  }
+
+  static Future<void> addOrder(OrderForDelivary order) async {
+    try {
+      // Add the order to Firestore
+      DocumentReference docRef =
+          await _firestore.collection("orders").add(order.toJson());
+      await docRef.update({"orderID": docRef.id});
+    } catch (error) {
+      print("Failed to add order: $error");
     }
   }
 }

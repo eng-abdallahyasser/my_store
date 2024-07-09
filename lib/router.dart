@@ -8,7 +8,7 @@ import 'package:my_store/view/screens/home/home.dart';
 import 'package:my_store/view/screens/navigation%20wraper/my_navigation_bar.dart';
 import 'package:my_store/view/screens/onboarding.dart';
 import 'package:my_store/view/screens/profile/profile.dart';
-import 'package:my_store/view/screens/search.dart';
+import 'package:my_store/view/global%20widget/search.dart';
 
 
 Map<String, Widget Function(BuildContext)> routes = {

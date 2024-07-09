@@ -5,8 +5,10 @@ import 'package:my_store/controller/cart_controller.dart';
 import 'package:my_store/core/constants.dart';
 
 class CheckoutCard extends StatelessWidget {
+  final CartController controller;
   const CheckoutCard({
     super.key,
+    required this.controller,
   });
 
   @override
@@ -61,26 +63,27 @@ class CheckoutCard extends StatelessWidget {
             const SizedBox(height: 16),
             Row(
               children: [
-                 Expanded(
-                  child: GetBuilder<CartController>(
-                    builder: (controller) {
-                      return Text.rich(
-                        TextSpan(
-                          text: "Total:\n",
-                          children: [
-                            TextSpan(
-                              text: "\$ ${controller.total}",
-                              style: const TextStyle(fontSize: 16, color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  ),
+                Expanded(
+                  child: GetBuilder<CartController>(builder: (controller) {
+                    return Text.rich(
+                      TextSpan(
+                        text: "Total:\n",
+                        children: [
+                          TextSpan(
+                            text: "\$ ${controller.total}",
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.onOrderPress();
+                    },
                     child: const Text("Check Out"),
                   ),
                 ),

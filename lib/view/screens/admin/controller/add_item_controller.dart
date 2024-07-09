@@ -41,7 +41,7 @@ class AddItemController extends GetxController {
         barrierDismissible: false,
       );
       try {
-        Repo.addItem(
+        await Repo.addItem(
             Product(
                 imagesUrl: [],
                 colors: colorList,
@@ -87,8 +87,7 @@ class AddItemController extends GetxController {
 
     if (pickedFile == null) return;
 
-    final imageByteFormat = await pickedFile.readAsBytes();
-    images.add(imageByteFormat);
+    images.add(await pickedFile.readAsBytes());
 
     update();
   }

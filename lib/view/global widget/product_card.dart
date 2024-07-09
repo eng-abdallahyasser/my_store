@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/data/model/Product.dart';
-import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/view/screens/details/details_screen.dart';
 
 class ProductCard extends StatelessWidget {
@@ -36,7 +35,7 @@ class ProductCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: FutureBuilder(
-                    future: Repo.getProductImageNumber(product.id, 0),
+                    future: product.initializeCoverImage(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
@@ -57,7 +56,7 @@ class ProductCard extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: MemoryImage(snapshot.data!),
+                              image: MemoryImage(snapshot.data!.coverImageUnit8List!),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -83,7 +82,7 @@ class ProductCard extends StatelessWidget {
                     color: MyColors.elsie,
                   ),
                 ),
-                const LoveCountBtn(count: 12, isFavourite: true)
+                LoveCountBtn(count: product.favouritecount, isFavourite: true)
               ],
             )
           ],
@@ -114,7 +113,7 @@ class _LoveCountBtnState extends State<LoveCountBtn> {
     isFavourite = widget.isFavourite;
   }
 
-  void _onTabe() {
+  void _onTabe() async {
     isFavourite = !isFavourite;
     if (isFavourite) {
       count = count + 1;
@@ -127,9 +126,8 @@ class _LoveCountBtnState extends State<LoveCountBtn> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _onTabe();
-        });
+        _onTabe();
+        setState(() {});
       },
       child: Container(
         padding: const EdgeInsets.all(6),

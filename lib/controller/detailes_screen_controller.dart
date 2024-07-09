@@ -10,9 +10,8 @@ class DetailesScreenController extends GetxController {
   Product product;
   int numberOfItems = 1;
   int selectedImage = 0;
-  late List<Uint8List?> images;
-  late List<bool> isImagesLoaded =
-      List<bool>.filled(product.imagesUrl.length, false);
+  List<Uint8List?> images = [];
+  late List<bool> isImagesLoaded = List.filled(product.imagesUrl.length, false);
   bool isCoverImageLoaded = false;
 
   DetailesScreenController({required this.product});
@@ -20,7 +19,7 @@ class DetailesScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchImages();
+    loadImages();
   }
 
   void selectColorIndex(int selectedColorIndex) {
@@ -54,16 +53,23 @@ class DetailesScreenController extends GetxController {
     update();
   }
 
-  void fetchImages() async {
+  Future<void> loadImages() async {
+    await fetchImages();
+  }
+
+  Future<void> fetchImages() async {
     // for (int index = 0; index < product.imagesUrl.length; index++) {
     //   try {
     //     images[index] = await Repo.getProductImageUrl(product.imagesUrl[index]);
+
     //     isImagesLoaded[index] = true;
+
+    //     update();
+    //     print("fetchImage $index done");
     //   } catch (e) {
     //     isImagesLoaded[index] = false;
+    //     print("error ${e.toString()} ");
     //   }
-    //   update();
-    //   print("fetchImage $index done");
     // }
     images = await Future.wait(
         product.imagesUrl.map((url) => Repo.getProductImageUrl(url)).toList());

@@ -6,13 +6,26 @@ import 'package:my_store/data/data_source/static.dart';
 import 'Product.dart';
 
 class CartItem {
-  final Product product;
+  Product? product;
+  String? productId;
   int numOfItem;
 
   CartItem({
-    required this.product,
+    this.product,
+    this.productId,
     required this.numOfItem,
   });
+
+  Map<String, dynamic> toJson() =>
+      {"productId": product!.id, "numberOfItems": numOfItem};
+
+  factory CartItem.fromJson(cart) {
+    return CartItem(
+      product: Product(imagesUrl: [], colors: []),
+      productId: cart["productId"],
+      numOfItem: cart["numberOfItems"],
+    );
+  }
 }
 
 // Demo data for our cart
