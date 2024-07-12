@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/data/data_source/static.dart';
 import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/cart_item.dart';
 
 class DetailesScreenController extends GetxController {
   int selectedColor = 0;
@@ -11,7 +12,7 @@ class DetailesScreenController extends GetxController {
   int numberOfItems = 1;
   int selectedImage = 0;
   List<Uint8List?> images = [];
-  late List<bool> isImagesLoaded = List.filled(product.imagesUrl.length, false);
+  List<bool> isImagesLoaded = [false, false, false, false, false];
   bool isCoverImageLoaded = false;
 
   DetailesScreenController({required this.product});
@@ -19,7 +20,7 @@ class DetailesScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadImages();
+    fetchImages();
   }
 
   void selectColorIndex(int selectedColorIndex) {
@@ -53,10 +54,6 @@ class DetailesScreenController extends GetxController {
     update();
   }
 
-  Future<void> loadImages() async {
-    await fetchImages();
-  }
-
   Future<void> fetchImages() async {
     // for (int index = 0; index < product.imagesUrl.length; index++) {
     //   try {
@@ -75,5 +72,10 @@ class DetailesScreenController extends GetxController {
         product.imagesUrl.map((url) => Repo.getProductImageUrl(url)).toList());
     isCoverImageLoaded = true;
     update();
+  }
+
+  void addToCart() {
+    Repo.demoCarts.
+    add(CartItem(numOfItem: numberOfItems,product: product));
   }
 }

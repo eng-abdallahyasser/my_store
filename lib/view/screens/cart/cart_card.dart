@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_store/core/constants.dart';
+import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/view/global%20widget/rounded_icon_btn.dart';
 
@@ -24,12 +25,33 @@ class CartCard extends StatelessWidget {
           child: AspectRatio(
             aspectRatio: 0.88,
             child: Container(
-              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: const Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(cart.product!.imagesUrl[0]),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: cart.product!.coverImageUnit8List != null
+                    ? Image.memory(cart.product!.coverImageUnit8List!,
+                        fit: BoxFit.cover)
+                    : FutureBuilder(
+                        future:
+                            Repo.getProductImageUrl(cart.product!.imagesUrl[0]),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                          if (snapshot.hasError || snapshot.data == null) {
+                            return Image.asset(
+                                "assete/images/product_placeholder.jpg",
+                                fit: BoxFit.cover);
+                          }
+                          return Image.memory(snapshot.data!,
+                              fit: BoxFit.cover);
+                        }),
+              ),
             ),
           ),
         ),
@@ -43,25 +65,31 @@ class CartCard extends StatelessWidget {
               maxLines: 2,
             ),
             const SizedBox(height: 8),
-            Text.rich(
-              TextSpan(
-                text: "\$${cart.product!.price}",
-                style: const TextStyle(
-                    fontWeight: FontWeight.w600, color: MyColors.elsie),
-                children: [
-                  TextSpan(
-                      text: "  x${cart.numOfItem}",
-                      style: Theme.of(context).textTheme.bodyLarge),
-                ],
-              ),
-            )
+            Row(
+              children: [
+                const Text(
+                  "جـ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, color: MyColors.elsie),
+                ),
+                Text(
+                  " ${cart.product!.price}",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, color: MyColors.elsie),
+                ),
+                Text("  x${cart.numOfItem}",
+                    style: Theme.of(context).textTheme.bodyLarge),
+              ],
+            ),
           ],
         ),
         const Spacer(),
         Column(children: [
           RoundedIconBtn(icon: Icons.add, press: add),
           const SizedBox(height: 4),
-          RoundedIconBtn(icon: Icons.remove, press: remove),
+          cart.numOfItem>0?
+          RoundedIconBtn(icon: Icons.remove, press: remove):
+          RoundedIconBtn(icon: Icons.delete_forever, press: remove),
         ])
       ],
     );

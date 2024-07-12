@@ -1,27 +1,34 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/data/model/order.dart';
+import 'package:my_store/services/firebase/firestore_services.dart';
+import 'package:my_store/services/firebase/storage_services.dart';
 
 class Repo {
-  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static final FirebaseStorage _storage = FirebaseStorage.instance;
+  static final FirestoreServices _firestore = FirestoreServices();
+  static final StorageServices _storage = StorageServices();
 
-  late List<Product> allProducts;
   late List<Product> favouritProducts;
+  static Future<List<Product>> demoProducts = getAllProduct();
+  static List<CartItem> demoCarts=[];
 
-  void fitchData() async {
-    allProducts = await getAllProduct();
+  void fitchData() {
+    demoProducts = getAllProduct();
   }
 
   static Future<List<Product>> getAllProduct() async {
-    final QuerySnapshot querySnapshot =
-        await _firestore.collection('products').get();
+    return await _firestore.getAllProduct();
+  }
 
-    return querySnapshot.docs.map((doc) {
-      return Product.fromJson(doc.data() as Map<String, dynamic>);
-    }).toList();
+  static Future<List<OrderForDelivary>?> getAllOrders() async {
+    try {
+      return await _firestore.getAllOrders();
+    } catch (e) {
+      print(e.toString());
+    }
+    return null;
   }
 
   // static Future<List> getAllCarts() async {
@@ -33,58 +40,24 @@ class Repo {
   // }
 
   Future<Product> getProductById(String id) async {
-    final DocumentSnapshot doc =
-        await FirebaseFirestore.instance.collection("products").doc(id).get();
-
-    if (!doc.exists) {
-      throw Exception("Product not found");
-    }
-
-    return Product.fromFirestore(doc);
+    return _firestore.getProductById(id);
   }
 
   static Future<Uint8List?> getProductImageNumber(
       String productId, int number) async {
-    final Uint8List? image =
-        await _storage.ref().child("$productId/image$number.jpg").getData();
-    try {
-      return image;
-    } catch (e) {
-      print('Failed to get profile picture for uid $productId: $e');
-      return null;
-    }
+    return await _storage.getProductImageByNumber(productId, number);
   }
 
   static Future<Uint8List?> getProductImageUrl(String url) async {
-    final Uint8List? image = await _storage.ref().child(url).getData();
-    try {
-      return image;
-    } catch (e) {
-      print('Failed to get profile picture for uid $url: $e');
-      return null;
-    }
+    return await _storage.getProductImageUrl(url);
   }
 
   static Future<void> addItem(Product product, List<Uint8List> images) async {
     try {
       // Add the product to Firestore
-      DocumentReference docRef =
-          await _firestore.collection("products").add(product.toJson());
-
-      // Generate URLs for images
-      List<String> urls = [];
-      for (int index = 0; index < images.length; index++) {
-        urls.add("${docRef.id}/image$index.jpg");
-      }
-
-      // Update the Firestore document with the document ID and image URLs
-      await docRef.update({"id": docRef.id, "images": urls});
-
+      DocumentReference docRef = await _firestore.addProduct(product, images);
       // Upload each image to Firebase Storage
-      for (int index = 0; index < images.length; index++) {
-        final imageRef = _storage.ref().child("${docRef.id}/image$index.jpg");
-        await imageRef.putData(images[index]);
-      }
+      _storage.uploadImages(images, docRef.id);
       print("Product Added with ID: ${docRef.id}");
     } catch (error) {
       print("Failed to add product: $error");
@@ -92,13 +65,6 @@ class Repo {
   }
 
   static Future<void> addOrder(OrderForDelivary order) async {
-    try {
-      // Add the order to Firestore
-      DocumentReference docRef =
-          await _firestore.collection("orders").add(order.toJson());
-      await docRef.update({"orderID": docRef.id});
-    } catch (error) {
-      print("Failed to add order: $error");
-    }
+    await _firestore.addOrder(order);
   }
 }

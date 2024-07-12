@@ -1,11 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constants.dart';
-
+import 'package:my_store/services/auth/auth.dart';
 
 class SignInController extends GetxController {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final Auth _auth = Auth();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController pwController = TextEditingController();
@@ -17,16 +16,15 @@ class SignInController extends GetxController {
   }
 
   Future<void> signIn() async {
-    try {
-      await _auth.signInWithEmailAndPassword(
-          email: emailController.text, password: pwController.text);
-      Get.offAllNamed(MyRoutes.home);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
+    Get.dialog(const AlertDialog(
+          title: Text('Signing In...'),
+          content: SizedBox(
+            height: 100,
+            child: Center(child: CircularProgressIndicator()),
+          ),
+        ));
+    await _auth.signIn(emailController.text, pwController.text);
+    Get.back();
+    Get.offAllNamed(MyRoutes.navigationBarWraper);
   }
 }

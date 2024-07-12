@@ -20,6 +20,7 @@ class MyRoutes {
   static const navigationBarWraper = "/navigationBarWraper";
   static const itemDetails = "/itemDetails";
   static const admin = "/admin";
+  static const splashScreen="/splash";
 }
 
 class MyColors {

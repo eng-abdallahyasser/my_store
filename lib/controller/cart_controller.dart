@@ -5,7 +5,7 @@ import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/data/model/order.dart';
 
 class CartController extends GetxController {
-  List<CartItem> cartList = demoCarts;
+  List<CartItem> cartList = Repo.demoCarts;
   double total = 0.0;
 
   @override
@@ -23,8 +23,24 @@ class CartController extends GetxController {
   }
 
   void removeOneProduct(int index) {
-    if (cartList[index].numOfItem > 1) {
+    if (cartList[index].numOfItem > 0) {
       cartList[index].numOfItem -= 1;
+    }
+    else if (cartList[index].numOfItem == 0) {
+      Get.dialog(AlertDialog(
+        title: const Text("Are you sure?"),
+        actions: [
+          TextButton(
+              onPressed: () {
+                cartList.removeAt(index);
+              },
+              child: const Text("Yes")),
+          TextButton(onPressed: () {
+            Get.back();
+          },
+          child: const Text("No"))
+        ],
+      ));
     }
     calculateTotal();
   }

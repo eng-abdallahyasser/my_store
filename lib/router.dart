@@ -9,10 +9,12 @@ import 'package:my_store/view/screens/navigation%20wraper/my_navigation_bar.dart
 import 'package:my_store/view/screens/onboarding.dart';
 import 'package:my_store/view/screens/profile/profile.dart';
 import 'package:my_store/view/global%20widget/search.dart';
+import 'package:my_store/view/screens/splash_screen/splash_screen.dart';
 
 
 Map<String, Widget Function(BuildContext)> routes = {
   MyRoutes.onboarding: (_) => Onboarding(),
+  MyRoutes.splashScreen: (_) => const SplashScreen(),
   MyRoutes.signInScreen: (_) => SignInScreen(),
   MyRoutes.signUpScreen: (_) => SignUpScreen(),
   MyRoutes.home: (_) =>  const Home(),

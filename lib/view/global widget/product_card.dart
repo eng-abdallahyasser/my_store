@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/view/global%20widget/custom_text.dart';
 import 'package:my_store/view/screens/details/details_screen.dart';
 
 class ProductCard extends StatelessWidget {
@@ -42,7 +43,7 @@ class ProductCard extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                       }
-                      if (snapshot.hasError) {
+                      if (snapshot.hasError || snapshot.data==null) {
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.asset(
@@ -56,7 +57,8 @@ class ProductCard extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: MemoryImage(snapshot.data!.coverImageUnit8List!),
+                              image: MemoryImage(
+                                  snapshot.data!.coverImageUnit8List!),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -72,17 +74,29 @@ class ProductCard extends StatelessWidget {
               maxLines: 2,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                const Text(
+                  "جـ ",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: MyColors.elsie,
+                  ),
+                ),
                 Text(
-                  "\$${product.price}",
+                  "${product.price} ",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: MyColors.elsie,
                   ),
                 ),
-                LoveCountBtn(count: product.favouritecount, isFavourite: true)
+                product.oldPrice > product.price
+                    ? StrikethroughText(
+                        " ${product.oldPrice} ",
+                      )
+                    : Container(),
+                const Spacer(),
+                LoveCountBtn(count: product.favouritecount, isFavourite: false)
               ],
             )
           ],

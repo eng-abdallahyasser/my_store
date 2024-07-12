@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:my_store/controller/detailes_screen_controller.dart';
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/data/model/Product.dart';
 import 'components/color_dots.dart';
 import 'components/product_description.dart';
@@ -112,12 +111,7 @@ class DetailsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: GetBuilder<DetailesScreenController>(builder: (controller) {
               return ElevatedButton(
-                onPressed: () {
-                  demoCarts.add(
-                    CartItem(
-                        product: product, numOfItem: controller.numberOfItems),
-                  );
-                },
+                onPressed: controller.addToCart,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

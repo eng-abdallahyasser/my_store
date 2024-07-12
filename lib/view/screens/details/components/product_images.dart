@@ -16,7 +16,7 @@ class ProductImages extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(40),
             // width: 238,
-            child: controller.isCoverImageLoaded
+            child: controller.isCoverImageLoaded || controller.isImagesLoaded[controller.selectedImage]
                 ? AspectRatio(
                     aspectRatio: 1,
                     child: Image.memory(
@@ -24,11 +24,16 @@ class ProductImages extends StatelessWidget {
                         fit: BoxFit.cover),
                   )
                 : const SizedBox(
-                    height: 200,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                  height: 200,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 20,),
+                      Text('Loading Images...'),
+                    ],
                   ),
+                ),
           ),
           const SizedBox(height: 12),
           Row(
@@ -78,7 +83,7 @@ class SmallProductImage extends StatelessWidget {
                 color: MyColors.elsie
                     .withOpacity(controller.selectedImage == index ? 1 : 0)),
           ),
-          child: controller.isCoverImageLoaded
+          child: controller.isCoverImageLoaded || controller.isImagesLoaded[controller.selectedImage]
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.memory(

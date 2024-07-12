@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_store/data/data_source/static.dart';
+import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/data/model/Product.dart';
 import 'package:my_store/view/global%20widget/product_card.dart';
 import 'package:my_store/view/global%20widget/section_title.dart';
@@ -23,7 +23,7 @@ class ProductList extends StatelessWidget {
           child: Row(
             children: [
               FutureBuilder(
-                future: demoProducts,
+                future: Repo.demoProducts,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(

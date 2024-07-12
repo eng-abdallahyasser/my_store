@@ -47,6 +47,7 @@ class AddItemController extends GetxController {
                 colors: colorList,
                 title: title.text,
                 price: double.parse(price.text),
+                oldPrice: double.parse(oldPrice.text),
                 description: description,
                 isPopular: true,
                 quantity: int.parse(quantity.text)),

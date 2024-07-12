@@ -4,10 +4,17 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/router.dart';
+import 'package:my_store/services/firebase/firebase_massaging.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  MyMassaging massaging = MyMassaging();
+  print("=======================================");
+  print("=======================================");
+  print(await massaging.getToken());
+  print("=======================================");
+
   runApp(const MyApp());
 }
 
@@ -27,9 +34,9 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 16, color: MyColors.gray),
         ),
       ),
-      initialRoute: MyRoutes.navigationBarWraper,
+      initialRoute: MyRoutes.splashScreen,
       // getPages: getPages,
-      routes:routes,
+      routes: routes,
     );
   }
 }

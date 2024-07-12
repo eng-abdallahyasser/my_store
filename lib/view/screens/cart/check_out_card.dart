@@ -84,7 +84,7 @@ class CheckoutCard extends StatelessWidget {
                     onPressed: () {
                       controller.onOrderPress();
                     },
-                    child: const Text("Check Out"),
+                    child: const Text("Order Delivery"),
                   ),
                 ),
               ],

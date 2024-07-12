@@ -24,7 +24,7 @@ class Product {
     this.favouritecount = 0,
     this.title = "",
     this.price = 0.0,
-    this.oldPrice = 0,
+    this.oldPrice = 0.0,
     this.description = "",
     this.quantity = 1,
     this.coverImageUnit8List,
