@@ -17,14 +17,30 @@ class SignInController extends GetxController {
 
   Future<void> signIn() async {
     Get.dialog(const AlertDialog(
-          title: Text('Signing In...'),
-          content: SizedBox(
-            height: 100,
-            child: Center(child: CircularProgressIndicator()),
-          ),
-        ));
-    await _auth.signIn(emailController.text, pwController.text);
+      title: Text('Signing In...'),
+      content: SizedBox(
+        height: 100,
+        child: Center(child: CircularProgressIndicator()),
+      ),
+    ));
+    String massage =
+        await _auth.signIn(emailController.text, pwController.text);
     Get.back();
-    Get.offAllNamed(MyRoutes.navigationBarWraper);
+    if (massage == "Signed in") {
+      Get.offAllNamed(MyRoutes.navigationBarWraper);
+    }
+    if (massage == 'invalid-email') {
+      Get.defaultDialog(
+        title: 'Error',
+        middleText: 'دا مش شكل ايميل يا واجهة',
+      );
+    }
+    if (massage == 'invalid-credential') {
+      Get.defaultDialog(
+        title: 'Error',
+        middleText: 'جدع، نسيت الباسورد ولا الأيميل ولا كتبتهم غلط ؟',
+      );
+    }
+    print(massage);
   }
 }

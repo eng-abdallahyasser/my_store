@@ -36,15 +36,43 @@ class SignUpController extends GetxController {
             child: Center(child: CircularProgressIndicator()),
           ),
         ));
-        await _auth.signUp(
+        String massage = await _auth.signUp(
             emailController.text, pwController.text, nameController.text);
+        Get.back();
+        if (massage == "Signed up") {
+          Get.offAllNamed(MyRoutes.navigationBarWraper);
+        }
+        if (massage == 'weak-password') {
+          Get.defaultDialog(
+            title: 'Error',
+            middleText: 'اجتهد شوية و خلي الباسورد اطول من كدة شوية',
+          );
+        }
+        if (massage == 'invalid-email') {
+      Get.defaultDialog(
+        title: 'Error',
+        middleText: 'دا مش شكل ايميل يا واجهة',
+      );
+    }
+        if (massage == 'email-already-in-use') {
+          Get.defaultDialog(
+            title: 'Error',
+            middleText: 'الايميل دا حد تاني مستخدمه او انت نسيت الباسورد بتاعه',
+          );
+        }
+        print(massage);
       } else {
-        print("Passwords don't match!");
+        Get.defaultDialog(
+          title: 'Error',
+          middleText: 'Password and Confirm Password are not the same',
+        );
       }
     } else {
-      print("You have to input all fields");
+      Get.defaultDialog(
+        title: 'Error',
+        middleText: 'Please fill all the fields',
+      );
     }
-    Get.back();
-    Get.offAllNamed(MyRoutes.navigationBarWraper);
+    
   }
 }

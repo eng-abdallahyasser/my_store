@@ -10,15 +10,17 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SafeArea(
-        child: Column(
-      children: [
-        SizedBox(height: 20),
-        HomeHeader(),
-        Categories(),
-        SpecialOffers(),
-        SizedBox(height: 20),
-        ProductList(),
-      ],
+        child: SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: 20),
+          HomeHeader(),
+          Categories(),
+          SpecialOffers(),
+          SizedBox(height: 20),
+          ProductList(),
+        ],
+      ),
     ));
   }
 }

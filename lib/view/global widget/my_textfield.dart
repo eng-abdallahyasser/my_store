@@ -11,7 +11,7 @@ class MyTextfield extends StatelessWidget {
       {super.key,
       required this.hintText,
       required this.controller,
-      this.obscureText = false, this.keyboardType= TextInputType.none,
+      this.obscureText = false, this.keyboardType= TextInputType.text,
       });
 
   @override

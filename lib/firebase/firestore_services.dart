@@ -73,7 +73,7 @@ class FirestoreServices {
 
   Future<Product> getProductById(String id) async {
     final DocumentSnapshot doc =
-        await FirebaseFirestore.instance.collection("products").doc(id).get();
+        await _firestore.collection("products").doc(id).get();
 
     if (!doc.exists) {
       throw Exception("Product not found");

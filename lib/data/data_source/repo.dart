@@ -45,7 +45,7 @@ class Repo {
   //   }).toList();
   // }
 
-  Future<Product> getProductById(String id) async {
+  static Future<Product> getProductById(String id) async {
     return _firestore.getProductById(id);
   }
 
