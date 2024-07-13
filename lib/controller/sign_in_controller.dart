@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/services/auth/auth.dart';
+import 'package:my_store/firebase/auth.dart';
 
 class SignInController extends GetxController {
   final Auth _auth = Auth();

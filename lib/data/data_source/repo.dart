@@ -3,19 +3,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_store/data/model/Product.dart';
 import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/data/model/order.dart';
-import 'package:my_store/services/firebase/firestore_services.dart';
-import 'package:my_store/services/firebase/storage_services.dart';
+import 'package:my_store/firebase/auth.dart';
+import 'package:my_store/firebase/firestore_services.dart';
+import 'package:my_store/firebase/storage_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Repo {
   static final FirestoreServices _firestore = FirestoreServices();
   static final StorageServices _storage = StorageServices();
+  static final Auth _auth = Auth();
+  static var prefs;
+  static bool onboardingShown = false;
 
   late List<Product> favouritProducts;
   static Future<List<Product>> demoProducts = getAllProduct();
-  static List<CartItem> demoCarts=[];
+  static List<CartItem> demoCarts = [];
 
-  void fitchData() {
-    demoProducts = getAllProduct();
+  static Future<void> initializePrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    onboardingShown = prefs.getBool('onboardingShown') ?? false;
   }
 
   static Future<List<Product>> getAllProduct() async {
@@ -67,4 +73,12 @@ class Repo {
   static Future<void> addOrder(OrderForDelivary order) async {
     await _firestore.addOrder(order);
   }
+
+  static Future<Map<String, dynamic>?> getUserDelivaryData() async {
+    return _firestore.getUserData(_auth.getCurrentUser());
+  }
+  static Future<void> saveUserDelivaryData(String phoneNumber,String address) async {
+    return _firestore.saveUserData(_auth.getCurrentUser(),phoneNumber,address);
+  }
+
 }

@@ -24,7 +24,7 @@ class Onboarding extends StatelessWidget {
                 },
                 itemCount: onboardingList.length,
                 itemBuilder: (context, index) =>
-                    _onboardingSection(onboardingList[index],context),
+                    _onboardingSection(onboardingList[index], context),
               ),
             ),
             Expanded(
@@ -108,7 +108,8 @@ class Onboarding extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.offAllNamed(MyRoutes.signInScreen);
+              controller.onGetStarted();
+               
             },
             child: Container(
               decoration: BoxDecoration(
@@ -133,7 +134,7 @@ class Onboarding extends StatelessWidget {
     }
   }
 
-  Widget _onboardingSection(OnboardingData data ,BuildContext context) {
+  Widget _onboardingSection(OnboardingData data, BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

@@ -52,7 +52,7 @@ List<BottomBarDestination> bottomBarDestinations = [
     icon: "assets/icons/User Icon.svg",
     route: MyRoutes.profile,
     label: "Profile",
-    routeWidget: const Profile(),
+    routeWidget:  Profile(),
   )
 ];
 

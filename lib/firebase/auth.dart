@@ -6,7 +6,6 @@ class Auth {
   Future<void> signIn(String email, password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -22,8 +21,7 @@ class Auth {
         email: email,
         password: password,
       );
-      await credential.user?.updateDisplayName(name);
-      
+      await credential.user?.updateDisplayName(name); 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -33,5 +31,25 @@ class Auth {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
+  }
+
+  Future<User?> getCurrentUserFuture() async {
+    return _auth.currentUser;
+  }
+
+  User? getCurrentUser() {
+    return _auth.currentUser;
+  }
+
+  Future<void> uploadProfilePic() async {
+    await _auth.currentUser!.updatePhotoURL("photoURL");
+  }
+
+  Stream<User?> getAuthState() {
+    return _auth.authStateChanges();
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_store/data/model/Product.dart';
 import 'package:my_store/data/model/order.dart';
 
@@ -89,13 +90,56 @@ class FirestoreServices {
       return Product.fromJson(doc.data() as Map<String, dynamic>);
     }).toList();
   }
+
   Future<List<OrderForDelivary>> getAllOrders() async {
     final QuerySnapshot querySnapshot =
         await _firestore.collection("orders").get();
 
     return querySnapshot.docs.map((doc) {
       return OrderForDelivary.fromJson(doc.data() as Map<String, dynamic>);
-
     }).toList();
+  }
+
+  Future<Map<String, dynamic>?> getUserData(User? user) async {
+    if (user != null) {
+      // Create a reference to the Firestore document
+      DocumentReference userDoc =
+          FirebaseFirestore.instance.collection('users').doc(user.uid);
+
+      // Get the document snapshot
+      DocumentSnapshot docSnapshot = await userDoc.get();
+
+      if (docSnapshot.exists) {
+        // Convert the document snapshot to a map
+        return docSnapshot.data() as Map<String, dynamic>?;
+      } else {
+        print('User document does not exist.');
+        return null;
+      }
+    } else {
+      print('No user is currently signed in.');
+      return null;
+    }
+  }
+
+  Future<void> saveUserData(User? user,String phoneNumber, String address) async {
+    if (user != null) {
+      // Create a reference to the Firestore document
+      DocumentReference userDoc =
+          FirebaseFirestore.instance.collection('users').doc(user.uid);
+
+      // Set the data to the Firestore document
+      await userDoc.set(
+          {
+            'name':user.displayName,
+            'phoneNumber': phoneNumber,
+            'address': address,
+          },
+          SetOptions(
+              merge:
+                  true)); // Use merge: true to update fields without overwriting existing data
+    } else {
+      print('No user is currently signed in.');
+    }
   }
 }

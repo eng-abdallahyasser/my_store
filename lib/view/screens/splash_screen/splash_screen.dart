@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_store/data/data_source/repo.dart';
+import 'package:my_store/firebase/auth.dart';
+import 'package:my_store/view/screens/auth/signin.dart';
+import 'package:my_store/view/screens/navigation%20wraper/my_navigation_bar.dart';
 import 'package:my_store/view/screens/onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,10 +15,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final _auth = Auth();
   @override
   void initState() {
     Timer(const Duration(milliseconds: 2500), () {
-      Get.off(()=>Onboarding());
+      Get.off(() => Repo.onboardingShown ? _authGate() : Onboarding());
     });
     super.initState();
   }
@@ -48,5 +53,22 @@ class _SplashScreenState extends State<SplashScreen> {
             ],
           ),
         ));
+  }
+
+  Widget _authGate() {
+    return FutureBuilder(
+        future: _auth.getCurrentUserFuture(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasData) {
+            return MyNavigationBarWraper();
+          } else {
+            return SignInScreen();
+          }
+        });
   }
 }

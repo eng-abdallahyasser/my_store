@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_store/controller/profile_controller.dart';
 import 'package:my_store/view/screens/admin/admin_screen.dart';
 import 'package:my_store/view/screens/profile/components/profile_menu.dart';
 import 'package:my_store/view/screens/profile/components/profile_pic.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+  final ProfileController controller = Get.put(ProfileController());
+  Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,8 @@ class Profile extends StatelessWidget {
         child: Column(
           children: [
             const ProfilePic(),
+            const SizedBox(height: 20),
+            Text(controller.getUserName()),
             const SizedBox(height: 20),
             ProfileMenu(
               text: "My Account",
@@ -42,13 +46,13 @@ class Profile extends StatelessWidget {
             ProfileMenu(
               text: "Log Out",
               icon: "assets/icons/Log out.svg",
-              press: () {},
+              press: controller.logOut,
             ),
             ProfileMenu(
               text: "Go as Admin",
               icon: "assets/icons/Discover.svg",
               press: () {
-                Get.to(()=>const AdminScreen());
+                Get.to(() => const AdminScreen());
               },
             ),
           ],

@@ -20,7 +20,7 @@ Map<String, Widget Function(BuildContext)> routes = {
   MyRoutes.home: (_) =>  const Home(),
   MyRoutes.cart: (_) =>   CartScreen(),
   MyRoutes.categories: (_) =>  const Categories(),
-  MyRoutes.profile: (_) =>  const Profile(),
+  MyRoutes.profile: (_) =>   Profile(),
   MyRoutes.search: (_) =>  const Search(),
   MyRoutes.navigationBarWraper: (_) => MyNavigationBarWraper(),
 };

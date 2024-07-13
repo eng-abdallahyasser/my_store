@@ -7,6 +7,8 @@ import 'package:my_store/data/model/order.dart';
 class CartController extends GetxController {
   List<CartItem> cartList = Repo.demoCarts;
   double total = 0.0;
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
   @override
   void onInit() {
@@ -25,20 +27,21 @@ class CartController extends GetxController {
   void removeOneProduct(int index) {
     if (cartList[index].numOfItem > 0) {
       cartList[index].numOfItem -= 1;
-    }
-    else if (cartList[index].numOfItem == 0) {
+    } else if (cartList[index].numOfItem == 0) {
       Get.dialog(AlertDialog(
         title: const Text("Are you sure?"),
         actions: [
           TextButton(
               onPressed: () {
                 cartList.removeAt(index);
+                update();
               },
               child: const Text("Yes")),
-          TextButton(onPressed: () {
-            Get.back();
-          },
-          child: const Text("No"))
+          TextButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text("No"))
         ],
       ));
     }
@@ -50,7 +53,7 @@ class CartController extends GetxController {
     calculateTotal();
   }
 
-  void onOrderPress() async {
+  void saveOrder() async {
     // add progress indcator here
     Get.defaultDialog(
       title: "Saving Your Order",
@@ -67,13 +70,13 @@ class CartController extends GetxController {
     await Repo.addOrder(OrderForDelivary(
       carts: cartList,
       orderID: "",
-      userAdress: "adress",
+      userAdress: addressController.text,
       userID: "id",
-      userPhone: "01023684509",
+      userPhone: phoneNumberController.text,
     ));
 
     cartList.clear();
-    update();
+    update(); // this update is not working i dont know why?
 
     // close it after finishing
     Get.back();
