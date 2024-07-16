@@ -52,10 +52,15 @@ List<BottomBarDestination> bottomBarDestinations = [
     icon: "assets/icons/User Icon.svg",
     route: MyRoutes.profile,
     label: "Profile",
-    routeWidget:  Profile(),
+    routeWidget: Profile(),
   )
 ];
 
+List<String> categories = [
+  "T-shirts",
+  "Pants",
+  "Shoes",
+];
 
 const String description =
     "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";

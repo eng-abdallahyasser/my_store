@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_store/core/constants.dart';
 
 class MyButton extends StatelessWidget {
   final String text;
@@ -7,25 +8,20 @@ class MyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
-      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Color(0xFF7f30fe),
-              Color(0xFF6380fb),
-            ],
-          ),
-          borderRadius: BorderRadius.circular(10)),
-      child: Center(
-        child: Text(
-          text,
-          style: const TextStyle(
-            fontSize: 20.0,
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-          ),
+        color: MyColors.elsie,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child:  Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 100.0,
+          vertical: 8.0,
         ),
+        child: Text(text,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+                color: MyColors.white)),
       ),
     );
   }

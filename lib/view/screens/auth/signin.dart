@@ -12,7 +12,6 @@ class SignInScreen extends StatelessWidget {
     super.key,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,10 +22,7 @@ class SignInScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height / 4.0,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: [
-                    Color(0xFF7f30fe),
-                    Color(0xFF6380fb),
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  color: MyColors.elsie,
                   borderRadius: BorderRadius.vertical(
                       bottom: Radius.elliptical(
                           MediaQuery.of(context).size.width, 106.0))),
@@ -47,7 +43,7 @@ class SignInScreen extends StatelessWidget {
                       child: Text(
                     "Login to your account",
                     style: TextStyle(
-                        color: Color(0xFFbbb0ff),
+                        color: Colors.white,
                         fontSize: 20.0,
                         fontWeight: FontWeight.w500),
                   )),
@@ -56,13 +52,13 @@ class SignInScreen extends StatelessWidget {
                         vertical: 20.0, horizontal: 20.0),
                     child: Material(
                       elevation: 5.0,
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(20),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 30.0, horizontal: 20.0),
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(20)),
                         child: GetBuilder<SignInController>(builder: (_) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,12 +96,11 @@ class SignInScreen extends StatelessWidget {
                                 children: [
                                   Text("I forgetten my password, ",
                                       style: TextStyle(
-                                          color: Colors.black,
                                           fontSize: 18.0,
                                           fontWeight: FontWeight.w400)),
                                   Text("Reset it.",
                                       style: TextStyle(
-                                          color: Color(0xff7f30fe),
+                                          color: Colors.blue,
                                           fontSize: 18.0,
                                           fontWeight: FontWeight.w500)),
                                 ],
@@ -147,7 +142,7 @@ class SignInScreen extends StatelessWidget {
                             "Sign Up Now",
                             style: TextStyle(
                               fontSize: 18.0,
-                              color: Color(0xff7f30fe),
+                              color: Colors.blue,
                               fontWeight: FontWeight.w500,
                             ),
                           ),

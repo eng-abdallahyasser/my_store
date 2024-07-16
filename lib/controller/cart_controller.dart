@@ -11,9 +11,19 @@ class CartController extends GetxController {
   TextEditingController addressController = TextEditingController();
 
   @override
-  void onInit() {
+  void onInit() async {
     calculateTotal();
+    getUserDelivaryData();
     super.onInit();
+  }
+
+  void getUserDelivaryData() async {
+    await Repo.getUserDelivaryData().then((delivaryData) {
+      if (delivaryData != null) {
+        phoneNumberController.text = delivaryData["phoneNumber"];
+        addressController.text = delivaryData["address"];
+      }
+    });
   }
 
   void calculateTotal() {

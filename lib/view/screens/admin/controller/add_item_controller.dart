@@ -15,6 +15,7 @@ class AddItemController extends GetxController {
   TextEditingController quantity = TextEditingController();
   List<Color> colorList = [];
   List<Uint8List> images = [];
+  String category = categories.first;
 
   void colorPick(Color color) {
     if (colorList.contains(color)) {
@@ -44,11 +45,12 @@ class AddItemController extends GetxController {
         await Repo.addItem(
             Product(
                 imagesUrl: [],
+                category: category,
                 colors: colorList,
                 title: title.text,
                 price: double.parse(price.text),
                 oldPrice: double.parse(oldPrice.text),
-                description: description,
+                description: desc.text,
                 isPopular: true,
                 quantity: int.parse(quantity.text)),
             images);
@@ -91,5 +93,12 @@ class AddItemController extends GetxController {
     images.add(await pickedFile.readAsBytes());
 
     update();
+  }
+
+  void setCategory(String? newCategory) {
+    if (newCategory != null) {
+      category = newCategory;
+      update();
+    }
   }
 }

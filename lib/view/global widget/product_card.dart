@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constants.dart';
+import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/data/model/Product.dart';
-import 'package:my_store/view/global%20widget/custom_text.dart';
 import 'package:my_store/view/screens/details/details_screen.dart';
 
 class ProductCard extends StatelessWidget {
@@ -43,7 +43,7 @@ class ProductCard extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                       }
-                      if (snapshot.hasError || snapshot.data==null) {
+                      if (snapshot.hasError || snapshot.data == null) {
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.asset(
@@ -74,6 +74,8 @@ class ProductCard extends StatelessWidget {
               maxLines: 2,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   "جـ ",
@@ -91,8 +93,12 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
                 product.oldPrice > product.price
-                    ? StrikethroughText(
+                    ? Text(
                         " ${product.oldPrice} ",
+                        style: const TextStyle(
+                          color: MyColors.gray,
+                          decoration: TextDecoration.lineThrough,
+                        ),
                       )
                     : Container(),
                 const Spacer(),
@@ -131,8 +137,10 @@ class _LoveCountBtnState extends State<LoveCountBtn> {
     isFavourite = !isFavourite;
     if (isFavourite) {
       count = count + 1;
+      Repo.incrementFavoriteCountById("QUh7rtBe569Hc8QvCRNe");
     } else {
       count = count - 1;
+       Repo.decrementFavoriteCountById("QUh7rtBe569Hc8QvCRNe");
     }
   }
 
@@ -145,7 +153,7 @@ class _LoveCountBtnState extends State<LoveCountBtn> {
       },
       child: Container(
         padding: const EdgeInsets.all(6),
-        height: 24,
+        // height: 24,
         decoration: BoxDecoration(
           color: isFavourite // favouriteProducts.contains(widget.product)
               ? MyColors.elsie.withOpacity(0.2)
@@ -162,10 +170,11 @@ class _LoveCountBtnState extends State<LoveCountBtn> {
             ),
             SvgPicture.asset(
               "assets/icons/Heart Icon_2.svg",
+              height: 10,
               colorFilter: ColorFilter.mode(
                   isFavourite // favouriteProducts.contains(widget.product)
                       ? const Color(0xFFFF4848)
-                      : MyColors.elsieLite,
+                      : MyColors.matteCharcoal.withOpacity(0.4),
                   BlendMode.srcIn),
             ),
           ],

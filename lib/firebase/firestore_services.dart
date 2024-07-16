@@ -25,6 +25,43 @@ class FirestoreServices {
     return docRef;
   }
 
+  Future<int> incrementFavoriteCountById(String documentId) async {
+    DocumentReference docRef =
+        _firestore.collection("products").doc(documentId);
+    int currentFavoriteCount = 0;
+    // Use a transaction to ensure atomic updates
+    await _firestore.runTransaction((transaction) async {
+      DocumentSnapshot docSnapshot = await transaction.get(docRef);
+      currentFavoriteCount =
+          (docSnapshot.data() as Map<String, dynamic>)['favouritecount'] ?? 0;
+      if (docSnapshot.exists) {
+        transaction
+            .update(docRef, {"favouritecount": currentFavoriteCount + 1});
+      }
+    });
+    return currentFavoriteCount+1;
+  }
+
+  Future<int> decrementFavoriteCountById(String documentId) async {
+    DocumentReference docRef =
+        _firestore.collection("products").doc(documentId);
+    int newFavoriteCount = 0;
+    // Use a transaction to ensure atomic updates
+    await _firestore.runTransaction((transaction) async {
+      DocumentSnapshot docSnapshot = await transaction.get(docRef);
+
+      if (docSnapshot.exists) {
+        int currentFavoriteCount =
+            (docSnapshot.data() as Map<String, dynamic>)['favouritecount'] ?? 0;
+        // Ensure the favorite count does not go below 0
+        newFavoriteCount =
+            currentFavoriteCount > 0 ? currentFavoriteCount - 1 : 0;
+        transaction.update(docRef, {"favouritecount": newFavoriteCount});
+      }
+    });
+    return newFavoriteCount;
+  }
+
   Future<void> addAdminToken(String token, String name) async {
     // Query to check if the token already exists
     QuerySnapshot existingTokens = await _firestore
@@ -100,11 +137,11 @@ class FirestoreServices {
     }).toList();
   }
 
-  Future<Map<String, dynamic>?> getUserData(User? user) async {
-    if (user != null) {
+  Future<Map<String, dynamic>?> getUserData(String? userID) async {
+    if (userID != null) {
       // Create a reference to the Firestore document
       DocumentReference userDoc =
-          FirebaseFirestore.instance.collection('users').doc(user.uid);
+          FirebaseFirestore.instance.collection('users').doc(userID);
 
       // Get the document snapshot
       DocumentSnapshot docSnapshot = await userDoc.get();
@@ -122,16 +159,18 @@ class FirestoreServices {
     }
   }
 
-  Future<void> saveUserData(User? user,String phoneNumber, String address) async {
+  Future<void> saveUserData(
+      User? user, String phoneNumber, String address) async {
     if (user != null) {
       // Create a reference to the Firestore document
       DocumentReference userDoc =
-          FirebaseFirestore.instance.collection('users').doc(user.uid);
+          FirebaseFirestore.instance.collection('users_data').doc(user.uid);
 
       // Set the data to the Firestore document
       await userDoc.set(
           {
-            'name':user.displayName,
+            'id': user.uid,
+            'name': user.displayName,
             'phoneNumber': phoneNumber,
             'address': address,
           },

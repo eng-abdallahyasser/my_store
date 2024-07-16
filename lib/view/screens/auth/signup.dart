@@ -19,14 +19,7 @@ class SignUpScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height / 4.0,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [
-                    Color(0xFF7f30fe),
-                    Color(0xFF6380fb),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                color: MyColors.elsie,
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.elliptical(
                     MediaQuery.of(context).size.width,
@@ -55,7 +48,7 @@ class SignUpScreen extends StatelessWidget {
                     child: Text(
                       'Create a new account',
                       style: TextStyle(
-                        color: Color(0xFFbbb0ff),
+                        color: MyColors.white,
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500,
                       ),
@@ -70,7 +63,7 @@ class SignUpScreen extends StatelessWidget {
                       color: Colors.white,
                       elevation: 5.0,
                       borderRadius: BorderRadius.circular(
-                        10,
+                        20,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(20),

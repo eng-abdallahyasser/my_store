@@ -14,6 +14,7 @@ class Repo {
   static final Auth _auth = Auth();
   static var prefs;
   static bool onboardingShown = false;
+  Map<String, dynamic>? delivaryData = {};
 
   late List<Product> favouritProducts;
   static Future<List<Product>> demoProducts = getAllProduct();
@@ -48,6 +49,12 @@ class Repo {
   static Future<Product> getProductById(String id) async {
     return _firestore.getProductById(id);
   }
+  static Future<int> decrementFavoriteCountById(String id) async {
+    return _firestore.decrementFavoriteCountById(id);
+  }
+  static Future<int> incrementFavoriteCountById(String id) async {
+    return _firestore.incrementFavoriteCountById(id);
+  }
 
   static Future<Uint8List?> getProductImageNumber(
       String productId, int number) async {
@@ -71,14 +78,13 @@ class Repo {
   }
 
   static Future<void> addOrder(OrderForDelivary order) async {
-    await _firestore.addOrder(order);
+    order.userID = _auth.getCurrentUser()!.uid;
+    _firestore.addOrder(order);
+    _firestore.saveUserData(
+        _auth.getCurrentUser(), order.userPhone, order.userAdress);
   }
 
   static Future<Map<String, dynamic>?> getUserDelivaryData() async {
-    return _firestore.getUserData(_auth.getCurrentUser());
+    return _firestore.getUserData(_auth.getCurrentUser()!.uid);
   }
-  static Future<void> saveUserDelivaryData(String phoneNumber,String address) async {
-    return _firestore.saveUserData(_auth.getCurrentUser(),phoneNumber,address);
-  }
-
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Categories extends StatelessWidget {
-  const Categories({super.key});
+class AppShortcuts extends StatelessWidget {
+  const AppShortcuts({super.key});
 
   @override
   Widget build(BuildContext context) {

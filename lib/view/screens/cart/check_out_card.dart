@@ -65,8 +65,8 @@ class CheckoutCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: GetBuilder<CartController>(builder: (controller) {
-                    return Text.rich(
+                  child: 
+                     Text.rich(
                       TextSpan(
                         text: "Total:\n",
                         children: [
@@ -77,9 +77,9 @@ class CheckoutCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                    );
-                  }),
-                ),
+                    )
+                  ),
+                
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {

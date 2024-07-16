@@ -1,11 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/data/model/Product.dart';
 import 'package:my_store/view/global%20widget/product_card.dart';
 import 'package:my_store/view/global%20widget/section_title.dart';
 
 class ProductList extends StatelessWidget {
-  const ProductList({super.key});
+  final String title;
+   const ProductList({
+    super.key,
+    this.title ="not titled",
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,7 @@ class ProductList extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SectionTitle(
-            title: "Popular Products",
+            title: title,
             press: () {},
           ),
         ),
@@ -36,7 +42,8 @@ class ProductList extends StatelessWidget {
                     );
                   }
                   if (snapshot.hasData) {
-                    var products = snapshot.data as List<Product>; // Ensure you cast the data to a list of products
+                    var products = snapshot.data as List<
+                        Product>; // Ensure you cast the data to a list of products
                     return Row(
                       children: List.generate(
                         products.length,
@@ -49,12 +56,14 @@ class ProductList extends StatelessWidget {
                               ),
                             );
                           }
-                          return const SizedBox.shrink(); // here by default width and height is 0
+                          return const SizedBox
+                              .shrink(); // here by default width and height is 0
                         },
                       ),
                     );
                   }
-                  return const SizedBox.shrink(); // In case there's no data and no error
+                  return const SizedBox
+                      .shrink(); // In case there's no data and no error
                 },
               ),
               const SizedBox(width: 20),

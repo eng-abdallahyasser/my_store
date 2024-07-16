@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constants.dart';
+import 'package:my_store/data/data_source/static.dart';
 import 'package:my_store/view/global%20widget/rounded_icon_btn.dart';
 import 'package:my_store/view/screens/admin/controller/add_item_controller.dart';
 
@@ -29,6 +30,7 @@ class AddItemScreen extends StatelessWidget {
             GetBuilder<AddItemController>(builder: (controller) {
               return _colorsPicker(controller);
             }),
+            _categeries(),
             _imagePicker(),
             const SizedBox(
               height: 40,
@@ -158,5 +160,23 @@ class AddItemScreen extends StatelessWidget {
         ],
       );
     });
+  }
+
+  Widget _categeries() {
+    return SizedBox(
+      width: double.infinity,
+      child: GetBuilder<AddItemController>(
+        builder: (controller) {
+          return DropdownButton(
+            hint: Text(controller.category),
+            items: categories
+                .map((category) =>
+                    DropdownMenuItem(value: category, child: Text(category)))
+                .toList(),
+            onChanged: controller.setCategory,
+          );
+        }
+      ),
+    );
   }
 }

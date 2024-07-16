@@ -6,7 +6,7 @@ import 'package:my_store/data/data_source/repo.dart';
 class Product {
   String id;
   int quantity;
-  final String title, description;
+  final String title, description, category;
   final List<String> imagesUrl;
   Uint8List? coverImageUnit8List;
   final List<Color> colors;
@@ -16,6 +16,7 @@ class Product {
 
   Product({
     this.id = "",
+    this.category="not foung",
     required this.imagesUrl,
     required this.colors,
     this.rating = 0.0,
@@ -32,6 +33,7 @@ class Product {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "category": category,
         "images": imagesUrl,
         "colors": colorsStringList(),
         "rating": rating,
@@ -52,6 +54,7 @@ class Product {
       colors: (json['colors'] as List<dynamic>)
           .map((colorString) => Color(int.parse(colorString, radix: 16)))
           .toList(),
+      category: json['id'] ?? "not foung",
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       isFavourite: json['isFavourite'] ?? false,
       isPopular: json['isPopular'] ?? false,
@@ -86,6 +89,7 @@ class Product {
       colors: (json['colors'] as List<dynamic>)
           .map((colorString) => Color(int.parse(colorString, radix: 16)))
           .toList(),
+      category: json['id'] ?? "not foung",
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       isFavourite: json['isFavourite'] ?? false,
       isPopular: json['isPopular'] ?? false,

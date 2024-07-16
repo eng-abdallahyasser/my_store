@@ -11,51 +11,48 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Column(
-              children: [
-                const Text(
-                  "Your CartScreen",
-                  style: TextStyle(color: Colors.black),
-                ),
-                Text(
-                  "${controller.cartList.length} items",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
-            ),
+    return GetBuilder<CartController>(builder: (controller) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Column(
+            children: [
+              const Text(
+                "Your CartScreen",
+                style: TextStyle(color: Colors.black),
+              ),
+              Text(
+                "${controller.cartList.length} items",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
           ),
-          body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: controller.cartList.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: controller.cartList.length,
-                      itemBuilder: (context, index) => Padding(
+        ),
+        body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: controller.cartList.isNotEmpty
+                ? ListView.builder(
+                    itemCount: controller.cartList.length,
+                    itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: GetBuilder<CartController>(builder: (controller) {
-                          return CartCard(
-                            cart: controller.cartList[index],
-                            add: () {
-                              controller.addOneProduct(index);
-                              
-                            },
-                            remove: () {
-                              controller.removeOneProduct(index);
-                            },
-                          );
-                        }),
-                      ),
-                    )
-                  : const Center(
-                      child: Text(
-                      "No items in cart",
-                      style: TextStyle(fontSize: 20),
-                    ))),
-          bottomNavigationBar: CheckoutCard(
-            controller: controller,
-          ),
-        );
-      }
+                        child: CartCard(
+                          cart: controller.cartList[index],
+                          add: () {
+                            controller.addOneProduct(index);
+                          },
+                          remove: () {
+                            controller.removeOneProduct(index);
+                          },
+                        )),
+                  )
+                : const Center(
+                    child: Text(
+                    "No items in cart",
+                    style: TextStyle(fontSize: 20),
+                  ))),
+        bottomNavigationBar: CheckoutCard(
+          controller: controller,
+        ),
+      );
+    });
   }
-
+}
