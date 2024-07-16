@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/data/model/Product.dart';
 import 'package:my_store/data/model/bottom_bar_destination.dart';
 import 'package:my_store/data/model/onboarding.dart';
 import 'package:my_store/view/screens/cart/cart.dart';
@@ -65,24 +63,4 @@ List<String> categories = [
 const String description =
     "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
 
-List<Product> favouriteProducts = [
-  Product(
-      imagesUrl: [
-        "assets/images/ps4_console_white_1.png",
-        "assets/images/ps4_console_white_2.png",
-        "assets/images/ps4_console_white_3.png",
-        "assets/images/ps4_console_white_4.png",
-      ],
-      colors: [
-        const Color(0xFFF6625E),
-        const Color(0xFF836DB8),
-        const Color(0xFFDECB9C),
-        Colors.white,
-      ],
-      title: "Wireless Controller for PS4™",
-      price: 64.99,
-      description: description,
-      rating: 4.8,
-      isFavourite: true,
-      isPopular: true),
-];
+

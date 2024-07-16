@@ -137,10 +137,10 @@ class _LoveCountBtnState extends State<LoveCountBtn> {
     isFavourite = !isFavourite;
     if (isFavourite) {
       count = count + 1;
-      Repo.incrementFavoriteCountById("QUh7rtBe569Hc8QvCRNe");
+      await Repo.incrementFavoriteCountById("QUh7rtBe569Hc8QvCRNe");
     } else {
       count = count - 1;
-       Repo.decrementFavoriteCountById("QUh7rtBe569Hc8QvCRNe");
+      await Repo.decrementFavoriteCountById("QUh7rtBe569Hc8QvCRNe");
     }
   }
 

@@ -1,8 +1,6 @@
 import 'dart:typed_data';
-
 import 'package:get/get.dart';
 import 'package:my_store/data/data_source/repo.dart';
-import 'package:my_store/data/data_source/static.dart';
 import 'package:my_store/data/model/Product.dart';
 import 'package:my_store/data/model/cart_item.dart';
 
@@ -14,8 +12,9 @@ class DetailesScreenController extends GetxController {
   List<Uint8List?> images = [];
   List<bool> isImagesLoaded = [false, false, false, false, false];
   bool isCoverImageLoaded = false;
+  int favouriteCount = 0;
 
-  DetailesScreenController({required this.product});
+  DetailesScreenController({required this.product, this.favouriteCount = 0});
 
   @override
   void onInit() {
@@ -46,10 +45,14 @@ class DetailesScreenController extends GetxController {
   }
 
   void onAddToFavouritesTap() {
-    if (!favouriteProducts.contains(product)) {
-      favouriteProducts.add(product);
+    if (!Repo.favouriteProducts.contains(product)) {
+      Repo.favouriteProducts.add(product);
+      favouriteCount++;
+      Repo.incrementFavoriteCountById(product.id);
     } else {
-      favouriteProducts.remove(product);
+      favouriteCount--;
+      Repo.favouriteProducts.remove(product);
+      Repo.decrementFavoriteCountById(product.id);
     }
     update();
   }
@@ -75,7 +78,6 @@ class DetailesScreenController extends GetxController {
   }
 
   void addToCart() {
-    Repo.demoCarts.
-    add(CartItem(numOfItem: numberOfItems,product: product));
+    Repo.demoCarts.add(CartItem(numOfItem: numberOfItems, product: product));
   }
 }

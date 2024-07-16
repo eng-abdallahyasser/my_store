@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_store/data/data_source/static.dart';
+import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/view/global%20widget/product_card.dart';
 
 class FavouritesScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class FavouritesScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: GridView.builder(
-                itemCount: favouriteProducts.length,
+                itemCount: Repo.favouriteProducts.length,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 200,
                   childAspectRatio: 0.7,
@@ -26,7 +26,7 @@ class FavouritesScreen extends StatelessWidget {
                   crossAxisSpacing: 16,
                 ),
                 itemBuilder: (context, index) =>
-                    ProductCard(product: favouriteProducts[index]),
+                    ProductCard(product: Repo.favouriteProducts[index]),
               ),
             ),
           )

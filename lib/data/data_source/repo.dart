@@ -15,6 +15,7 @@ class Repo {
   static var prefs;
   static bool onboardingShown = false;
   Map<String, dynamic>? delivaryData = {};
+  static List<Product> favouriteProducts = [];
 
   late List<Product> favouritProducts;
   static Future<List<Product>> demoProducts = getAllProduct();

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:my_store/controller/detailes_screen_controller.dart';
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/data/data_source/static.dart';
+import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/data/model/Product.dart';
 
 class ProductDescription extends StatelessWidget {
@@ -35,9 +35,9 @@ class ProductDescription extends StatelessWidget {
               onTap: controller.onAddToFavouritesTap,
               child: Container(
                 padding: const EdgeInsets.all(16),
-                width: 48,
+                // width: 48,
                 decoration: BoxDecoration(
-                  color: favouriteProducts.contains(product)
+                  color:Repo.favouriteProducts.contains(product)
                       ? const Color(0xFFFFE6E6)
                       : const Color(0xFFF5F6F9),
                   borderRadius: const BorderRadius.only(
@@ -45,14 +45,24 @@ class ProductDescription extends StatelessWidget {
                     bottomLeft: Radius.circular(20),
                   ),
                 ),
-                child: SvgPicture.asset(
-                  "assets/icons/Heart Icon_2.svg",
-                  colorFilter: ColorFilter.mode(
-                      favouriteProducts.contains(product)
-                          ? const Color(0xFFFF4848)
-                          : const Color(0xFFDBDEE4),
-                      BlendMode.srcIn),
-                  height: 16,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min, // Add this line
+                  children: [
+                    Text(controller.favouriteCount.toString()),
+                    const SizedBox(
+                        width:
+                            8), // Add some spacing between the text and icon if needed
+
+                    SvgPicture.asset(
+                      "assets/icons/Heart Icon_2.svg",
+                      colorFilter: ColorFilter.mode(
+                          Repo.favouriteProducts.contains(product)
+                              ? const Color(0xFFFF4848)
+                              : const Color(0xFFDBDEE4),
+                          BlendMode.srcIn),
+                      height: 16,
+                    ),
+                  ],
                 ),
               ),
             );
@@ -97,11 +107,11 @@ class ProductDescription extends StatelessWidget {
   }
 
   void onAddToFavouritesTap(Product product) {
-    if (!favouriteProducts.contains(product)) {
-      favouriteProducts.add(product);
+    if (!Repo.favouriteProducts.contains(product)) {
+      Repo.favouriteProducts.add(product);
       print("added");
     } else {
-      favouriteProducts.remove(product);
+      Repo.favouriteProducts.remove(product);
       print("removed");
     }
   }

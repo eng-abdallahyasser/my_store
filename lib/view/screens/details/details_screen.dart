@@ -13,7 +13,7 @@ class DetailsScreen extends StatelessWidget {
   final Product product;
 
   late final DetailesScreenController controller =
-      Get.put(DetailesScreenController(product: product));
+      Get.put(DetailesScreenController(product: product,favouriteCount: product.favouritecount));
 
   DetailsScreen({super.key, required this.product});
 
@@ -58,9 +58,9 @@ class DetailsScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const Text(
-                      "4.7",
-                      style: TextStyle(
+                     Text(
+                     product.rating.toString(),
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
