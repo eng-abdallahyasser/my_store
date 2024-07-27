@@ -102,7 +102,9 @@ class ProductCard extends StatelessWidget {
                       )
                     : Container(),
                 const Spacer(),
-                LoveCountBtn(count: product.favouritecount, isFavourite: false)
+                LoveCountBtn(
+                  product: product,
+                ),
               ],
             )
           ],
@@ -113,49 +115,59 @@ class ProductCard extends StatelessWidget {
 }
 
 class LoveCountBtn extends StatefulWidget {
-  const LoveCountBtn(
-      {super.key, required this.count, required this.isFavourite});
-  final int count;
-  final bool isFavourite;
+  final Product product;
+
+  const LoveCountBtn({
+    super.key,
+    required this.product,
+  });
 
   @override
   State<LoveCountBtn> createState() => _LoveCountBtnState();
 }
 
 class _LoveCountBtnState extends State<LoveCountBtn> {
-  int count = 12;
-  bool isFavourite = false;
+  late int count;
+  late bool isFavourite;
 
   @override
   void initState() {
     super.initState();
-    count = widget.count;
-    isFavourite = widget.isFavourite;
+    count = widget.product.favouritecount;
+    isFavourite = Repo.favouriteProducts.contains(widget.product);
   }
 
-  void _onTabe() async {
-    isFavourite = !isFavourite;
+  Future<void> _onTab() async {
+    setState(() {
+      isFavourite = !isFavourite;
+      if (isFavourite) {
+        count += 1;
+      } else {
+        count -= 1;
+      }
+    });
+
     if (isFavourite) {
-      count = count + 1;
-      await Repo.incrementFavoriteCountById("QUh7rtBe569Hc8QvCRNe");
+      Repo.favouriteProducts.add(widget.product);
+      await Repo.incrementFavoriteCountById(widget.product.id);
     } else {
-      count = count - 1;
-      await Repo.decrementFavoriteCountById("QUh7rtBe569Hc8QvCRNe");
+      Repo.favouriteProducts.remove(widget.product);
+      await Repo.decrementFavoriteCountById(widget.product.id);
     }
+
+    setState(() {
+      count = widget.product.favouritecount;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        _onTabe();
-        setState(() {});
-      },
+      onTap: _onTab,
       child: Container(
         padding: const EdgeInsets.all(6),
-        // height: 24,
         decoration: BoxDecoration(
-          color: isFavourite // favouriteProducts.contains(widget.product)
+          color: isFavourite
               ? MyColors.elsie.withOpacity(0.2)
               : MyColors.matteCharcoal.withOpacity(0.07),
           borderRadius: BorderRadius.circular(100),
@@ -165,17 +177,18 @@ class _LoveCountBtnState extends State<LoveCountBtn> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "${count} ",
+              "$count ",
               style: const TextStyle(fontSize: 12),
             ),
             SvgPicture.asset(
               "assets/icons/Heart Icon_2.svg",
               height: 10,
               colorFilter: ColorFilter.mode(
-                  isFavourite // favouriteProducts.contains(widget.product)
-                      ? const Color(0xFFFF4848)
-                      : MyColors.matteCharcoal.withOpacity(0.4),
-                  BlendMode.srcIn),
+                isFavourite
+                    ? const Color(0xFFFF4848)
+                    : MyColors.matteCharcoal.withOpacity(0.4),
+                BlendMode.srcIn,
+              ),
             ),
           ],
         ),

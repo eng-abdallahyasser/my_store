@@ -76,6 +76,8 @@ class CartController extends GetxController {
       ),
     );
 
+    print(cartList[0].toJson());
+
     //saving order ....
     await Repo.addOrder(OrderForDelivary(
       carts: cartList,

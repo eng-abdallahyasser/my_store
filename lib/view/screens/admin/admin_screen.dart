@@ -65,95 +65,106 @@ class AdminScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(order.userAdress),
-          Text(order.userPhone),
+          Row(
+            children: [
+              Text(order.number.toString()),
+              const SizedBox(width: 16),
+              Text(order.dateTime),
+            ],
+          ),
+          Row(
+            children: [
+              Text(order.userPhone),
+              const SizedBox(width: 16),
+              Text(order.userAdress),
+            ],
+          ),
           ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: order.carts.length,
-              itemBuilder: (context, index) {
-                return FutureBuilder(
-                    future: Repo.getProductById(order.carts[index].productId!),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      if (snapshot.hasError) {
-                        return const Text(" error ..");
-                      }
-                      return Row(
-                        children: [
-                          SizedBox(
-                            width: 88,
-                            child: AspectRatio(
-                              aspectRatio: 0.88,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFF5F6F9),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: FutureBuilder(
-                                      future: Repo.getProductImageUrl(snapshot.data!.imagesUrl[0]),
-                                      builder: (context, nestedsnapshot) {
-                                        if (nestedsnapshot.connectionState ==
-                                            ConnectionState.waiting) {
-                                          return const Center(
-                                              child:
-                                                  CircularProgressIndicator());
-                                        }
-                                        if (nestedsnapshot.hasError ||
-                                            nestedsnapshot.data == null) {
-                                          return Image.asset(
-                                              "assete/images/product_placeholder.jpg",
-                                              fit: BoxFit.cover);
-                                        }
-                                        return Image.memory(
-                                            nestedsnapshot.data!,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: order.carts.length,
+            itemBuilder: (context, index) {
+              return FutureBuilder(
+                  future: Repo.getProductById(order.carts[index].productId!),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasError) {
+                      return const Text(" error ..");
+                    }
+                    return Row(
+                      children: [
+                        SizedBox(
+                          width: 88,
+                          child: AspectRatio(
+                            aspectRatio: 0.88,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF5F6F9),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: FutureBuilder(
+                                    future: Repo.getProductImageUrl(
+                                        snapshot.data!.imagesUrl[0]),
+                                    builder: (context, nestedsnapshot) {
+                                      if (nestedsnapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      }
+                                      if (nestedsnapshot.hasError ||
+                                          nestedsnapshot.data == null) {
+                                        return Image.asset(
+                                            "assete/images/product_placeholder.jpg",
                                             fit: BoxFit.cover);
-                                      }),
-                                ),
+                                      }
+                                      return Image.memory(nestedsnapshot.data!,
+                                          fit: BoxFit.cover);
+                                    }),
                               ),
                             ),
                           ),
-                          const SizedBox(width: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                snapshot.data!.title,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                maxLines: 2,
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  const Text(
-                                    "جـ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: MyColors.elsie),
-                                  ),
-                                  Text(
-                                    " ${snapshot.data!.price}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: MyColors.elsie),
-                                  ),
-                                  Text("  x${order.carts[index].numOfItem}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      );
-                    });
-              }),
+                        ),
+                        const SizedBox(width: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              snapshot.data!.title,
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 16),
+                              maxLines: 2,
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Text(
+                                  "جـ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: MyColors.elsie),
+                                ),
+                                Text(
+                                  " ${snapshot.data!.price}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: MyColors.elsie),
+                                ),
+                                Text("  x${order.carts[index].numOfItem}",
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
         ],
       ),
     );

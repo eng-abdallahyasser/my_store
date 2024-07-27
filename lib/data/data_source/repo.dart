@@ -50,9 +50,11 @@ class Repo {
   static Future<Product> getProductById(String id) async {
     return _firestore.getProductById(id);
   }
+
   static Future<int> decrementFavoriteCountById(String id) async {
     return _firestore.decrementFavoriteCountById(id);
   }
+
   static Future<int> incrementFavoriteCountById(String id) async {
     return _firestore.incrementFavoriteCountById(id);
   }
@@ -80,6 +82,7 @@ class Repo {
 
   static Future<void> addOrder(OrderForDelivary order) async {
     order.userID = _auth.getCurrentUser()!.uid;
+    print(order.carts.length);
     _firestore.addOrder(order);
     _firestore.saveUserData(
         _auth.getCurrentUser(), order.userPhone, order.userAdress);

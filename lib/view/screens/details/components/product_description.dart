@@ -105,14 +105,4 @@ class ProductDescription extends StatelessWidget {
       ],
     );
   }
-
-  void onAddToFavouritesTap(Product product) {
-    if (!Repo.favouriteProducts.contains(product)) {
-      Repo.favouriteProducts.add(product);
-      print("added");
-    } else {
-      Repo.favouriteProducts.remove(product);
-      print("removed");
-    }
-  }
 }

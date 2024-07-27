@@ -4,17 +4,18 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/data/data_source/repo.dart';
+import 'package:my_store/firebase/firebase_massaging.dart';
 import 'package:my_store/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Repo.initializePrefs();
-  // MyMassaging massaging = MyMassaging();
-  // print("=======================================");
-  // print("=======================================");
-  // print(await massaging.getToken());
-  // print("=======================================");
+  MyMassaging massaging = MyMassaging();
+  print("=======================================");
+  print("=======================================");
+  print(await massaging.getToken());
+  print("=======================================");
 
   runApp(const MyApp());
 }
