@@ -83,8 +83,8 @@ class Repo {
   static Future<void> addOrder(OrderForDelivary order) async {
     order.userID = _auth.getCurrentUser()!.uid;
     print(order.carts.length);
-    _firestore.addOrder(order);
-    _firestore.saveUserData(
+    await _firestore.addOrder(order);
+    await _firestore.saveUserData(
         _auth.getCurrentUser(), order.userPhone, order.userAdress);
   }
 

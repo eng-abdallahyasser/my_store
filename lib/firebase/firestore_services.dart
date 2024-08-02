@@ -39,7 +39,7 @@ class FirestoreServices {
             .update(docRef, {"favouritecount": currentFavoriteCount + 1});
       }
     });
-    return currentFavoriteCount+1;
+    return currentFavoriteCount + 1;
   }
 
   Future<int> decrementFavoriteCountById(String documentId) async {
@@ -97,47 +97,52 @@ class FirestoreServices {
     await docRef.update({"id": docRef.id});
   }
 
- Future<void> addOrder(OrderForDelivary order) async {
-  try {
-    // Create a reference to the counter document
-    DocumentReference counterRef = _firestore.collection("counters").doc("orderCounter");
-print(order.carts.length);
-    // Run a transaction to ensure atomicity
-    await _firestore.runTransaction((transaction) async {
-      // Get the current counter value
-      DocumentSnapshot counterSnapshot = await transaction.get(counterRef);
+  Future<void> addOrder(OrderForDelivary order) async {
+    try {
+      
+      // Create a reference to the counter document
+      DocumentReference counterRef =
+          _firestore.collection("counters").doc("orderCounter");
+      print("carts length      ${order.carts.length}");
+      // Run a transaction to ensure atomicity
+      await _firestore.runTransaction((transaction) async {
+        print("carts length      ${order.carts.length}");
+        // Get the current counter value
+        DocumentSnapshot counterSnapshot = await transaction.get(counterRef);
 
-      // Check if the document exists, if not create it with an initial currentNumber of 0
-      int currentNumber = 0;
-      if (!counterSnapshot.exists) {
-        transaction.set(counterRef, {'currentNumber': currentNumber});
-      } else {
-        currentNumber = (counterSnapshot.data() as Map<String, dynamic>)['currentNumber'] ?? 0;
-      }
+        // Check if the document exists, if not create it with an initial currentNumber of 0
+        int currentNumber = 0;
+        if (!counterSnapshot.exists) {
+          transaction.set(counterRef, {'currentNumber': currentNumber});
+        } else {
+          currentNumber = (counterSnapshot.data()
+                  as Map<String, dynamic>)['currentNumber'] ??
+              0;
+        }
 
-      // Increment the counter
-      int newNumber = currentNumber + 1;
+        // Increment the counter
+        int newNumber = currentNumber + 1;
 
-      // Update the order with the new number
-      order.number = newNumber;
+        // Update the order with the new number
+        order.number = newNumber;
 
-      // Create a new document reference for the order
-      DocumentReference docRef = _firestore.collection("orders").doc();
+        // Create a new document reference for the order
+        DocumentReference docRef = _firestore.collection("orders").doc();
 
-      // Add the order to Firestore within the transaction
-      transaction.set(docRef, order.toJson());
+        // Add the order to Firestore within the transaction
+        transaction.set(docRef, order.toJson());
 
-      // Update the orderID field in the newly created order document
-      transaction.update(docRef, {"orderID": docRef.id});
+        // Update the orderID field in the newly created order document
+        transaction.update(docRef, {"orderID": docRef.id});
 
-      // Update the counter value in Firestore
-      transaction.update(counterRef, {'currentNumber': newNumber});
-    });
-  } catch (error) {
-    print("Failed to add order: $error");
+        // Update the counter value in Firestore
+        transaction.update(counterRef, {'currentNumber': newNumber});
+      });
+      print("carts length      ${order.carts.length}");
+    } catch (error) {
+      print("Failed to add order: $error");
+    }
   }
-}
-
 
   Future<Product> getProductById(String id) async {
     final DocumentSnapshot doc =

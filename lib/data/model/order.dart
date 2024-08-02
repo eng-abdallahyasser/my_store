@@ -20,19 +20,8 @@ class OrderForDelivary {
   });
 
   Map<String, dynamic> toJson() {
-
-    print(carts.length);
-
-    List<Map<String, dynamic>> cartsMap = carts.map((cart) {
-    var json = cart.toJson();
-    print('Converted cart to JSON: $json');
-    return json;
-  }).toList();
-
-    print(carts.length);
-
     return {
-      'carts': cartsMap,
+      'carts': carts.map((cart) => cart.toJson()).toList(),
       'orderID': orderID,
       'userID': userID,
       'userAdress': userAdress,

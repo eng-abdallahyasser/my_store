@@ -76,16 +76,16 @@ class CartController extends GetxController {
       ),
     );
 
-    print(cartList[0].toJson());
-
-    //saving order ....
-    await Repo.addOrder(OrderForDelivary(
+    OrderForDelivary order = OrderForDelivary(
       carts: cartList,
       orderID: "",
       userAdress: addressController.text,
       userID: "id",
       userPhone: phoneNumberController.text,
-    ));
+    );
+
+    //saving order ....
+    await Repo.addOrder(order);
 
     cartList.clear();
     update(); // this update is not working i dont know why?
