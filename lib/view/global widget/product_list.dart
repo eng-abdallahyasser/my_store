@@ -2,15 +2,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:my_store/data/data_source/repo.dart';
-import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/product.dart';
 import 'package:my_store/view/global%20widget/product_card.dart';
 import 'package:my_store/view/global%20widget/section_title.dart';
 
 class ProductList extends StatelessWidget {
   final String title;
-   const ProductList({
+  const ProductList({
     super.key,
-    this.title ="not titled",
+    this.title = "not titled",
   });
 
   @override
@@ -48,13 +48,24 @@ class ProductList extends StatelessWidget {
                       children: List.generate(
                         products.length,
                         (index) {
-                          if (products[index].isPopular) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: ProductCard(
-                                product: products[index],
-                              ),
-                            );
+                          if (title == "Popular Products") {
+                            if (products[index].isPopular) {
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: ProductCard(
+                                  product: products[index],
+                                ),
+                              );
+                            }
+                          } else {
+                            if (title == products[index].category) {
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: ProductCard(
+                                  product: products[index],
+                                ),
+                              );
+                            }
                           }
                           return const SizedBox
                               .shrink(); // here by default width and height is 0

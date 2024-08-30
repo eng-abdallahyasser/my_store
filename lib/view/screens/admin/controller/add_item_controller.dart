@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_store/data/data_source/static.dart';
-import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/product.dart';
 import 'package:my_store/data/data_source/repo.dart';
 
 class AddItemController extends GetxController {

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:my_store/data/data_source/repo.dart';
-import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/product.dart';
 import 'package:my_store/data/model/cart_item.dart';
 
 class DetailesScreenController extends GetxController {

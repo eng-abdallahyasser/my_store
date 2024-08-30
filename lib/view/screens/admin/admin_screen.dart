@@ -4,6 +4,7 @@ import 'package:my_store/core/constants.dart';
 import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/data/model/order.dart';
 import 'package:my_store/view/screens/admin/add_item_screen.dart';
+import 'package:my_store/view/screens/admin/admins_screen.dart';
 import 'package:my_store/view/screens/admin/list_items_screen.dart';
 import 'package:my_store/view/screens/profile/components/profile_menu.dart';
 
@@ -19,6 +20,11 @@ class AdminScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            ProfileMenu(
+              text: "Admins",
+              icon: "assets/icons/Plus Icon.svg",
+              press: () => {Get.to(() => const AdminsScreen())},
+            ),
             ProfileMenu(
               text: "Add New Item",
               icon: "assets/icons/Plus Icon.svg",

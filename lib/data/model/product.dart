@@ -54,7 +54,7 @@ class Product {
       colors: (json['colors'] as List<dynamic>)
           .map((colorString) => Color(int.parse(colorString, radix: 16)))
           .toList(),
-      category: json['id'] ?? "not foung",
+      category: json['category'] ?? "not foung",
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       isFavourite: json['isFavourite'] ?? false,
       isPopular: json['isPopular'] ?? false,

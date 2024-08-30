@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/product.dart';
 
 class ListItmesController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

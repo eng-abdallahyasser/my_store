@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/product.dart';
 import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/data/model/order.dart';
 import 'package:my_store/firebase/auth.dart';
@@ -90,5 +90,9 @@ class Repo {
 
   static Future<Map<String, dynamic>?> getUserDelivaryData() async {
     return _firestore.getUserData(_auth.getCurrentUser()!.uid);
+  }
+
+  static saveAdminToken() {
+    
   }
 }

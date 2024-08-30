@@ -38,9 +38,14 @@ dependencies:
   cloud_firestore: ^5.0.2
   firebase_storage: ^12.1.0
   image_picker: ^1.1.2
-  flutter_launcher_icons: "^0.13.1"
+  flutter_launcher_icons: ^0.13.1
   firebase_messaging: ^15.0.3
   shared_preferences: ^2.2.3
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/lou roll logo.svg"
  
 
 dev_dependencies:

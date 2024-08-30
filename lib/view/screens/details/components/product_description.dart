@@ -4,7 +4,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:my_store/controller/detailes_screen_controller.dart';
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/data/data_source/repo.dart';
-import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/product.dart';
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({

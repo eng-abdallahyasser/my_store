@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/product.dart';
 import 'package:my_store/view/global%20widget/rounded_icon_btn.dart';
 import 'package:my_store/view/screens/admin/controller/add_item_controller.dart';
 import 'package:my_store/view/screens/admin/controller/edit_item_controller.dart';

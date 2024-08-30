@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:my_store/data/model/Product.dart';
+import 'package:my_store/data/model/product.dart';
 
 class EditItemController extends GetxController {
   Product product = Product(
