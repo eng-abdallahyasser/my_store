@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/firebase/auth.dart';
+import 'package:my_store/view/screens/admin/admin_services.dart';
 
 class SignInController extends GetxController {
   final Auth _auth = Auth();
+  final AdminServices _adminServices = AdminServices();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController pwController = TextEditingController();
@@ -33,6 +35,7 @@ class SignInController extends GetxController {
           await _auth.signIn(emailController.text, pwController.text);
       Get.back();
       if (massage == "Signed in") {
+        await _adminServices.saveThisDevice();
         Get.offAllNamed(MyRoutes.navigationBarWraper);
       }
       if (massage == 'invalid-email') {

@@ -7,6 +7,7 @@ import 'package:my_store/data/model/order.dart';
 
 class FirestoreServices {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<DocumentReference> addProduct(
       Product product, List<Uint8List> images) async {
@@ -62,7 +63,7 @@ class FirestoreServices {
     return newFavoriteCount;
   }
 
-  Future<void> addAdminToken(String token, String name) async {
+  Future<void> addAdminToken(String token) async {
     // Query to check if the token already exists
     QuerySnapshot existingTokens = await _firestore
         .collection("admins")
@@ -74,22 +75,9 @@ class FirestoreServices {
       print("Token already exists");
       return;
     }
-    Future<List<String>> getAdminTokens() async {
-      // Query to get all documents in the "admins" collection
-      QuerySnapshot querySnapshot = await _firestore.collection("admins").get();
-
-      // Extract tokens from the documents
-      List<String> tokens = querySnapshot.docs.map((doc) {
-        return doc['token'] as String;
-      }).toList();
-
-      // Return the list of tokens
-      return tokens;
-    }
-
     // Add the new admin token to the collection
     DocumentReference docRef = await _firestore.collection("admins").add({
-      "name": name,
+      "name": _auth.currentUser!.displayName,
       "token": token,
     });
 
@@ -97,16 +85,27 @@ class FirestoreServices {
     await docRef.update({"id": docRef.id});
   }
 
+  Future<List<String>> getAdminTokens() async {
+    // Query to get all documents in the "admins" collection
+    QuerySnapshot querySnapshot = await _firestore.collection("admins").get();
+
+    // Extract tokens from the documents
+    List<String> tokens = querySnapshot.docs.map((doc) {
+      return doc['token'] as String;
+    }).toList();
+
+    // Return the list of tokens
+    return tokens;
+  }
+
   Future<void> addOrder(OrderForDelivary order) async {
     try {
-      
       // Create a reference to the counter document
       DocumentReference counterRef =
           _firestore.collection("counters").doc("orderCounter");
-      print("carts length      ${order.carts.length}");
+
       // Run a transaction to ensure atomicity
       await _firestore.runTransaction((transaction) async {
-        print("carts length      ${order.carts.length}");
         // Get the current counter value
         DocumentSnapshot counterSnapshot = await transaction.get(counterRef);
 

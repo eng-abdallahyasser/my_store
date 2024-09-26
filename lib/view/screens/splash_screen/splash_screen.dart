@@ -34,19 +34,25 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width / 1.5,
-                child: Image.asset("assets/images/joe store logo2.png"),
+                child:
+                    Image.asset("assets/images/Lou Roll Project Final-1.png"),
               ),
-              const SizedBox(
-                height: 40,
+              // const SizedBox(
+              //   height: 40,
+              // ),
+              const Text(
+                "Developed by Eng",
+                style: TextStyle(
+                  fontSize: 12,
+                ),
               ),
-              const Text("Developed by Eng"),
               const SizedBox(
                 height: 10,
               ),
               const Text(
                 "ABDALLAH YASSER",
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF1B262C)),
               ),

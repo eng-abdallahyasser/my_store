@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:my_store/data/model/cart_item.dart';
 
 class OrderForDelivary {
@@ -26,7 +27,7 @@ class OrderForDelivary {
       'userID': userID,
       'userAdress': userAdress,
       'userPhone': userPhone,
-      'date': DateTime.now().toIso8601String(),
+      'date': "${DateFormat.Md().format(DateTime.now())} - ${DateFormat.jm().format(DateTime.now())}",
       'number': number,
     };
   }

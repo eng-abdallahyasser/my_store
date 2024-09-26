@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/firebase/auth.dart';
+import 'package:my_store/view/screens/admin/admin_services.dart';
 
 class SignUpController extends GetxController {
   final Auth _auth = Auth();
+  final AdminServices _adminServices = AdminServices();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -40,6 +42,7 @@ class SignUpController extends GetxController {
             emailController.text, pwController.text, nameController.text);
         Get.back();
         if (massage == "Signed up") {
+          await _adminServices.saveThisDevice();
           Get.offAllNamed(MyRoutes.navigationBarWraper);
         }
         if (massage == 'weak-password') {

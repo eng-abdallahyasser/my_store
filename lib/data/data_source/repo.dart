@@ -19,7 +19,7 @@ class Repo {
 
   late List<Product> favouritProducts;
   static Future<List<Product>> demoProducts = getAllProduct();
-  static List<CartItem> demoCarts = [];
+  static List<CartItem> demoCarts = [CartItem(numOfItem: 0)];
 
   static Future<void> initializePrefs() async {
     prefs = await SharedPreferences.getInstance();
@@ -92,7 +92,5 @@ class Repo {
     return _firestore.getUserData(_auth.getCurrentUser()!.uid);
   }
 
-  static saveAdminToken() {
-    
-  }
+  static saveAdminToken() {}
 }
