@@ -31,26 +31,28 @@ class CartCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: cart.product!.coverImageUnit8List != null
-                    ? Image.memory(cart.product!.coverImageUnit8List!,
-                        fit: BoxFit.cover)
-                    : FutureBuilder(
-                        future:
-                            Repo.getProductImageUrl(cart.product!.imagesUrl[0]),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-                          if (snapshot.hasError || snapshot.data == null) {
-                            return Image.asset(
-                                "assete/images/product_placeholder.jpg",
-                                fit: BoxFit.cover);
-                          }
-                          return Image.memory(snapshot.data!,
-                              fit: BoxFit.cover);
-                        }),
+                child: cart.product == null
+                    ? Container()
+                    : cart.product!.coverImageUnit8List != null
+                        ? Image.memory(cart.product!.coverImageUnit8List!,
+                            fit: BoxFit.cover)
+                        : FutureBuilder(
+                            future: Repo.getProductImageUrl(
+                                cart.product!.imagesUrl[0]),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              if (snapshot.hasError || snapshot.data == null) {
+                                return Image.asset(
+                                    "assete/images/product_placeholder.jpg",
+                                    fit: BoxFit.cover);
+                              }
+                              return Image.memory(snapshot.data!,
+                                  fit: BoxFit.cover);
+                            }),
               ),
             ),
           ),
@@ -87,9 +89,9 @@ class CartCard extends StatelessWidget {
         Column(children: [
           RoundedIconBtn(icon: Icons.add, press: add),
           const SizedBox(height: 4),
-          cart.numOfItem>0?
-          RoundedIconBtn(icon: Icons.remove, press: remove):
-          RoundedIconBtn(icon: Icons.delete_forever, press: remove),
+          cart.numOfItem > 1
+              ? RoundedIconBtn(icon: Icons.remove, press: remove)
+              : RoundedIconBtn(icon: Icons.delete_forever, press: remove),
         ])
       ],
     );

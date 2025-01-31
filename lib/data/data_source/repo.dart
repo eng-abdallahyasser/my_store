@@ -17,11 +17,12 @@ class Repo {
   Map<String, dynamic>? delivaryData = {};
   static List<Product> favouriteProducts = [];
 
-  late List<Product> favouritProducts;
+  List<Product> favouritProducts = [];
   static Future<List<Product>> demoProducts = getAllProduct();
-  static List<CartItem> demoCarts = [CartItem(numOfItem: 0)];
+  static List<CartItem> demoCarts = [];
 
   static Future<void> initializePrefs() async {
+    print("initializePrefs***************************");
     prefs = await SharedPreferences.getInstance();
     onboardingShown = prefs.getBool('onboardingShown') ?? false;
   }

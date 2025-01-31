@@ -29,24 +29,27 @@ class CartController extends GetxController {
   void calculateTotal() {
     total = 0.0;
     for (var item in cartList) {
-      total += item.product!.price * item.numOfItem;
+      if(item.product!=null) {
+        total += item.product!.price * item.numOfItem;
+      }
     }
     update();
   }
 
   void removeOneProduct(int index) {
-    if (cartList[index].numOfItem > 0) {
+    if (cartList[index].numOfItem > 1) {
       cartList[index].numOfItem -= 1;
-    } else if (cartList[index].numOfItem == 0) {
+    } else if (cartList[index].numOfItem == 1) {
       Get.dialog(AlertDialog(
         title: const Text("Are you sure?"),
         actions: [
           TextButton(
               onPressed: () {
                 cartList.removeAt(index);
+                Get.back();
                 update();
               },
-              child: const Text("Yes")),
+              child: const Text("Yes, Remove It")),
           TextButton(
               onPressed: () {
                 Get.back();
