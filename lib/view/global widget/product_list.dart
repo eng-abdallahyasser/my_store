@@ -15,36 +15,38 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SectionTitle(
-            title: title,
-            press: () {},
-          ),
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              FutureBuilder(
-                future: Repo.demoProducts,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (snapshot.hasError) {
-                    return const Center(
-                      child: Text("Error..."),
-                    );
-                  }
-                  if (snapshot.hasData) {
-                    var products = snapshot.data as List<
-                        Product>; // Ensure you cast the data to a list of products
-                    return Row(
+    return FutureBuilder(
+        future: title == "Popular Products"
+            ? Repo.getPopularProducts()
+            : Repo.getProductsByCategory(title),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text("Error..."),
+            );
+          }
+          if (snapshot.hasData) {
+            var products = snapshot.data as List<Product>;
+            if (products.isEmpty) {
+              return const SizedBox.shrink();
+            }
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: SectionTitle(
+                    title: title,
+                    press: () {},
+                  ),
+                ),
+                SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
                       children: List.generate(
                         products.length,
                         (index) {
@@ -58,30 +60,22 @@ class ProductList extends StatelessWidget {
                               );
                             }
                           } else {
-                            if (title == products[index].category) {
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: ProductCard(
-                                  product: products[index],
-                                ),
-                              );
-                            }
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: ProductCard(
+                                product: products[index],
+                              ),
+                            );
                           }
                           return const SizedBox
                               .shrink(); // here by default width and height is 0
                         },
                       ),
-                    );
-                  }
-                  return const SizedBox
-                      .shrink(); // In case there's no data and no error
-                },
-              ),
-              const SizedBox(width: 20),
-            ],
-          ),
-        )
-      ],
-    );
+                    )),
+              ],
+            );
+          }
+          return const SizedBox.shrink();
+        });
   }
 }

@@ -22,7 +22,6 @@ class Repo {
   static List<CartItem> demoCarts = [];
 
   static Future<void> initializePrefs() async {
-    print("initializePrefs***************************");
     prefs = await SharedPreferences.getInstance();
     onboardingShown = prefs.getBool('onboardingShown') ?? false;
   }
@@ -50,6 +49,12 @@ class Repo {
 
   static Future<Product> getProductById(String id) async {
     return _firestore.getProductById(id);
+  }
+  static Future<List<Product>> getProductsByCategory(String category) async {
+    return _firestore.getProductsByCategory(category);
+  }
+  static Future<List<Product>> getPopularProducts() async {
+    return _firestore.getPopularProducts();
   }
 
   static Future<int> decrementFavoriteCountById(String id) async {

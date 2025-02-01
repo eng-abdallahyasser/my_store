@@ -159,7 +159,7 @@ class FirestoreServices {
         await _firestore.collection('products').get();
 
     return querySnapshot.docs.map((doc) {
-      return Product.fromJson(doc.data() as Map<String, dynamic>);
+      return Product.fromFirestore(doc);
     }).toList();
   }
 
@@ -215,5 +215,33 @@ class FirestoreServices {
     } else {
       print('No user is currently signed in.');
     }
+  }
+
+  Future<List<Product>> getProductsByCategory(String category) async {
+     try {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('products')
+        .where('category', isEqualTo: category)
+        .get();
+
+    return querySnapshot.docs.map((doc) => Product.fromFirestore(doc)).toList();
+  } catch (e) {
+    print('Error fetching products: $e');
+    return [];
+  }
+  }
+
+  Future<List<Product>> getPopularProducts() async {
+     try {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('products')
+        .where('isPopular', isEqualTo: true)
+        .get();
+
+    return querySnapshot.docs.map((doc) => Product.fromFirestore(doc)).toList();
+  } catch (e) {
+    print('Error fetching products: $e');
+    return [];
+  }
   }
 }

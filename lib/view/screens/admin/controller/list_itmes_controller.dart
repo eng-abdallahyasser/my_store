@@ -14,7 +14,7 @@ class ListItmesController extends GetxController {
         await _firestore.collection('products').get();
 
     return querySnapshot.docs.map((doc) {
-      return Product.fromJson(doc.data() as Map<String, dynamic>);
+      return Product.fromFirestore(doc);
     }).toList();
   }
 

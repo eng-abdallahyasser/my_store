@@ -47,25 +47,6 @@ class Product {
         "quantity": quantity,
       };
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      id: json['id'] ?? "",
-      imagesUrl: List<String>.from(json['images'] ?? []),
-      colors: (json['colors'] as List<dynamic>)
-          .map((colorString) => Color(int.parse(colorString, radix: 16)))
-          .toList(),
-      category: json['category'] ?? "not foung",
-      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
-      isFavourite: json['isFavourite'] ?? false,
-      isPopular: json['isPopular'] ?? false,
-      favouritecount: json['favouritecount'] ?? 0,
-      title: json['title'] ?? "",
-      price: (json['price'] as num?)?.toDouble() ?? 0.0,
-      oldPrice: (json['oldPrice'] as num?)?.toDouble() ?? 0.0,
-      description: json['description'] ?? "",
-      quantity: json['quantity'] ?? 1,
-    );
-  }
 
   List<String> colorsStringList() {
     List<String> colorsStringList = [];
@@ -89,7 +70,7 @@ class Product {
       colors: (json['colors'] as List<dynamic>)
           .map((colorString) => Color(int.parse(colorString, radix: 16)))
           .toList(),
-      category: json['id'] ?? "not foung",
+      category: json['category'] ?? "not foung",
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       isFavourite: json['isFavourite'] ?? false,
       isPopular: json['isPopular'] ?? false,

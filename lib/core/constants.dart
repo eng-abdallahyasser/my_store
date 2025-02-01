@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+
 class MyImages {
   static const String onBoardingImage1 = 'assets/images/onboarding1.png';
   static const String onBoardingImage2 = 'assets/images/onboarding2.png';
@@ -21,6 +22,7 @@ class MyRoutes {
   static const itemDetails = "/itemDetails";
   static const admin = "/admin";
   static const splashScreen="/splash";
+  static const addressScreen="/addresses";
 }
 
 class MyColors {

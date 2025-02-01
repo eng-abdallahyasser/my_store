@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_store/core/constants.dart';
+import 'package:my_store/view/screens/addresses/address.dart';
 import 'package:my_store/view/screens/auth/signin.dart';
 import 'package:my_store/view/screens/auth/signup.dart';
 import 'package:my_store/view/screens/cart/cart.dart';
@@ -20,4 +21,5 @@ Map<String, Widget Function(BuildContext)> routes = {
   MyRoutes.profile: (_) => Profile(),
   MyRoutes.search: (_) => const Search(),
   MyRoutes.navigationBarWraper: (_) => MyNavigationBarWraper(),
+  MyRoutes.addressScreen: (_)=> const AddressScreen(),
 };
