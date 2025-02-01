@@ -33,7 +33,7 @@ class Profile extends StatelessWidget {
               text: "My Addresses",
               icon: "assets/icons/Location point.svg",
               press: () {
-                Get.to(() => const AddressScreen());
+                Get.to(() => AddressScreen());
               },
             ),
             ProfileMenu(

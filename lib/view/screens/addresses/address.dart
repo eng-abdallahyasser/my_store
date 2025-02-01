@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:my_store/controller/address_controller.dart';
+import 'package:my_store/data/data_source/static.dart';
+import 'package:my_store/view/screens/addresses/address_cart.dart';
 
 class AddressScreen extends StatelessWidget {
-  const AddressScreen({super.key});
+  final AddressController controller = Get.put(AddressController());
+  AddressScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(
-        title: const Text("My Addresses"),
-      ),
-       body: const SingleChildScrollView(
-        child: Column(
-            children: [
-                SizedBox(height: 20),
-                Text("Add New Address"),
-                SizedBox(height: 20),
-            ]
-       )
-      ));
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("My Addresses"),
+        ),
+        body: SingleChildScrollView(
+            child: Column(children: [
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: tempAddresses.length,
+            itemBuilder: (context, index) =>
+                GestureDetector(
+                  onTap: ()=>{
+                    controller.onTapAddress(tempAddresses[index])
+                    } ,
+                  child: AddressCart(address: tempAddresses[index])),
+          )
+        ])));
   }
 }

@@ -21,5 +21,5 @@ Map<String, Widget Function(BuildContext)> routes = {
   MyRoutes.profile: (_) => Profile(),
   MyRoutes.search: (_) => const Search(),
   MyRoutes.navigationBarWraper: (_) => MyNavigationBarWraper(),
-  MyRoutes.addressScreen: (_)=> const AddressScreen(),
+  MyRoutes.addressScreen: (_)=> AddressScreen(),
 };
