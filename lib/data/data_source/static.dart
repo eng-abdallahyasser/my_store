@@ -1,5 +1,4 @@
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/data/model/address.dart';
 import 'package:my_store/data/model/bottom_bar_destination.dart';
 import 'package:my_store/data/model/onboarding.dart';
 import 'package:my_store/view/screens/cart/cart.dart';
@@ -64,10 +63,4 @@ List<String> categories = [
 const String description =
     "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
 
-List<Address> tempAddresses=[
-  Address(name: "شقة اخويا", latitude: 63546 , longitude: 45646541, address:" address address address address address", phoneNumber: "+201023684509"),
-  Address(name: "شقة اخويا", latitude: 63546 , longitude: 45646541, address:" address address address address address", phoneNumber: "+201023684509"),
-  Address(name: "شقة اخويا", latitude: 63546 , longitude: 45646541, address:" address address address address address", phoneNumber: "+201023684509"),
-  Address(name: "شقة اخويا", latitude: 63546 , longitude: 45646541, address:" address address address address address", phoneNumber: "+201023684509"),
-  Address(name: "شقة اخويا", latitude: 63546 , longitude: 45646541, address:" address address address address address", phoneNumber: "+201023684509"),
-];
+

@@ -3,9 +3,10 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 class SmallMapCard extends StatelessWidget {
-  final LatLng location ;
+  final LatLng location;
 
-  const SmallMapCard({super.key, required this.location}); // Example: Cairo, Egypt
+  const SmallMapCard(
+      {super.key, required this.location}); // Example: Cairo, Egypt
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +25,16 @@ class SmallMapCard extends StatelessWidget {
             ),
             children: [
               TileLayer(
-                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                subdomains: ['a', 'b', 'c'],
+                urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
               ),
               MarkerLayer(
-                markers: [ 
+                markers: [
                   Marker(
                     width: 40,
                     height: 40,
                     point: location,
-                    child: const Icon(Icons.location_pin, color: Colors.red, size: 40),
+                    child: const Icon(Icons.location_pin,
+                        color: Colors.red, size: 40),
                   ),
                 ],
               ),

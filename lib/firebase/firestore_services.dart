@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_store/data/model/address.dart';
 import 'package:my_store/data/model/product.dart';
 import 'package:my_store/data/model/order.dart';
 
@@ -218,30 +219,70 @@ class FirestoreServices {
   }
 
   Future<List<Product>> getProductsByCategory(String category) async {
-     try {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('products')
-        .where('category', isEqualTo: category)
-        .get();
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .where('category', isEqualTo: category)
+          .get();
 
-    return querySnapshot.docs.map((doc) => Product.fromFirestore(doc)).toList();
-  } catch (e) {
-    print('Error fetching products: $e');
-    return [];
-  }
+      return querySnapshot.docs
+          .map((doc) => Product.fromFirestore(doc))
+          .toList();
+    } catch (e) {
+      print('Error fetching products: $e');
+      return [];
+    }
   }
 
   Future<List<Product>> getPopularProducts() async {
-     try {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('products')
-        .where('isPopular', isEqualTo: true)
-        .get();
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .where('isPopular', isEqualTo: true)
+          .get();
 
-    return querySnapshot.docs.map((doc) => Product.fromFirestore(doc)).toList();
-  } catch (e) {
-    print('Error fetching products: $e');
-    return [];
+      return querySnapshot.docs
+          .map((doc) => Product.fromFirestore(doc))
+          .toList();
+    } catch (e) {
+      print('Error fetching products: $e');
+      return [];
+    }
   }
+
+  Future<void> addAddress(Address address) async {
+    try {
+      DocumentReference docRef =
+          await _firestore.collection("addresses").add(address.toMap());
+
+      // Get generated Firestore document ID
+      String addressId = docRef.id;
+
+      // Update Firestore document with the addressId
+      await _firestore
+          .collection("addresses")
+          .doc(addressId)
+          .update({"addressId": addressId});
+
+      print("Address added with ID: $addressId");
+    } catch (e) {
+      print("Error adding address: $e");
+    }
+  }
+
+  Future<List<Address>> getAddresses(String userId) async {
+    try {
+      QuerySnapshot snapshot = await _firestore
+          .collection("addresses")
+          .where("userId", isEqualTo: userId)
+          .get();
+
+      return snapshot.docs
+          .map((doc) => Address.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print("Error fetching addresses: $e");
+      return [];
+    }
   }
 }

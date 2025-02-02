@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_store/data/model/address.dart';
 import 'package:my_store/data/model/product.dart';
 import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/data/model/order.dart';
@@ -88,7 +89,6 @@ class Repo {
 
   static Future<void> addOrder(OrderForDelivary order) async {
     order.userID = _auth.getCurrentUser()!.uid;
-    print(order.carts.length);
     await _firestore.addOrder(order);
     await _firestore.saveUserData(
         _auth.getCurrentUser(), order.userPhone, order.userAdress);
@@ -96,6 +96,16 @@ class Repo {
 
   static Future<Map<String, dynamic>?> getUserDelivaryData() async {
     return _firestore.getUserData(_auth.getCurrentUser()!.uid);
+  }
+
+   static Future<void> addAddress(Address address ) async {
+    address.userId = _auth.getCurrentUser()!.uid;
+    
+    await _firestore.addAddress(address);
+  }
+
+  static Future<List<Address>> getAddresses(){
+    return _firestore.getAddresses(_auth.getCurrentUser()!.uid);
   }
 
   static saveAdminToken() {}

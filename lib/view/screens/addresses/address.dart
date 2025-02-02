@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/controller/address_controller.dart';
-import 'package:my_store/data/data_source/static.dart';
+import 'package:my_store/data/data_source/repo.dart';
+import 'package:my_store/data/model/address.dart';
 import 'package:my_store/view/screens/addresses/address_cart.dart';
 
 class AddressScreen extends StatelessWidget {
@@ -17,13 +18,42 @@ class AddressScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: tempAddresses.length,
-              itemBuilder: (context, index) => GestureDetector(
-                  onTap: () => {controller.onTapAddress(tempAddresses[index])},
-                  child: AddressCart(address: tempAddresses[index])),
+            GetBuilder<AddressController>(
+              builder: (context) {
+                return FutureBuilder(
+                  future: Repo.getAddresses(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text("Error..."),
+                      );
+                    }
+                    if (snapshot.hasData) {
+                      var addresses = snapshot.data as List<Address>;
+                      if (addresses.isEmpty) {
+                        return const SizedBox.shrink();
+                      }
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: addresses.length,
+                        itemBuilder: (context, index) {
+                          return AddressCart(
+                              address:
+                                  addresses[index]); // Correct way to pass address
+                        },
+                      );
+                      
+                    }
+                    return const SizedBox
+                                  .shrink(); // here by default width and height is 0
+                  },
+                );
+              }
             )
           ],
         ),
