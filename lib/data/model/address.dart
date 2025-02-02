@@ -1,10 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class Address {
   String name;
-  int latitude;
-  int longitude;
+  double latitude;
+  double longitude;
   String address;
   String phoneNumber;
   Address({
@@ -18,8 +17,8 @@ class Address {
 
   Address copyWith({
     String? name,
-    int? latitude,
-    int? longitude,
+    double? latitude,
+    double? longitude,
     String? address,
     String? phoneNumber,
   }) {
@@ -45,8 +44,8 @@ class Address {
   factory Address.fromMap(Map<String, dynamic> map) {
     return Address(
       name: map['name'] as String,
-      latitude: map['latitude'] as int,
-      longitude: map['longitude'] as int,
+      latitude: map['latitude'] as double,
+      longitude: map['longitude'] as double,
       address: map['address'] as String,
       phoneNumber: map['phoneNumber'] as String,
     );
