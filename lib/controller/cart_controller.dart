@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/data/data_source/repo.dart';
+import 'package:my_store/data/model/address.dart';
 import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/data/model/order.dart';
+import 'package:my_store/view/screens/addresses/address.dart';
 
 class CartController extends GetxController {
   List<CartItem> cartList = Repo.demoCarts;
   double total = 0.0;
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  List<Address> addresses = [];
+  Address selectedAddress=Address(userId: "userId", addressId: "addressId", name: "name", latitude: 0, longitude: 0, address: "address", phoneNumber: "phoneNumber");
 
   @override
   void onInit() async {
     calculateTotal();
-    getUserDelivaryData();
+   getAddresses();
     super.onInit();
   }
 
-  void getUserDelivaryData() async {
-    await Repo.getUserDelivaryData().then((delivaryData) {
-      if (delivaryData != null) {
-        phoneNumberController.text = delivaryData["phoneNumber"];
-        addressController.text = delivaryData["address"];
-      }
-    });
+  void getAddresses() async {
+    addresses =await Repo.getAddresses();
   }
 
   void calculateTotal() {
     total = 0.0;
     for (var item in cartList) {
-      if(item.product!=null) {
+      if (item.product != null) {
         total += item.product!.price * item.numOfItem;
       }
     }
@@ -100,5 +99,41 @@ class CartController extends GetxController {
       "Your Order Saved successfully",
       snackPosition: SnackPosition.TOP,
     );
+  }
+
+  void placeOreder() async {
+    // add progress indcator here
+    Get.defaultDialog(
+        title: "Saving Your Order",
+        content: const Column(children: [
+          CircularProgressIndicator(),
+          SizedBox(height: 20),
+          Text("laoding")
+        ]));
+    List<Address> addresses = await Repo.getAddresses();
+    if (addresses.isEmpty) {
+      Get.back();
+      Get.snackbar("Error", "Please add your address first",
+          duration: const Duration(seconds: 10));
+      Get.to(() => AddressScreen());
+    } else {
+      Get.back();
+      Get.defaultDialog(
+          title: "Choose Address",
+          content: Column(children: [Text(addresses[0].address)]),
+          onConfirm: () {
+            Get.back();
+            saveOrder();
+          },
+          textConfirm: "Confirm",
+          onCancel: () {
+            Get.back();
+          });
+    }
+  }
+
+  void selectAddress(addressTapped) {
+    selectedAddress=addressTapped;
+    update();
   }
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:my_store/controller/address_controller.dart';
 import 'package:my_store/data/model/address.dart';
+import 'package:my_store/view/global%20widget/my_button.dart';
 import 'package:my_store/view/global%20widget/my_textfield.dart';
 import 'package:my_store/view/screens/addresses/small_map_card.dart';
 
@@ -12,8 +13,7 @@ class NewAddress extends StatelessWidget {
   final TextEditingController addressController;
   final TextEditingController phoneController;
 
-
-   NewAddress(
+  NewAddress(
       {super.key,
       required this.address,
       required this.addressController,
@@ -44,14 +44,21 @@ class NewAddress extends StatelessWidget {
                   ),
                 ),
               ),
-              MyTextfield(hintText: "Your Address", controller: addressController),
-              MyTextfield(hintText: "Phone Number", controller: phoneController ,keyboardType: TextInputType.phone,),
-              Spacer(),
-              ElevatedButton(
-                onPressed:(){ controller.onSaveNewAddressClicked(address); },
-                child: const Text('Save'),
-              )
-        
+              MyTextfield(
+                  hintText: "Your Address", controller: addressController),
+              MyTextfield(
+                hintText: "Phone Number",
+                controller: phoneController,
+                keyboardType: TextInputType.phone,
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: () {
+                  controller.onSaveNewAddressClicked(address);
+                },
+                child: const MyButton(text: "Save Address"),
+              ),
+              const SizedBox(height: 20,)
             ],
           ),
         ),

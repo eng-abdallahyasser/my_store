@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:my_store/controller/cart_controller.dart';
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/view/global%20widget/my_textfield.dart';
 
 class CheckoutCard extends StatelessWidget {
   final CartController controller;
@@ -83,26 +81,7 @@ class CheckoutCard extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.defaultDialog(
-                          title: "Delivery Info",
-                          content: Column(children: [
-                            MyTextfield(
-                              hintText: "Phone Number",
-                              controller: controller.phoneNumberController,
-                              keyboardType: TextInputType.number,
-                            ),
-                            MyTextfield(
-                                hintText: "Address",
-                                controller: controller.addressController)
-                          ]),
-                          onConfirm: () {
-                            Get.back();
-                            controller.saveOrder();
-                          },
-                          textConfirm: "Confirm",
-                          onCancel: () {
-                            Get.back();
-                          });
+                      controller.placeOreder();
                     },
                     child: const Text("Order Delivery"),
                   ),
