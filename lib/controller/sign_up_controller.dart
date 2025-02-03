@@ -63,7 +63,6 @@ class SignUpController extends GetxController {
             middleText: 'الايميل دا حد تاني مستخدمه او انت نسيت الباسورد بتاعه',
           );
         }
-        print(massage);
       } else {
         Get.defaultDialog(
           title: 'Error',

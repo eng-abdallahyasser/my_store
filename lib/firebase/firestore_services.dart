@@ -73,7 +73,6 @@ class FirestoreServices {
 
     // If the token already exists, return early to prevent duplicate entry
     if (existingTokens.docs.isNotEmpty) {
-      print("Token already exists");
       return;
     }
     // Add the new admin token to the collection
@@ -138,7 +137,6 @@ class FirestoreServices {
         // Update the counter value in Firestore
         transaction.update(counterRef, {'currentNumber': newNumber});
       });
-      print("carts length      ${order.carts.length}");
     } catch (error) {
       print("Failed to add order: $error");
     }
@@ -264,7 +262,6 @@ class FirestoreServices {
           .doc(addressId)
           .update({"addressId": addressId});
 
-      print("Address added with ID: $addressId");
     } catch (e) {
       print("Error adding address: $e");
     }

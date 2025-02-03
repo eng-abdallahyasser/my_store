@@ -81,7 +81,6 @@ class Repo {
       DocumentReference docRef = await _firestore.addProduct(product, images);
       // Upload each image to Firebase Storage
       _storage.uploadImages(images, docRef.id);
-      print("Product Added with ID: ${docRef.id}");
     } catch (error) {
       print("Failed to add product: $error");
     }

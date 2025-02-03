@@ -13,7 +13,6 @@ class EditItemScreen extends StatelessWidget {
 
   EditItemScreen({super.key, required this.product});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,7 +136,8 @@ class EditItemScreen extends StatelessWidget {
             child: controller.colorList.contains(color)
                 ? SvgPicture.asset(
                     "assets/icons/Check mark rounde.svg",
-                    color: MyColors.elsie,
+                    colorFilter:
+                        const ColorFilter.mode(MyColors.elsie, BlendMode.srcIn),
                     width: 22,
                   )
                 : Container(),

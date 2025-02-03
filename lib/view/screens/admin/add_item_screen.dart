@@ -135,7 +135,7 @@ class AddItemScreen extends StatelessWidget {
             child: controller.colorList.contains(color)
                 ? SvgPicture.asset(
                     "assets/icons/Check mark rounde.svg",
-                    color: MyColors.elsie,
+                    colorFilter: const ColorFilter.mode(MyColors.elsie, BlendMode.srcIn),
                     width: 22,
                   )
                 : Container(),
