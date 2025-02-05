@@ -134,7 +134,10 @@ class _LoveCountBtnState extends State<LoveCountBtn> {
   void initState() {
     super.initState();
     count = widget.product.favouritecount;
-    isFavourite = Repo.favouriteProducts.contains(widget.product);
+    isFavourite = Repo.favouriteProducts.contains(widget.product.id);
+          if (isFavourite) {
+        count += 1;
+      } 
   }
 
   Future<void> _onTab() async {
@@ -148,11 +151,13 @@ class _LoveCountBtnState extends State<LoveCountBtn> {
     });
 
     if (isFavourite) {
-      Repo.favouriteProducts.add(widget.product);
-      await Repo.incrementFavoriteCountById(widget.product.id);
+      Repo.favouriteProducts.add(widget.product.id);
+      widget.product.favouritecount;
+      await Repo.addToFavorites(widget.product.id);
+
     } else {
-      Repo.favouriteProducts.remove(widget.product);
-      await Repo.decrementFavoriteCountById(widget.product.id);
+      Repo.favouriteProducts.remove(widget.product.id);
+      await Repo.removeFromFavorites(widget.product.id);
     }
 
     setState(() {

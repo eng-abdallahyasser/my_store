@@ -20,11 +20,6 @@ class ProductList extends StatelessWidget {
             ? Repo.getPopularProducts()
             : Repo.getProductsByCategory(title),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
           if (snapshot.hasError) {
             return const Center(
               child: Text("Error..."),

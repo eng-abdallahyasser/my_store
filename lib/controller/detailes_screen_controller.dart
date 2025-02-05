@@ -46,13 +46,13 @@ class DetailesScreenController extends GetxController {
 
   void onAddToFavouritesTap() {
     if (!Repo.favouriteProducts.contains(product)) {
-      Repo.favouriteProducts.add(product);
+      Repo.favouriteProducts.add(product.id);
       favouriteCount++;
-      Repo.incrementFavoriteCountById(product.id);
+      Repo.addToFavorites(product.id);
     } else {
       favouriteCount--;
-      Repo.favouriteProducts.remove(product);
-      Repo.decrementFavoriteCountById(product.id);
+      Repo.favouriteProducts.remove(product.id);
+      Repo.removeFromFavorites(product.id);
     }
     update();
   }

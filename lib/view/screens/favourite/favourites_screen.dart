@@ -26,7 +26,25 @@ class FavouritesScreen extends StatelessWidget {
                   crossAxisSpacing: 16,
                 ),
                 itemBuilder: (context, index) =>
-                    ProductCard(product: Repo.favouriteProducts[index]),
+                    FutureBuilder(
+                      future: Repo.getProductById(Repo.favouriteProducts[index]),
+
+                      builder: (context,snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (snapshot.hasError || snapshot.data == null) {
+                          return const Center(
+                            child: Text("Error loading product"),
+                          );
+                        }
+                        return ProductCard(
+                          product: snapshot.data!,
+                        );
+                      }
+                    ),
               ),
             ),
           )

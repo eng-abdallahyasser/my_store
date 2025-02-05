@@ -27,9 +27,9 @@ class FirestoreServices {
     return docRef;
   }
 
-  Future<int> incrementFavoriteCountById(String documentId) async {
-    DocumentReference docRef =
-        _firestore.collection("products").doc(documentId);
+  Future<int> incrementFavoriteCountById(
+      String productId, String userId) async {
+    DocumentReference docRef = _firestore.collection("products").doc(productId);
     int currentFavoriteCount = 0;
     // Use a transaction to ensure atomic updates
     await _firestore.runTransaction((transaction) async {
@@ -40,13 +40,19 @@ class FirestoreServices {
         transaction
             .update(docRef, {"favouritecount": currentFavoriteCount + 1});
       }
+      DocumentReference userRef = _firestore.collection('users').doc(userId);
+
+      await userRef.update({
+        'favorites': FieldValue.arrayUnion([productId])
+      });
     });
+
     return currentFavoriteCount + 1;
   }
 
-  Future<int> decrementFavoriteCountById(String documentId) async {
-    DocumentReference docRef =
-        _firestore.collection("products").doc(documentId);
+  Future<int> decrementFavoriteCountById(
+      String productId, String userId) async {
+    DocumentReference docRef = _firestore.collection("products").doc(productId);
     int newFavoriteCount = 0;
     // Use a transaction to ensure atomic updates
     await _firestore.runTransaction((transaction) async {
@@ -60,6 +66,12 @@ class FirestoreServices {
             currentFavoriteCount > 0 ? currentFavoriteCount - 1 : 0;
         transaction.update(docRef, {"favouritecount": newFavoriteCount});
       }
+      DocumentReference userRef =
+          FirebaseFirestore.instance.collection('users').doc(userId);
+
+      await userRef.update({
+        'favorites': FieldValue.arrayRemove([productId])
+      });
     });
     return newFavoriteCount;
   }
@@ -261,7 +273,6 @@ class FirestoreServices {
           .collection("addresses")
           .doc(addressId)
           .update({"addressId": addressId});
-
     } catch (e) {
       print("Error adding address: $e");
     }

@@ -16,9 +16,9 @@ class Repo {
   static var prefs;
   static bool onboardingShown = false;
   Map<String, dynamic>? delivaryData = {};
-  static List<Product> favouriteProducts = [];
+  static List<String> favouriteProducts = [];
+  static String userId = _auth.getCurrentUser()!.uid;
 
-  List<Product> favouritProducts = [];
   static Future<List<Product>> demoProducts = getAllProduct();
   static List<CartItem> demoCarts = [];
 
@@ -47,23 +47,35 @@ class Repo {
   //     return Order.fromJson(doc.data() as Map<String, dynamic>);
   //   }).toList();
   // }
+  Future<List<String>> getFavorites() async {
+  DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+  if (userSnapshot.exists) {
+    List<dynamic> favorites = userSnapshot.get('favorites') ?? [];
+    return List<String>.from(favorites);
+  }
+  return [];
+}
+
 
   static Future<Product> getProductById(String id) async {
     return _firestore.getProductById(id);
   }
+
   static Future<List<Product>> getProductsByCategory(String category) async {
     return _firestore.getProductsByCategory(category);
   }
+
   static Future<List<Product>> getPopularProducts() async {
     return _firestore.getPopularProducts();
   }
 
-  static Future<int> decrementFavoriteCountById(String id) async {
-    return _firestore.decrementFavoriteCountById(id);
+  static Future<int> removeFromFavorites(String id) async {
+    return _firestore.decrementFavoriteCountById(id, userId);
   }
 
-  static Future<int> incrementFavoriteCountById(String id) async {
-    return _firestore.incrementFavoriteCountById(id);
+  static Future<void> addToFavorites(String productId) async {
+    await _firestore.incrementFavoriteCountById(productId, userId);
   }
 
   static Future<Uint8List?> getProductImageNumber(
@@ -97,13 +109,13 @@ class Repo {
     return _firestore.getUserData(_auth.getCurrentUser()!.uid);
   }
 
-   static Future<void> addAddress(Address address ) async {
+  static Future<void> addAddress(Address address) async {
     address.userId = _auth.getCurrentUser()!.uid;
-    
+
     await _firestore.addAddress(address);
   }
 
-  static Future<List<Address>> getAddresses(){
+  static Future<List<Address>> getAddresses() {
     return _firestore.getAddresses(_auth.getCurrentUser()!.uid);
   }
 
