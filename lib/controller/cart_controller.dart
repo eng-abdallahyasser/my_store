@@ -12,17 +12,24 @@ class CartController extends GetxController {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   List<Address> addresses = [];
-  Address selectedAddress=Address(userId: "userId", addressId: "addressId", name: "name", latitude: 0, longitude: 0, address: "address", phoneNumber: "phoneNumber");
+  Address selectedAddress = Address(
+      userId: "userId",
+      addressId: "addressId",
+      name: "name",
+      latitude: 0,
+      longitude: 0,
+      address: "address",
+      phoneNumber: "phoneNumber");
 
   @override
   void onInit() async {
     calculateTotal();
-   getAddresses();
+    getAddresses();
     super.onInit();
   }
 
   void getAddresses() async {
-    addresses =await Repo.getAddresses();
+    addresses = await Repo.getAddresses();
   }
 
   void calculateTotal() {
@@ -46,7 +53,7 @@ class CartController extends GetxController {
               onPressed: () {
                 cartList.removeAt(index);
                 Get.back();
-                update();
+                calculateTotal();
               },
               child: const Text("Yes, Remove It")),
           TextButton(
@@ -133,7 +140,7 @@ class CartController extends GetxController {
   }
 
   void selectAddress(addressTapped) {
-    selectedAddress=addressTapped;
+    selectedAddress = addressTapped;
     update();
   }
 }

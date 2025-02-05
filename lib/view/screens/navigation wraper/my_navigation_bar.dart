@@ -23,7 +23,7 @@ class MyNavigationBarWraper extends StatelessWidget {
       ),
       bottomNavigationBar: GetBuilder<NavigationBarController>(
         builder: (controller) => BottomNavigationBar(
-          onTap: controller.setIndex,
+          onTap: (index){controller.setIndex(index);},
           currentIndex: controller.selectedIndex,
           selectedItemColor: MyColors.elsie,
           showUnselectedLabels: false,

@@ -15,6 +15,8 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartController>(builder: (controller) {
+      controller.calculateTotal();
+      controller.getAddresses();
       return Scaffold(
         appBar: AppBar(
           title: Column(
