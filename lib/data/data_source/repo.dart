@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_store/data/model/address.dart';
@@ -22,7 +23,8 @@ class Repo {
   static Future<List<Product>> demoProducts = getAllProduct();
   static List<CartItem> demoCarts = [];
 
-  static Future<void> initializePrefs() async {
+  static Future<void> init() async {
+    favouriteProducts = await getFavorites();
     prefs = await SharedPreferences.getInstance();
     onboardingShown = prefs.getBool('onboardingShown') ?? false;
   }
@@ -35,28 +37,14 @@ class Repo {
     try {
       return await _firestore.getAllOrders();
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
     return null;
   }
 
-  // static Future<List> getAllCarts() async {
-  //   final QuerySnapshot querySnapshot =
-  //       await _firestore.collection('orders').get();
-  //   return querySnapshot.docs.map((doc) {
-  //     return Order.fromJson(doc.data() as Map<String, dynamic>);
-  //   }).toList();
-  // }
-  Future<List<String>> getFavorites() async {
-  DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
-
-  if (userSnapshot.exists) {
-    List<dynamic> favorites = userSnapshot.get('favorites') ?? [];
-    return List<String>.from(favorites);
+  static Future<List<String>> getFavorites() async {
+    return _firestore.getFavorites(userId);
   }
-  return [];
-}
-
 
   static Future<Product> getProductById(String id) async {
     return _firestore.getProductById(id);
@@ -94,29 +82,22 @@ class Repo {
       // Upload each image to Firebase Storage
       _storage.uploadImages(images, docRef.id);
     } catch (error) {
-      print("Failed to add product: $error");
+      log("Failed to add product: $error");
     }
   }
 
   static Future<void> addOrder(OrderForDelivary order) async {
-    order.userID = _auth.getCurrentUser()!.uid;
+    order.userID = userId;
     await _firestore.addOrder(order);
-    await _firestore.saveUserData(
-        _auth.getCurrentUser(), order.userPhone, order.userAdress);
-  }
-
-  static Future<Map<String, dynamic>?> getUserDelivaryData() async {
-    return _firestore.getUserData(_auth.getCurrentUser()!.uid);
   }
 
   static Future<void> addAddress(Address address) async {
-    address.userId = _auth.getCurrentUser()!.uid;
-
+    address.userId = userId;
     await _firestore.addAddress(address);
   }
 
   static Future<List<Address>> getAddresses() {
-    return _firestore.getAddresses(_auth.getCurrentUser()!.uid);
+    return _firestore.getAddresses(userId);
   }
 
   static saveAdminToken() {}

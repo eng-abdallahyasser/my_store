@@ -45,7 +45,7 @@ class DetailesScreenController extends GetxController {
   }
 
   void onAddToFavouritesTap() {
-    if (!Repo.favouriteProducts.contains(product)) {
+    if (!Repo.favouriteProducts.contains(product.id)) {
       Repo.favouriteProducts.add(product.id);
       favouriteCount++;
       Repo.addToFavorites(product.id);

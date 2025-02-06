@@ -9,7 +9,7 @@ import 'package:my_store/router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await Repo.initializePrefs();
+  await Repo.init();
 
   runApp(const MyApp());
 }

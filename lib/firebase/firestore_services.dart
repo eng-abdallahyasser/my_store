@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,6 +31,7 @@ class FirestoreServices {
   Future<int> incrementFavoriteCountById(
       String productId, String userId) async {
     DocumentReference docRef = _firestore.collection("products").doc(productId);
+    DocumentReference userRef = _firestore.collection('users').doc(userId);
     int currentFavoriteCount = 0;
     // Use a transaction to ensure atomic updates
     await _firestore.runTransaction((transaction) async {
@@ -40,7 +42,6 @@ class FirestoreServices {
         transaction
             .update(docRef, {"favouritecount": currentFavoriteCount + 1});
       }
-      DocumentReference userRef = _firestore.collection('users').doc(userId);
 
       await userRef.update({
         'favorites': FieldValue.arrayUnion([productId])
@@ -53,6 +54,7 @@ class FirestoreServices {
   Future<int> decrementFavoriteCountById(
       String productId, String userId) async {
     DocumentReference docRef = _firestore.collection("products").doc(productId);
+    DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(userId);
     int newFavoriteCount = 0;
     // Use a transaction to ensure atomic updates
     await _firestore.runTransaction((transaction) async {
@@ -66,8 +68,6 @@ class FirestoreServices {
             currentFavoriteCount > 0 ? currentFavoriteCount - 1 : 0;
         transaction.update(docRef, {"favouritecount": newFavoriteCount});
       }
-      DocumentReference userRef =
-          FirebaseFirestore.instance.collection('users').doc(userId);
 
       await userRef.update({
         'favorites': FieldValue.arrayRemove([productId])
@@ -97,6 +97,15 @@ class FirestoreServices {
     await docRef.update({"id": docRef.id});
   }
 
+Future<List<String>> getFavorites(String userID) async{
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(userID).get();
+
+  if (userSnapshot.exists) {
+    List<dynamic> favorites = userSnapshot.get('favorites') ?? [];
+    return List<String>.from(favorites);
+  }
+  return [];
+}
   Future<List<String>> getAdminTokens() async {
     // Query to get all documents in the "admins" collection
     QuerySnapshot querySnapshot = await _firestore.collection("admins").get();
@@ -150,7 +159,7 @@ class FirestoreServices {
         transaction.update(counterRef, {'currentNumber': newNumber});
       });
     } catch (error) {
-      print("Failed to add order: $error");
+      log("Failed to add order: $error");
     }
   }
 
@@ -183,51 +192,6 @@ class FirestoreServices {
     }).toList();
   }
 
-  Future<Map<String, dynamic>?> getUserData(String? userID) async {
-    if (userID != null) {
-      // Create a reference to the Firestore document
-      DocumentReference userDoc =
-          FirebaseFirestore.instance.collection('users').doc(userID);
-
-      // Get the document snapshot
-      DocumentSnapshot docSnapshot = await userDoc.get();
-
-      if (docSnapshot.exists) {
-        // Convert the document snapshot to a map
-        return docSnapshot.data() as Map<String, dynamic>?;
-      } else {
-        print('User document does not exist.');
-        return null;
-      }
-    } else {
-      print('No user is currently signed in.');
-      return null;
-    }
-  }
-
-  Future<void> saveUserData(
-      User? user, String phoneNumber, String address) async {
-    if (user != null) {
-      // Create a reference to the Firestore document
-      DocumentReference userDoc =
-          FirebaseFirestore.instance.collection('users_data').doc(user.uid);
-
-      // Set the data to the Firestore document
-      await userDoc.set(
-          {
-            'id': user.uid,
-            'name': user.displayName,
-            'phoneNumber': phoneNumber,
-            'address': address,
-          },
-          SetOptions(
-              merge:
-                  true)); // Use merge: true to update fields without overwriting existing data
-    } else {
-      print('No user is currently signed in.');
-    }
-  }
-
   Future<List<Product>> getProductsByCategory(String category) async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -239,7 +203,7 @@ class FirestoreServices {
           .map((doc) => Product.fromFirestore(doc))
           .toList();
     } catch (e) {
-      print('Error fetching products: $e');
+      log('Error fetching products: $e');
       return [];
     }
   }
@@ -255,7 +219,7 @@ class FirestoreServices {
           .map((doc) => Product.fromFirestore(doc))
           .toList();
     } catch (e) {
-      print('Error fetching products: $e');
+      log('Error fetching products: $e');
       return [];
     }
   }
@@ -274,7 +238,7 @@ class FirestoreServices {
           .doc(addressId)
           .update({"addressId": addressId});
     } catch (e) {
-      print("Error adding address: $e");
+      log("Error adding address: $e");
     }
   }
 
@@ -289,7 +253,7 @@ class FirestoreServices {
           .map((doc) => Address.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
     } catch (e) {
-      print("Error fetching addresses: $e");
+      log("Error fetching addresses: $e");
       return [];
     }
   }

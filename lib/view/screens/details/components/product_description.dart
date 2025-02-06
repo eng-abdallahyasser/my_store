@@ -37,7 +37,7 @@ class ProductDescription extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 // width: 48,
                 decoration: BoxDecoration(
-                  color:Repo.favouriteProducts.contains(product)
+                  color:Repo.favouriteProducts.contains(product.id)
                       ? const Color(0xFFFFE6E6)
                       : const Color(0xFFF5F6F9),
                   borderRadius: const BorderRadius.only(
@@ -56,7 +56,7 @@ class ProductDescription extends StatelessWidget {
                     SvgPicture.asset(
                       "assets/icons/Heart Icon_2.svg",
                       colorFilter: ColorFilter.mode(
-                          Repo.favouriteProducts.contains(product)
+                          Repo.favouriteProducts.contains(product.id)
                               ? const Color(0xFFFF4848)
                               : const Color(0xFFDBDEE4),
                           BlendMode.srcIn),

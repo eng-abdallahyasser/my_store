@@ -37,7 +37,7 @@ class FavouritesScreen extends StatelessWidget {
                         }
                         if (snapshot.hasError || snapshot.data == null) {
                           return const Center(
-                            child: Text("Error loading product"),
+                            child: Text("Error : Item not found"),
                           );
                         }
                         return ProductCard(

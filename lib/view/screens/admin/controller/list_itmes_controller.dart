@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,7 +25,7 @@ class ListItmesController extends GetxController {
     try {
       return image;
     } catch (e) {
-      print('Failed to get profile picture for uid $productId: $e');
+      log('Failed to get profile picture for uid $productId: $e');
       return null;
     }
   }

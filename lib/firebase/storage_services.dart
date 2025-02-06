@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -18,7 +19,7 @@ class StorageServices {
     try {
       return image;
     } catch (e) {
-      print('Failed to get profile picture for uid $url: $e');
+      log('Failed to get profile picture for uid $url: $e');
       return null;
     }
   }
@@ -31,7 +32,7 @@ class StorageServices {
           .child("$productId/image$number.jpg")
           .getData();
     } catch (e) {
-      print('Failed to get profile picture for uid $productId: $e');
+      log('Failed to get profile picture for uid $productId: $e');
       return null;
     }
   }
