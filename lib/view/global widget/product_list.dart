@@ -1,8 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-
 import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/data/model/product.dart';
 import 'package:my_store/view/global%20widget/product_card.dart';
@@ -17,10 +13,7 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("${Repo.isProductsFetched} ${Repo.fetchedProducts.length} ");
-    return Repo.isProductsFetched?
-    ProductListWidget(title: title, products: Repo.fetchedProducts):
-     FutureBuilder(
+    return FutureBuilder(
         future: title == "Popular Products"
             ? Repo.getPopularProducts()
             : Repo.getProductsByCategory(title),
@@ -69,30 +62,16 @@ class ProductListWidget extends StatelessWidget {
               children: List.generate(
                 products.length,
                 (index) {
-                  if (title == "Popular Products") {
-                    if (products[index].isPopular) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: ProductCard(
-                          product: products[index],
-                        ),
-                      );
-                    }
-                  } else {
-                    if(products[index].category==title){
                     return Padding(
                       padding: const EdgeInsets.only(left: 12, right: 12),
                       child: ProductCard(
                         product: products[index],
                       ),
                     );
-                  }}
-                  return const SizedBox
-                      .shrink(); // here by default width and height is 0
                 },
               ),
             )),
-            const Divider()
+        const Divider()
       ],
     );
   }

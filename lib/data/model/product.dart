@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_store/data/data_source/repo.dart';
+import 'package:my_store/data/model/variant.dart';
 
 class Product {
   String id;
@@ -13,6 +14,8 @@ class Product {
   final double rating, price, oldPrice;
   bool isInitialezed, isPopular;
   final int favouritecount;
+  List<List<Variant>> options;
+  List<String> optionsNames;
 
   Product({
     this.id = "",
@@ -29,6 +32,8 @@ class Product {
     this.description = "",
     this.quantity = 1,
     this.coverImageUnit8List,
+    this.options = const [],
+    this.optionsNames = const [],
   });
 
   Map<String, dynamic> toJson() => {
@@ -44,6 +49,11 @@ class Product {
         "oldPrice": oldPrice,
         "description": description,
         "quantity": quantity,
+        "options":options
+          .map((innerList) =>
+              innerList.map((variant) => variant.toJson()).toList())
+          .toList(),
+        "optionsNames":optionsNames
       };
 
 
@@ -80,6 +90,14 @@ class Product {
       oldPrice: (json['oldPrice'] as num?)?.toDouble() ?? 0.0,
       description: json['description'] ?? "",
       quantity: json['quantity'] ?? 1,
+      options: json['options'] == null
+        ? <List<Variant>>[]
+        : (json['options'] as List<dynamic>).map((innerList) {
+            return (innerList as List<dynamic>).map((variantJson) {
+              return Variant.fromJson(variantJson as Map<String, dynamic>);
+            }).toList();
+          }).toList(),
+      optionsNames: List<String>.from(json['optionsNames'] ?? []),
     );
   }
 }
