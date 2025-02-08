@@ -43,9 +43,11 @@ class FirestoreServices {
             .update(docRef, {"favouritecount": currentFavoriteCount + 1});
       }
 
-      await userRef.update({
-        'favorites': FieldValue.arrayUnion([productId])
-      });
+      await userRef.set(
+          {
+            'favorites': FieldValue.arrayUnion([productId])
+          },
+          SetOptions(merge:true)); // Merge ensures existing fields are not overwritten
     });
 
     return currentFavoriteCount + 1;
@@ -54,7 +56,8 @@ class FirestoreServices {
   Future<int> decrementFavoriteCountById(
       String productId, String userId) async {
     DocumentReference docRef = _firestore.collection("products").doc(productId);
-    DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(userId);
+    DocumentReference userRef =
+        FirebaseFirestore.instance.collection('users').doc(userId);
     int newFavoriteCount = 0;
     // Use a transaction to ensure atomic updates
     await _firestore.runTransaction((transaction) async {
@@ -97,15 +100,17 @@ class FirestoreServices {
     await docRef.update({"id": docRef.id});
   }
 
-Future<List<String>> getFavorites(String userID) async{
-    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(userID).get();
+  Future<List<String>> getFavorites(String userID) async {
+    DocumentSnapshot userSnapshot =
+        await FirebaseFirestore.instance.collection('users').doc(userID).get();
 
-  if (userSnapshot.exists) {
-    List<dynamic> favorites = userSnapshot.get('favorites') ?? [];
-    return List<String>.from(favorites);
+    if (userSnapshot.exists) {
+      List<dynamic> favorites = userSnapshot.get('favorites') ?? [];
+      return List<String>.from(favorites);
+    }
+    return [];
   }
-  return [];
-}
+
   Future<List<String>> getAdminTokens() async {
     // Query to get all documents in the "admins" collection
     QuerySnapshot querySnapshot = await _firestore.collection("admins").get();
@@ -194,7 +199,7 @@ Future<List<String>> getFavorites(String userID) async{
 
   Future<List<Product>> getProductsByCategory(String category) async {
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+      QuerySnapshot querySnapshot = await _firestore
           .collection('products')
           .where('category', isEqualTo: category)
           .get();
@@ -210,7 +215,7 @@ Future<List<String>> getFavorites(String userID) async{
 
   Future<List<Product>> getPopularProducts() async {
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+      QuerySnapshot querySnapshot = await _firestore
           .collection('products')
           .where('isPopular', isEqualTo: true)
           .get();

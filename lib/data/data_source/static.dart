@@ -55,9 +55,12 @@ List<BottomBarDestination> bottomBarDestinations = [
 ];
 
 List<String> categories = [
-  "T-shirts",
-  "Pants",
-  "Shoes",
+  "Sushi Rolls",
+  "Nigiri",
+  "Sashimi",
+  "Bento Boxes",
+  "Side Dishes",
+  "Beverages"
 ];
 
 const String description =

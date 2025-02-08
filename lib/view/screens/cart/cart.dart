@@ -71,7 +71,7 @@ class CartScreen extends StatelessWidget {
                                   Text(
                                     (controller.selectedAddress.latitude == 0.0)
                                         ? "Tap to select an address"
-                                        : controller.selectedAddress.name,
+                                        : controller.selectedAddress.address,
                                     style: const TextStyle(fontSize: 16),
                                   ),
                                   SvgPicture.asset(
