@@ -11,7 +11,7 @@ class Product {
   Uint8List? coverImageUnit8List;
   final List<Color> colors;
   final double rating, price, oldPrice;
-  final bool isFavourite, isPopular;
+  bool isInitialezed, isPopular;
   final int favouritecount;
 
   Product({
@@ -20,7 +20,7 @@ class Product {
     required this.imagesUrl,
     required this.colors,
     this.rating = 0.0,
-    this.isFavourite = false,
+    this.isInitialezed = false,
     this.isPopular = false,
     this.favouritecount = 0,
     this.title = "",
@@ -37,7 +37,6 @@ class Product {
         "images": imagesUrl,
         "colors": colorsStringList(),
         "rating": rating,
-        "isFavourite": isFavourite,
         "isPopular": isPopular,
         "favouritecount": favouritecount,
         "title": title,
@@ -58,6 +57,7 @@ class Product {
 
   Future<Product> initializeCoverImage() async {
     coverImageUnit8List = await Repo.getProductImageUrl(imagesUrl[0]);
+    isInitialezed=true;
     return this;
   }
 
@@ -72,7 +72,7 @@ class Product {
           .toList(),
       category: json['category'] ?? "not foung",
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
-      isFavourite: json['isFavourite'] ?? false,
+      isInitialezed: false,
       isPopular: json['isPopular'] ?? false,
       favouritecount: json['favouritecount'] ?? 0,
       title: json['title'] ?? "",

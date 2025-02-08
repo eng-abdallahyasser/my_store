@@ -35,7 +35,20 @@ class ProductCard extends StatelessWidget {
                   color: MyColors.matteCharcoal.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: FutureBuilder(
+                child: product.isInitialezed?
+                ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: MemoryImage(
+                                  product.coverImageUnit8List!),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ):
+                FutureBuilder(
                     future: product.initializeCoverImage(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {

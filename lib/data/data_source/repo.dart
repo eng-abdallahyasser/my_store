@@ -20,7 +20,8 @@ class Repo {
   static List<String> favouriteProducts = [];
   static String userId = _auth.getCurrentUser()!.uid;
 
-  static Future<List<Product>> demoProducts = getAllProduct();
+  static List<Product> fetchedProducts = [];
+  static bool isProductsFetched=false;
   static List<CartItem> demoCarts = [];
   static List<Map<String, dynamic>> testProducts = [
   {
@@ -419,12 +420,15 @@ class Repo {
 
   static Future<void> init() async {
     favouriteProducts = await getFavorites();
+    fetchAllProduct();
     prefs = await SharedPreferences.getInstance();
     onboardingShown = prefs.getBool('onboardingShown') ?? false;
   }
 
-  static Future<List<Product>> getAllProduct() async {
-    return await _firestore.getAllProduct();
+  static fetchAllProduct() async {
+    fetchedProducts = await _firestore.getAllProduct();
+    isProductsFetched= true;
+    
   }
 
   static Future<List<OrderForDelivary>?> getAllOrders() async {
@@ -441,14 +445,23 @@ class Repo {
   }
 
   static Future<Product> getProductById(String id) async {
+    if(isProductsFetched){
+      return fetchedProducts.firstWhere((element) => element.id == id);
+    }
     return _firestore.getProductById(id);
   }
 
   static Future<List<Product>> getProductsByCategory(String category) async {
+    if(isProductsFetched){
+      return fetchedProducts.where((element) => element.category == category).toList();
+    }
     return _firestore.getProductsByCategory(category);
   }
 
   static Future<List<Product>> getPopularProducts() async {
+    if(isProductsFetched){
+      return fetchedProducts.where((element) => element.isPopular == true).toList();
+    }
     return _firestore.getPopularProducts();
   }
 

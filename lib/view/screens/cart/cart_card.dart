@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_store/core/constants.dart';
-import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/view/global%20widget/rounded_icon_btn.dart';
 
@@ -33,12 +32,11 @@ class CartCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 child: cart.product == null
                     ? Container()
-                    : cart.product!.coverImageUnit8List != null
+                    : cart.product!.isInitialezed
                         ? Image.memory(cart.product!.coverImageUnit8List!,
                             fit: BoxFit.cover)
                         : FutureBuilder(
-                            future: Repo.getProductImageUrl(
-                                cart.product!.imagesUrl[0]),
+                            future:  cart.product!.initializeCoverImage(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -50,7 +48,7 @@ class CartCard extends StatelessWidget {
                                     "assete/images/product_placeholder.jpg",
                                     fit: BoxFit.cover);
                               }
-                              return Image.memory(snapshot.data!,
+                              return Image.memory(snapshot.data!.coverImageUnit8List!,
                                   fit: BoxFit.cover);
                             }),
               ),

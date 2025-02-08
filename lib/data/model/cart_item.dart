@@ -4,6 +4,7 @@ class CartItem {
   Product? product;
   String? productId;
   int numOfItem;
+  String note="";
 
   CartItem({
     this.product,
