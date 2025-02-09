@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:my_store/data/data_source/repo.dart';
 import 'package:my_store/data/model/product.dart';
 import 'package:my_store/data/model/cart_item.dart';
+import 'package:my_store/data/model/variant.dart';
 
 class DetailesScreenController extends GetxController {
   int selectedColor = 0;
@@ -13,6 +14,9 @@ class DetailesScreenController extends GetxController {
   List<bool> isImagesLoaded = [false, false, false, false, false];
   bool isCoverImageLoaded = false;
   int favouriteCount = 0;
+
+  var selectedVariants;
+
 
   DetailesScreenController({required this.product, this.favouriteCount = 0});
 
@@ -78,6 +82,8 @@ class DetailesScreenController extends GetxController {
   }
 
   void addToCart() {
-    Repo.demoCarts.add(CartItem(numOfItem: numberOfItems, product: product));
+    Repo.demoCarts.add(CartItem(numOfItem: numberOfItems, product: product, note: ''));
   }
+
+  void selectVariant(int groupIndex, Variant variant) {}
 }

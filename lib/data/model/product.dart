@@ -91,7 +91,19 @@ class Product {
       description: json['description'] ?? "",
       quantity: json['quantity'] ?? 1,
       options: json['options'] == null
-        ? <List<Variant>>[]
+        ? [
+  // Group 1: Colors
+  [
+    Variant(id: 'v1', name: 'Red', price: 10.0, ),
+    Variant(id: 'v2', name: 'Blue', price: 12.0, ),
+    Variant(id: 'v5', name: 'Green', price: 11.0,),
+  ],
+  // Group 2: Sizes
+  [
+    Variant(id: 'v3', name: 'Small', price: 0.0,),
+    Variant(id: 'v4', name: 'Large', price: 2.0, ),
+  ]
+]
         : (json['options'] as List<dynamic>).map((innerList) {
             return (innerList as List<dynamic>).map((variantJson) {
               return Variant.fromJson(variantJson as Map<String, dynamic>);
