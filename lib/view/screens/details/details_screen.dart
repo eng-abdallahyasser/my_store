@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:my_store/controller/detailes_screen_controller.dart';
 import 'package:my_store/core/constants.dart';
 import 'package:my_store/data/model/product.dart';
-import 'package:my_store/view/screens/details/components/variant_chooser.dart';
+import 'package:my_store/view/screens/details/components/option_chooser.dart';
 import 'components/color_dots.dart';
 import 'components/product_description.dart';
 import 'components/product_images.dart';
@@ -89,7 +89,7 @@ class DetailsScreen extends StatelessWidget {
                   product: product,
                   pressOnSeeMore: () {},
                 ),
-                VariantChooser(options: product.options, controller: controller),
+                OptionChooser(options: product.options, controller: controller),
                 TopRoundedContainer(
                   color: const Color(0xFFF6F7F9),
                   child: Column(

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_store/data/data_source/repo.dart';
+import 'package:my_store/data/model/option.dart';
 import 'package:my_store/data/model/variant.dart';
 
 class Product {
@@ -14,12 +15,12 @@ class Product {
   final double rating, price, oldPrice;
   bool isInitialezed, isPopular;
   final int favouritecount;
-  List<List<Variant>> options;
+  List<Option> options;
   List<String> optionsNames;
 
   Product({
     this.id = "",
-    this.category="not foung",
+    this.category = "not foung",
     required this.imagesUrl,
     required this.colors,
     this.rating = 0.0,
@@ -49,13 +50,9 @@ class Product {
         "oldPrice": oldPrice,
         "description": description,
         "quantity": quantity,
-        "options":options
-          .map((innerList) =>
-              innerList.map((variant) => variant.toJson()).toList())
-          .toList(),
-        "optionsNames":optionsNames
+        "options": options.map((x) => x.toJson()).toList(),
+        "optionsNames": optionsNames
       };
-
 
   List<String> colorsStringList() {
     List<String> colorsStringList = [];
@@ -67,7 +64,7 @@ class Product {
 
   Future<Product> initializeCoverImage() async {
     coverImageUnit8List = await Repo.getProductImageUrl(imagesUrl[0]);
-    isInitialezed=true;
+    isInitialezed = true;
     return this;
   }
 
@@ -90,25 +87,32 @@ class Product {
       oldPrice: (json['oldPrice'] as num?)?.toDouble() ?? 0.0,
       description: json['description'] ?? "",
       quantity: json['quantity'] ?? 1,
-      options: json['options'] == null
-        ? [
-  // Group 1: Colors
-  [
-    Variant(id: 'v1', name: 'Red', price: 10.0, ),
-    Variant(id: 'v2', name: 'Blue', price: 12.0, ),
-    Variant(id: 'v5', name: 'Green', price: 11.0,),
-  ],
-  // Group 2: Sizes
-  [
-    Variant(id: 'v3', name: 'Small', price: 0.0,),
-    Variant(id: 'v4', name: 'Large', price: 2.0, ),
-  ]
-]
-        : (json['options'] as List<dynamic>).map((innerList) {
-            return (innerList as List<dynamic>).map((variantJson) {
-              return Variant.fromJson(variantJson as Map<String, dynamic>);
-            }).toList();
-          }).toList(),
+      options:json['option'] ?? [
+        Option(
+            min: 1,
+            max: 1,
+            variants: [Variant(id: "id", name: "name", price: 2)],
+            choosedVariant: [Variant(id: "id", name: "name", price: 2)],
+            optionName: 'option 1'),
+        Option(
+            min: 1,
+            max: 1,
+            variants: [Variant(id: "id", name: "name", price: 2)],
+            choosedVariant: [Variant(id: "id", name: "name", price: 2)],
+            optionName: 'option name 2'),
+        Option(
+            min: 1,
+            max: 1,
+            variants: [Variant(id: "id", name: "name", price: 2)],
+            choosedVariant: [Variant(id: "id", name: "name", price: 2)],
+            optionName: 'option 3'),
+        Option(
+            min: 1,
+            max: 1,
+            variants: [Variant(id: "id", name: "name", price: 2)],
+            choosedVariant: [Variant(id: "id", name: "name", price: 2)],
+            optionName: 'option name 4')
+      ],
       optionsNames: List<String>.from(json['optionsNames'] ?? []),
     );
   }
