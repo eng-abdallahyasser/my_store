@@ -34,9 +34,9 @@ class CartController extends GetxController {
 
   void calculateTotal() {
     total = 0.0;
-    for (var item in cartList) {
-      if (item.product != null) {
-        total += item.product!.price * item.numOfItem;
+    for (var cartItem in cartList) {
+      if (cartItem.product != null) {
+        total += (cartItem.product!.calculateTotalCost()) * cartItem.numOfItem;
       }
     }
     update();

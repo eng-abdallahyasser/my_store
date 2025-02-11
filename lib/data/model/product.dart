@@ -17,6 +17,7 @@ class Product {
   final int favouritecount;
   List<Option> options;
   List<String> optionsNames;
+        
 
   Product({
     this.id = "",
@@ -68,6 +69,16 @@ class Product {
     return this;
   }
 
+  double calculateTotalCost(){
+    double choosedVariantCost=0.0;
+     for(Option option in options){
+      for(Variant variant in option.choosedVariant) {
+        choosedVariantCost+=variant.price;
+      }   
+    }
+    return choosedVariantCost+price;
+  }
+
   // Factory method to create a Product from Firestore data
   factory Product.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> json = doc.data() as Map<String, dynamic>;
@@ -87,32 +98,40 @@ class Product {
       oldPrice: (json['oldPrice'] as num?)?.toDouble() ?? 0.0,
       description: json['description'] ?? "",
       quantity: json['quantity'] ?? 1,
-      options:json['option'] ?? [
-        Option(
-            min: 1,
-            max: 1,
-            variants: [Variant(id: "id", name: "name", price: 2)],
-            choosedVariant: [Variant(id: "id", name: "name", price: 2)],
-            optionName: 'option 1'),
-        Option(
-            min: 1,
-            max: 1,
-            variants: [Variant(id: "id", name: "name", price: 2)],
-            choosedVariant: [Variant(id: "id", name: "name", price: 2)],
-            optionName: 'option name 2'),
-        Option(
-            min: 1,
-            max: 1,
-            variants: [Variant(id: "id", name: "name", price: 2)],
-            choosedVariant: [Variant(id: "id", name: "name", price: 2)],
-            optionName: 'option 3'),
-        Option(
-            min: 1,
-            max: 1,
-            variants: [Variant(id: "id", name: "name", price: 2)],
-            choosedVariant: [Variant(id: "id", name: "name", price: 2)],
-            optionName: 'option name 4')
-      ],
+      options: json['option'] ??
+          [
+            Option(
+                min: 1,
+                max: 1,
+                variants: [
+                  Variant(id: "id", name: "name", price: 2),
+                  Variant(id: "id", name: "name", price: 2)
+                ],
+                choosedVariant: [],
+                optionName: 'option 1'),
+            Option(
+                min: 1,
+                max: 2,
+                variants: [
+                  Variant(id: "id", name: "name", price: 2),
+                  Variant(id: "id", name: "name", price: 2),
+                  Variant(id: "id", name: "name", price: 2)
+                ],
+                choosedVariant: [Variant(id: "id", name: "name", price: 2)],
+                optionName: 'option name 2'),
+            Option(
+                min: 1,
+                max: 1,
+                variants: [Variant(id: "id", name: "name", price: 2)],
+                choosedVariant: [],
+                optionName: 'option 3'),
+            Option(
+                min: 1,
+                max: 1,
+                variants: [Variant(id: "id", name: "name", price: 2)],
+                choosedVariant: [],
+                optionName: 'option name 4')
+          ],
       optionsNames: List<String>.from(json['optionsNames'] ?? []),
     );
   }

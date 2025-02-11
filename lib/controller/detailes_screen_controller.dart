@@ -1,6 +1,9 @@
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_store/controller/navigation_bar_controller.dart';
 import 'package:my_store/data/data_source/repo.dart';
+import 'package:my_store/data/model/option.dart';
 import 'package:my_store/data/model/product.dart';
 import 'package:my_store/data/model/cart_item.dart';
 import 'package:my_store/data/model/variant.dart';
@@ -14,9 +17,6 @@ class DetailesScreenController extends GetxController {
   List<bool> isImagesLoaded = [false, false, false, false, false];
   bool isCoverImageLoaded = false;
   int favouriteCount = 0;
-
-  var selectedVariants;
-
 
   DetailesScreenController({required this.product, this.favouriteCount = 0});
 
@@ -82,8 +82,51 @@ class DetailesScreenController extends GetxController {
   }
 
   void addToCart() {
-    Repo.demoCarts.add(CartItem(numOfItem: numberOfItems, product: product, note: ''));
+    bool validOptions = true;
+    for (Option option in product.options) {
+      if (option.choosedVariant.isEmpty ||
+          (option.choosedVariant.length < option.min ||
+              option.choosedVariant.length > option.max)) {
+        validOptions = false;
+        break;
+      }
+    }
+    if (!validOptions) {
+      Get.snackbar(
+        'Error',
+        'Please choose valid options',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    Repo.demoCarts
+        .add(CartItem(numOfItem: numberOfItems, product: product, note: ''));
+    Get.back();
+    Get.snackbar(
+      'Success',
+      'Product added to cart',
+      snackPosition: SnackPosition.BOTTOM,
+      mainButton: TextButton(
+        child: const Text('go to cart'),
+        onPressed: () {
+          Get.closeCurrentSnackbar();
+          Get.find<NavigationBarController>().setIndex(2);
+        },
+      ),
+    );
   }
 
-  void selectVariant(int groupIndex, Variant variant) {}
+  void selectVariant(int optionIndex, Variant variant) {
+    if (!product.options[optionIndex].choosedVariant.contains(variant)) {
+      if (product.options[optionIndex].max ==
+          product.options[optionIndex].choosedVariant.length) {
+        product.options[optionIndex].choosedVariant.removeAt(0);
+      }
+      product.options[optionIndex].choosedVariant.add(variant);
+    } else {
+      product.options[optionIndex].choosedVariant.remove(variant);
+    }
+    update();
+  }
 }
