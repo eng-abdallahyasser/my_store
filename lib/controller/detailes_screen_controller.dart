@@ -101,7 +101,7 @@ class DetailesScreenController extends GetxController {
     }
 
     Repo.demoCarts
-        .add(CartItem(numOfItem: numberOfItems, product: product, note: ''));
+        .add(CartItem(numOfItem: numberOfItems, product: product.copyWith(), note: ''));
     Get.back();
     Get.snackbar(
       'Success',

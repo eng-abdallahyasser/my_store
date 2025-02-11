@@ -24,4 +24,15 @@ class Variant {
       price: (json['price'] as num).toDouble(),
     );
   }
+  Variant copyWith({
+  String? id,
+  String? name,
+  double? price,
+}) {
+  return Variant(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    price: price ?? this.price,
+  );
+}
 }

@@ -31,8 +31,8 @@ class Option {
       min: min ?? this.min,
       max: max ?? this.max,
       optionName: optionName ?? this.optionName,
-      variants: variants ?? this.variants,
-      choosedVariant: choosedVariant ?? this.choosedVariant,
+      variants: variants ?? List<Variant>.from(this.variants),
+    choosedVariant: choosedVariant ?? List<Variant>.from(this.choosedVariant),
     );
   }
 

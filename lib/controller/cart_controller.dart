@@ -123,11 +123,22 @@ class CartController extends GetxController {
       Get.snackbar("Error", "Please add your address first",
           duration: const Duration(seconds: 10));
       Get.to(() => AddressScreen());
-    } else {
+    }else if(selectedAddress.latitude==0){
+      Get.back();
+      Get.snackbar("Error", "Please select your address first",
+          duration: const Duration(seconds: 10));
+    }
+     else {
       Get.back();
       Get.defaultDialog(
-          title: "Choose Address",
-          content: Column(children: [Text(addresses[0].address)]),
+          title: "Confirm Your Address",
+          content: Column(children: [
+            const SizedBox(height: 20),
+            Text(selectedAddress.address),
+            const SizedBox(height: 20),
+            Text(selectedAddress.phoneNumber),
+            const SizedBox(height: 20),
+          ]),
           onConfirm: () {
             Get.back();
             saveOrder();
@@ -135,6 +146,7 @@ class CartController extends GetxController {
           textConfirm: "Confirm",
           onCancel: () {
             Get.back();
+
           });
     }
   }

@@ -78,6 +78,15 @@ class Product {
     }
     return choosedVariantCost+price;
   }
+  String optionDescription(){
+    String optionDescription="";
+     for(Option option in options){
+      for(Variant variant in option.choosedVariant) {
+        optionDescription+="${variant.name}, ";
+      }   
+    }
+    return optionDescription;
+  }
 
   // Factory method to create a Product from Firestore data
   factory Product.fromFirestore(DocumentSnapshot doc) {
@@ -135,4 +144,42 @@ class Product {
       optionsNames: List<String>.from(json['optionsNames'] ?? []),
     );
   }
+
+  Product copyWith({
+  String? id,
+  int? quantity,
+  String? title,
+  String? description,
+  String? category,
+  List<String>? imagesUrl,
+  Uint8List? coverImageUnit8List,
+  List<Color>? colors,
+  double? rating,
+  double? price,
+  double? oldPrice,
+  bool? isInitialezed,
+  bool? isPopular,
+  int? favouritecount,
+  List<Option>? options,
+  List<String>? optionsNames,
+}) {
+  return Product(
+    id: id ?? this.id,
+    quantity: quantity ?? this.quantity,
+    title: title ?? this.title,
+    description: description ?? this.description,
+    category: category ?? this.category,
+    imagesUrl: imagesUrl ?? this.imagesUrl,
+    coverImageUnit8List: coverImageUnit8List ?? this.coverImageUnit8List,
+    colors: colors ?? this.colors,
+    rating: rating ?? this.rating,
+    price: price ?? this.price,
+    oldPrice: oldPrice ?? this.oldPrice,
+    isInitialezed: isInitialezed ?? this.isInitialezed,
+    isPopular: isPopular ?? this.isPopular,
+    favouritecount: favouritecount ?? this.favouritecount,
+    options: options ?? this.options.map((o) => o.copyWith()).toList(),
+    optionsNames: optionsNames ?? List<String>.from(this.optionsNames),
+  );
+}
 }

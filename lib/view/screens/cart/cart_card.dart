@@ -64,16 +64,21 @@ class CartCard extends StatelessWidget {
               style: const TextStyle(color: Colors.black, fontSize: 16),
               maxLines: 2,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
+            Text(
+              cart.product!.optionDescription(),
+              style: const TextStyle(color: Colors.black, fontSize: 14),
+            ),
+            const SizedBox(height: 6),
             Row(
               children: [
                 const Text(
-                  "جـ",
+                  "ج.م",
                   style: TextStyle(
                       fontWeight: FontWeight.w600, color: MyColors.elsie),
                 ),
                 Text(
-                  " ${cart.product!.price}",
+                  " ${cart.product!.calculateTotalCost()}",
                   style: const TextStyle(
                       fontWeight: FontWeight.w600, color: MyColors.elsie),
                 ),
