@@ -80,18 +80,18 @@ class AdminScreen extends StatelessWidget {
           ),
           Row(
             children: [
-              Text(order.userPhone),
+              Text(order.orderID),
               const SizedBox(width: 16),
-              Text(order.userAdress),
+              Text(order.addressID),
             ],
           ),
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: order.carts.length,
+            itemCount: order.cartItem.length,
             itemBuilder: (context, index) {
               return FutureBuilder(
-                  future: Repo.getProductById(order.carts[index].productId!),
+                  future: Repo.getProductById(order.cartItem[index].productId!),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -159,7 +159,7 @@ class AdminScreen extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                       color: MyColors.elsie),
                                 ),
-                                Text("  x${order.carts[index].numOfItem}",
+                                Text("  x${order.cartItem[index].numOfItem}",
                                     style:
                                         Theme.of(context).textTheme.bodyLarge),
                               ],

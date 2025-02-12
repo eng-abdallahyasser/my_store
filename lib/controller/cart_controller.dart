@@ -86,11 +86,11 @@ class CartController extends GetxController {
     );
 
     OrderForDelivary order = OrderForDelivary(
-      carts: cartList,
-      orderID: "",
-      userAdress: addressController.text,
-      userID: "id",
-      userPhone: phoneNumberController.text,
+      number: 0,
+      cartItem: cartList,
+      orderID: "orderID",
+      addressID: "addressID",
+      userID: "userID",
     );
 
     //saving order ....

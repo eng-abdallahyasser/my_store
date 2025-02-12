@@ -431,13 +431,13 @@ class Repo {
     
   }
 
-  static Future<List<OrderForDelivary>?> getAllOrders() async {
+  static Future<List< OrderForDelivary>> getAllOrders() async {
     try {
-      return await _firestore.getAllOrders();
+      return _firestore.getAllOrders();
     } catch (e) {
       log(e.toString());
     }
-    return null;
+    return [];
   }
 
   static Future<List<String>> getFavorites() async {

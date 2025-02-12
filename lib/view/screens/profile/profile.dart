@@ -63,6 +63,16 @@ class Profile extends StatelessWidget {
                 Get.to(() => const AdminScreen());
               },
             ),
+            const SizedBox(height: 20),
+            // FutureBuilder(
+            //     future: AppUtils.getAppVersion(),
+            //     builder: (context, snapshot) {
+            //       if (snapshot.hasData) {
+            //         return Text(snapshot.data);
+            //       }
+            //       return const SizedBox.shrink();
+            //     }),
+            const SizedBox(height: 20),
           ],
         ),
       ),

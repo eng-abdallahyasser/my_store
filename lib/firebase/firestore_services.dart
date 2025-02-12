@@ -193,7 +193,7 @@ class FirestoreServices {
         await _firestore.collection("orders").get();
 
     return querySnapshot.docs.map((doc) {
-      return OrderForDelivary.fromJson(doc.data() as Map<String, dynamic>);
+      return OrderForDelivary.fromMap(doc.data() as Map<String, dynamic>);
     }).toList();
   }
 
